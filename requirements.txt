@@ -5,12 +5,15 @@ colorama==0.3.9
 decorator==4.2.1
 Django==2.0.2
 django-autocomplete-light==3.3.0rc3
-django-crispy-forms==1.7.2
+django-crispy-forms==1.7.0
 django-extensions==1.9.9
 django-filter==1.0.4
+django-leaflet==0.22.0
 django-rest-framework==0.1.0
+django-reversion==2.0.13
 django-tables2==1.9.0
 djangorestframework==3.7.7
+djangorestframework-gis==0.12
 entrypoints==0.2.3
 html5lib==1.0.1
 idna==2.5
@@ -29,10 +32,13 @@ mistune==0.8.3
 nbconvert==5.3.1
 nbformat==4.4.0
 notebook==5.4.0
+numpy==1.13.1
+pandas==0.20.3
 pandocfilters==1.4.2
 parso==0.1.1
 pickleshare==0.7.4
 prompt-toolkit==1.0.15
+psycopg2==2.7.3
 Pygments==2.2.0
 pyparsing==2.2.0
 python-dateutil==2.6.1
@@ -55,5 +61,5 @@ update==0.0.1
 urllib3==1.21.1
 wcwidth==0.1.7
 webencodings==0.5.1
-win-unicode-console==0.5
 wincertstore==0.2
+xlrd==1.0.0
