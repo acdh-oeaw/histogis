@@ -121,8 +121,8 @@ class TempStatialRel(IdProvider):
         if self.instance_a and self.instance_b and self.relation_type:
             return "{} {} {}".format(
                 self.instance_a,
-                self.instance_b,
-                self.relation_type
+                self.relation_type,
+                self.instance_b
             )
         else:
             return "TempStatialRel ID: {}".format(self.id)
