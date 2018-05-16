@@ -1,0 +1,35 @@
+{% extends "webpage/base.html" %}
+{% block content %}
+<!-- Launch modal on page load http://stackoverflow.com/questions/10233550/launch-bootstrap-modal-on-page-load -->
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm delete</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h4>
+                        Are you sure you want to delete the {{ object.get_classname }}:<br />
+                        <strong>{{ object }}</strong> ?
+                    </h4>
+                    <input  class="btn btn-danger" type="submit" value="Yes, I want to delete" />
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock content %}
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(window).load(function(){
+            $('#myModal').modal('show');
+        });
+    </script>
+{% endblock scripts %}

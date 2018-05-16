@@ -1,0 +1,74 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+   /* font-family: 'Libre Franklin', sans-serif;
+    padding-top: 70px;*/
+}
+
+/*remove round corners everywhere*/
+/** {
+  border-radius: 0 !important;
+}*/
+
+header {
+    flex: 0 0 auto;
+}
+
+.main-content{
+    flex: 1 0 auto;
+}
+
+footer {
+    flex: 0 0 auto;
+    left: 0;
+    right: 0;
+    margin-top: 20px;
+    /*background-color: #f8f8f8;
+    padding: 20px;   
+    width: 100%;
+    margin-top: 30px;*/
+}
+
+/*custom acdh logo css*/
+
+#acdh-logo {
+    width: 25%;
+    height: auto;
+    padding: 10px 0 10px 0;
+}
+
+#github-logo {
+    width: 10%;
+    height: auto;
+    padding: 10px 0 10px 0;
+}
+
+
+@media (max-width: 768px) {
+    #acdh-logo, #orea-logo {
+        width: 15%;
+    }
+    #github-logo {
+        width: 7%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1105px) {
+    .navbar-right {
+        float: none !important;
+    }
+}
+
+/*Button's text is all in caps and bold. When adding html markup text should be all in lowercase. */
+.btn {
+   /* font-weight: bold;
+    font-variant: small-caps;*/
+    white-space: normal;
+    margin-bottom: 10px;
+}
+
