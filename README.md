@@ -1,18 +1,16 @@
-[![DOI](https://zenodo.org/badge/95352230.svg)](https://zenodo.org/badge/latestdoi/95352230)
-
-# Django Base Project
+# HistoGIS
 
 ## About
 
-As the name suggests, this is a basic Django project. The idea of this base project is mainly to bootstrap the web application development process through setting up such a Django Base Project which already provides a couple of Django apps providing quite generic functionalities needed for building web application bound to the Digital Humanities Domain.
+HistoGIS is a Geographical Information System, workbench and repository to retrieve, collect, create, enrich and preserve historical temporalized spatial data sets.
+HistoGIS is based upon django, geodjango and [djangobaseproject](https://github.com/acdh-oeaw/djangobaseproject)
+
 
 ## Install
 
 1. Download or clone this repository.
-2. Rename the root folder of this project `histogis` and the `histogis` folder in your projects root folder to the name chosen for your new project (e.g. to `mynewproject`).
-3. In all files in the project directory, rename `histogis` to the name chosen for your new project. (Use `Find and Replace All` feature provided by your code editor.)
-4. Adapt the information in `webpage/metadata.py` according to your needs.
-5. Create and activate a virtual environment and run `pip install -r requirements.txt`.
+2. Adapt the information in `webpage/metadata.py` according to your needs.
+3. Create and activate a virtual environment and run `pip install -r requirements.txt`.
 
 ## First steps
 
@@ -25,10 +23,6 @@ For development just append `--settings={nameOfYouProject}.settings.dev` to the 
 ### Jupyter notebook
 
 In case you want to use [Jupyter Notebook and Django-Extensions](https://andrewbrookins.com/python/using-ipython-notebook-with-django/) use the `requirements_dev.txt` for your virtual environment.
-
-## Next steps
-
-Build your custom awesome Web App.
 
 ## Tests
 
