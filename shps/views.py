@@ -56,7 +56,7 @@ class TempSpatialListView(GenericListView):
 
 class TempSpatialDetailView(DetailView):
     model = TempSpatial
-    template_name = 'shapes/assignment_detail.html'
+    template_name = 'shps/shape_detail.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

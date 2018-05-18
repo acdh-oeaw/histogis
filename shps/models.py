@@ -80,7 +80,7 @@ class TempSpatial(IdProvider):
     def get_geojson(self):
         geojson = serialize(
             'geojson', TempSpatial.objects.filter(id=self.id),
-            geometry_field='polygon',
+            geometry_field='geom',
             fields=('name', 'start_date', )
         )
         return geojson
