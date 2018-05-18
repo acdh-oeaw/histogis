@@ -1,0 +1,307 @@
+{% extends "webpage/base.html" %}
+{% load staticfiles %}
+{% load leaflet_tags %}
+{% load webpage_extras %}
+{% load archiv_extras %}
+{% block title %}Archaelogical Entity {{ object.id }}{% endblock %}
+{% block scriptHeader %}
+    {% leaflet_js %}
+    {% leaflet_css %}
+{% endblock %}
+{% block content %}
+<style>
+    .leaflet-container {  /* all maps */
+        width:  100%;
+        height: 800px;
+    }
+</style>
+<!-- <div class="container"> -->
+<div class="row">
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-2">
+                    {% if object.get_prev %}
+                        <h2>
+                            <a href="{% url 'archiv:archent_detail' pk=object.get_prev %}">
+                                <i class="fas fa-chevron-left" title="previous"></i>
+                            </a>
+                        </h2>
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <h1 style="text-align: center;">
+                        <small>Archaelogical Entity:</small> {{ object }}
+                        {% if user.is_authenticated %}
+                            <small>
+                                <a href="{% url 'archiv:archent_edit' pk=object.id %}">
+                                    <i class="far fa-edit" title="edit"></i>
+                                </a>
+                            </small>
+                            |
+                            <small>
+                                <a href="{% url 'archiv:archent_delete' pk=object.id %}">
+                                    <i class="far fa-trash-alt" title="delete"></i>
+                                </a>
+                            </small>
+                            |
+                            <small>
+                                <a href="{% url 'arche:resource_copy' %}?app-name=archiv&id={{ object.id }}&class-name=archent" class="confirmation">
+                                    <i class="far fa-copy" aria-hidden="true" title="copy object"></i>
+                                </a>
+                            </small>
+                        {% endif %}
+                    </h1>
+                    {% if user.is_authenticated %}
+                        {% class_dict as classes %}
+                        <form action="{% url 'archiv:copy_poly' %}">
+                            <div class="form-group">
+                                <strong>Copy polygon to:</strong>
+                                <select class="custom-select" name="target-class" id="target-class">
+                                    {% for key, value in classes.items %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input id="current-id" name="current-id" type="hidden" value="{{ object.id }}">
+                                <input id="current-class" name="current-class" type="hidden" value="ArchEnt">
+                            </div>
+                            <button type="submit" class="btn btn-primary confirmation">Copy</button>
+                        </form>
+                    {% endif %}
+                </div>
+            <div class="col-md-2">
+                <h2>
+                    {% if object.get_next %}
+                    <a href="{% url 'archiv:archent_detail' pk=object.get_next %}" style="float:right">
+                        <i class="fas fa-chevron-right" title="next"></i>
+                    </a>
+                </h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+                <legend>Basic Information</legend>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>
+                            {% get_verbose_name archent "site_id" %}
+                        </th>
+                        <td>
+                            <a href="{{ object.site_id.get_absolute_url }}">
+                                {{ object.site_id }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {% get_verbose_name archent "name" %}
+                        </th>
+                        <td>
+                            {{ object.name }}
+                        </td>
+                    </tr>
+                    {% if object.ent_type %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "ent_type" %}
+                            </th>
+                            <td>
+                                {{ object.ent_type }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.burial_type %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "burial_type" %}
+                            </th>
+                            <td>
+                                {{ object.burial_type }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.settlement_fortification.all %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "settlement_fortification" %}
+                            </th>
+                            <td>
+                                {% for x in object.settlement_fortification.all %}
+                                    <li>
+                                        {{x }}
+                                    </li>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.settlement_occupation %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "settlement_occupation" %}
+                            </th>
+                            <td>
+                                {{ object.settlement_occupation }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.topography.all %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "topography" %}
+                            </th>
+                            <td>
+                                {% for x in object.topography.all %}
+                                    <li>
+                                        {{x }}
+                                    </li>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.alt_name.all %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name iadbaseclass "alt_name" %}
+                            </th>
+                            <td>
+                                {% for x in object.alt_name.all %}
+                                    <li>
+                                        {{x }}
+                                    </li>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.alt_id %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "alt_id" %}
+                            </th>
+                            <td>
+                                {{ object.alt_id }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.description %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "description" %}
+                            </th>
+                            <td>
+                                {{ object.description }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.comment %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "comment" %}
+                            </th>
+                            <td>
+                                {{ object.comment }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.public %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "public" %}
+                            </th>
+                            <td>
+                                {{ object.public }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.literature.all %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "literature" %}
+                            </th>
+                            <td>
+                                {% for x in object.literature.all %}
+                                    <li>
+                                        {{ x }}
+                                    </li>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.period.all %}
+                        <tr>
+                            <th>
+                                {% get_verbose_name archent "period" %}
+                            </th>
+                            <td>
+                                {% for x in object.period.all %}
+                                    <li>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                    </li>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+                {% if object.type_certainty or  object.dating_certainty or object.location_certainty %}
+                <legend>Certainty</legend>
+                <table class="table table-bordered table-hover">
+                {% if object.type_certainty %}
+                    <tr>
+                        <th>
+                            {% get_verbose_name archent "type_certainty" %}
+                        </th>
+                        <td>
+                            {{ object.type_certainty }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if object.dating_certainty %}
+                    <tr>
+                        <th>
+                            {% get_verbose_name archent "dating_certainty" %}
+                        </th>
+                        <td>
+                            {{ object.dating_certainty }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if object.location_certainty %}
+                    <tr>
+                        <th>
+                            {% get_verbose_name archent "location_certainty" %}
+                        </th>
+                        <td>
+                            {{ object.location_certainty }}
+                        </td>
+                    </tr>
+                {% endif %}
+                </table>
+                {% endif %}
+    </div>
+</div>
+</div>
+<div class="col-md-6">
+    {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+    <legend>GeoJSON</legend>
+    {{ object.get_geojson }}
+</div>
+</div><!--main row-->
+<!-- </div> -->
+<script type="text/javascript">
+    function map_init_basic (map, options) {
+        var geojsonFeature = {{ object.get_geojson|safe }};
+        L.geoJson(geojsonFeature).addTo(map);
+        {% if object.get_site_geojson %}
+            var siteGeojsonFeature = {{ object.get_site_geojson|safe }};
+
+            L.geoJson(siteGeojsonFeature).setStyle({fillColor: 'green'}).addTo(map);
+        {% endif %}
+    }
+</script>
+<script type="text/javascript">
+    $('.confirmation').on('click', function () {
+        return confirm('Are you sure?');
+    });
+</script>
+{% endblock %}

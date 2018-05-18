@@ -1,0 +1,95 @@
+{% extends "archiv/create_base_template.html" %}
+{% load browsing_extras %}
+{% block title %}
+    Create/Edit {{ class_name }}
+{% endblock %}
+
+{% block objectType %}
+    <h1>Create/Edit
+        {% if docstring %}
+            <abbr title="{{ docstring}}">{{ class_name }}</abbr>
+        {% else %}
+            {{ class_name }}
+        {% endif %}
+    </h1>
+    {% block aditionaljs %}
+    <style>
+
+       .hidden_burial {
+           display:none;
+       }
+
+       .hidden_settlement {
+           display:none;
+       }
+   </style>
+
+    <script type="text/javascript">
+        $('#id_finds_type').ready(function(){
+            var selected_option =  $("#id_ent_type option:selected").text()
+            console.log(selected_option);
+            if (selected_option.includes('settlement')){
+                $( ".hidden_settlement" ).css("display", 'inline');
+            } else if (selected_option.includes('funerary')) {
+                $( ".hidden_burial" ).css("display", 'inline');
+            } else {
+
+            }
+
+        });
+        $("#id_ent_type").change(function() {
+            var selectedText = $("#id_ent_type option:selected").text();
+            var burials = $( ".hidden_burial" );
+            var settlements =  $( ".hidden_settlement" )
+            burials.css("display", "none");
+            settlements.css("display", "none");
+            console.log(selectedText)
+            if (selectedText.includes('funerary site')) {
+                burials.toggle();
+                settlements.css("display", "none")
+            } else if (selectedText.includes('settlement')) {
+                settlements.toggle();
+                burials.css("display", "none");
+            } else {
+                burials.css("display", "none");
+                settlements.css("display", "none");
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        var SiteStyle = {
+            "color": "#ff7800",
+            "weight": 2,
+            "opacity": 1,
+            "fillOpacity": 0,
+        };
+    </script>
+        {% if site_poly %}
+                <script type="text/javascript">
+                    window.addEventListener("map:init", function (e) {
+                        var detail = e.detail;
+                        var siteGeojsonFeature = {{ site_poly|safe }};
+                        L.geoJson(siteGeojsonFeature, {style: SiteStyle}).addTo(detail.map);
+                    }, false);
+                </script>
+            {% else %}
+                <script>
+                    window.addEventListener("map:init", function (e) {
+                        var detail = e.detail;
+                        var map = detail.map;
+                        var layerGroup = L.layerGroup().addTo(map);
+                        $("#id_site_id").change(function() {
+                            var url = "/api/sites/" + this.value + "/?format=json";
+                            $.getJSON(url, function(data) {
+                                layerGroup.clearLayers();
+                                var newLayer = L.geoJson(data, {style: SiteStyle});
+                                newLayer.addTo(layerGroup);
+                            });
+                        });
+                    }, false);
+                </script>
+        {% endif %}
+    {% endblock %}
+
+{% endblock %}

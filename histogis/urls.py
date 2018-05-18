@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^vocabs/', include('vocabs.urls', namespace='vocabs')),
     url(r'^vocabs-ac/', include('vocabs.dal_urls', namespace='vocabs-ac')),
     url(r'^', include('webpage.urls', namespace='webpage')),
+    url(r'^shapes/', include('shps.urls', namespace='shapes')),
 ]

@@ -1,0 +1,34 @@
+{% extends "webpage/base.html" %}
+{% block title %}{% endblock %}
+{% load leaflet_tags %}
+{% load crispy_forms_tags %}
+{% block scriptHeader %}
+    {% leaflet_js plugins="forms" %}
+    {% leaflet_css plugins="forms" %}
+    <style>
+
+        .leaflet-container {  /* all maps */
+            width:  100%;
+            height: 800px;
+        }
+        label { font-weight: bold; }
+
+</style>
+{% endblock %}
+{% block content %}
+
+<!-- <div class="container"> -->
+
+    <div class="card">
+        <div class="card-header">
+            {% block objectType %} {% endblock %}
+        </div>
+        <div class="card-body">
+             {% crispy form %}
+        </div>
+    </div>
+    
+    {% block aditionaljs %}{% endblock %}
+
+
+{% endblock content %}
