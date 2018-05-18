@@ -5,6 +5,12 @@ from idprovider.models import IdProvider
 
 from vocabs.models import SkosConcept
 
+DATE_ACCURACY = (
+    ('Y', 'Year'),
+    ('YM', 'Month'),
+    ('DMY', 'Day')
+)
+
 
 class Source(models.Model):
     name = models.CharField(max_length=255)
@@ -52,23 +58,23 @@ class TempSpatial(IdProvider):
     name = models.CharField(
         blank=True, null=True, max_length=250, verbose_name="The objects name"
     )
-    start_date = models.DateField(
-        blank=True, null=True,
-        verbose_name="Start Date.",
-        help_text="Earliest date this entity captures"
-    )
-    end_date = models.DateField(
-        blank=True, null=True,
-        verbose_name="End Date.",
-        help_text="Latest date this entity captures"
-    )
     source = models.ForeignKey(
         Source, null=True, blank=True, related_name="source_of",
         verbose_name="Source",
         help_text="The source of this data.",
         on_delete=models.SET_NULL
     )
+    part_of = models.ForeignKey(
+        'self', blank=True,
+        null=True, related_name='has_children',
+        on_delete=models.SET_NULL
+        )
     geom = models.MultiPolygonField(blank=True, null=True)
+    administrative_unit = models.ForeignKey(
+        SkosConcept, blank=True,
+        null=True, related_name="adm_unit",
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         ordering = ['id']
@@ -105,16 +111,6 @@ class TempStatialRel(IdProvider):
         SkosConcept, blank=True,
         null=True, related_name="tmp_spatial_rel_relation",
         on_delete=models.SET_NULL
-    )
-    start_date = models.DateField(
-        blank=True, null=True,
-        verbose_name="Start Date.",
-        help_text="Earliest date this relation describes"
-    )
-    end_date = models.DateField(
-        blank=True, null=True,
-        verbose_name="End Date.",
-        help_text="Latest date this relation describes"
     )
 
     def __str__(self):
