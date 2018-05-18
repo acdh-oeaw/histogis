@@ -66,12 +66,12 @@ class TempSpatial(IdProvider):
     )
     part_of = models.ForeignKey(
         'self', related_name='has_children',
-        on_delete=models.SET_NULL, null=True
+        on_delete=models.SET_NULL, null=True, blank=True
         )
     geom = models.MultiPolygonField(blank=True, null=True)
     administrative_unit = models.ForeignKey(
         SkosConcept, null=True, related_name="adm_unit",
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL, blank=True
     )
 
     class Meta:
