@@ -56,7 +56,7 @@ class TempSpatial(IdProvider):
     """A class for temporalized spatial objects"""
 
     name = models.CharField(
-        blank=True, null=True, max_length=250, verbose_name="The objects name"
+         max_length=250, verbose_name="The objects name"
     )
     source = models.ForeignKey(
         Source, null=True, blank=True, related_name="source_of",
@@ -65,14 +65,12 @@ class TempSpatial(IdProvider):
         on_delete=models.SET_NULL
     )
     part_of = models.ForeignKey(
-        'self', blank=True,
-        null=True, related_name='has_children',
-        on_delete=models.SET_NULL
+        'self', related_name='has_children',
+        on_delete=models.SET_NULL, null=True
         )
     geom = models.MultiPolygonField(blank=True, null=True)
     administrative_unit = models.ForeignKey(
-        SkosConcept, blank=True,
-        null=True, related_name="adm_unit",
+        SkosConcept, null=True, related_name="adm_unit",
         on_delete=models.SET_NULL
     )
 
@@ -98,17 +96,17 @@ class TempStatialRel(IdProvider):
     """ Describes a temporalized relation between two TempSpatial objects """
 
     instance_a = models.ForeignKey(
-        TempSpatial, blank=True, null=True,
+        TempSpatial, null=True,
         related_name='related_instance_a',
         on_delete=models.SET_NULL
     )
     instance_b = models.ForeignKey(
-        TempSpatial, blank=True,
+        TempSpatial,
         null=True, related_name='related_instance_b',
         on_delete=models.SET_NULL
     )
     relation_type = models.ForeignKey(
-        SkosConcept, blank=True,
+        SkosConcept,
         null=True, related_name="tmp_spatial_rel_relation",
         on_delete=models.SET_NULL
     )
