@@ -97,7 +97,10 @@
                         </a>
                         {% endif %}
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">dummy</a>
+                            {% nav_menu app='shps' as links %}
+                            {% for x in links %}
+                                <a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a>
+                            {% endfor %}
                         </div>
                     </li>
                     <li class="nav-item dropdown">

@@ -85,6 +85,31 @@ class TempSpatial(IdProvider):
         )
         return geojson
 
+    def get_absolute_url(self):
+        return reverse(
+            'shapes:shape_detail', kwargs={'pk': self.id}
+        )
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('shapes:browse_shapes')
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse('shapes:shape_create')
+
+    def get_next(self):
+        next = TempSpatial.objects.filter(id__gt=self.id)
+        if next:
+            return next.first().id
+        return False
+
+    def get_prev(self):
+        prev = TempSpatial.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return prev.first().id
+        return False
+
     def __str__(self):
         if self.name:
             return "{}".format(self.name)
