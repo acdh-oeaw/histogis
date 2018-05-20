@@ -67,6 +67,7 @@ class TempSpatialCreate(BaseCreateView):
 
     model = TempSpatial
     form_class = TempSpatialForm
+    template_name = 'shps/generic_create.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -77,6 +78,7 @@ class TempSpatialUpdate(BaseUpdateView):
 
     model = TempSpatial
     form_class = TempSpatialForm
+    template_name = 'shps/generic_create.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

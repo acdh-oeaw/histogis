@@ -2,6 +2,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit,  Layout, Fieldset, Div, MultiField, HTML
 from crispy_forms.bootstrap import Accordion, AccordionGroup
+from leaflet.forms.widgets import LeafletWidget
 
 from .models import TempSpatial
 
@@ -10,6 +11,9 @@ class TempSpatialForm(forms.ModelForm):
     class Meta:
         model = TempSpatial
         fields = "__all__"
+        widgets = {
+            'geom': LeafletWidget(),
+        }
 
     def __init__(self, *args, **kwargs):
         super(TempSpatialForm, self).__init__(*args, **kwargs)
