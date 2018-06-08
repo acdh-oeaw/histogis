@@ -73,6 +73,7 @@ class TempSpatial(IdProvider):
         SkosConcept, null=True, related_name="adm_unit",
         on_delete=models.SET_NULL, blank=True
     )
+    orig_id = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         ordering = ['id']
