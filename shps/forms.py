@@ -4,7 +4,46 @@ from crispy_forms.layout import Submit,  Layout, Fieldset, Div, MultiField, HTML
 from crispy_forms.bootstrap import Accordion, AccordionGroup
 from leaflet.forms.widgets import LeafletWidget
 
-from .models import TempSpatial
+from .models import TempSpatial, Source
+
+
+class SourceForm(forms.ModelForm):
+    class Meta:
+        model = Source
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(SourceForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class SourceFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(SourceFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'name',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    'description',
+                    css_id="more"
+                    ),
+                )
+            )
 
 
 class TempSpatialForm(forms.ModelForm):
@@ -42,7 +81,7 @@ class TempSpatialFilterFormHelper(FormHelper):
             Accordion(
                 AccordionGroup(
                     'Advanced search',
-                    'description',
+                    'administrative_unit',
                     css_id="more"
                     ),
                 )

@@ -13,4 +13,13 @@ urlpatterns = [
         name='shape_edit'),
     url(r'^shape/create/$', views.TempSpatialCreate.as_view(),
         name='shape_create'),
+    url(r'^sources/$', views.SourceListView.as_view(), name='browse_sources'),
+    url(r'^source/detail/(?P<pk>[0-9]+)$', views.SourceDetailView.as_view(),
+        name='source_detail'),
+    url(r'^source/delete/(?P<pk>[0-9]+)$', views.SourceDelete.as_view(),
+        name='source_delete'),
+    url(r'^source/edit/(?P<pk>[0-9]+)$', views.SourceUpdate.as_view(),
+        name='source_edit'),
+    url(r'^source/create/$', views.SourceCreate.as_view(),
+        name='source_create'),
 ]

@@ -13,7 +13,9 @@ DATE_ACCURACY = (
 
 
 class Source(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(
+        max_length=255, verbose_name="Name",
+        help_text="Name of the source")
     description = models.TextField(
         blank=True, null=True,
         verbose_name="Description",
@@ -24,11 +26,32 @@ class Source(models.Model):
         verbose_name="Quote",
         help_text="How to quote."
     )
-    original_url = models.URLField(blank=True, null=True)
-    downloaded = models.DateTimeField(blank=True, null=True)
+    original_url = models.URLField(
+        blank=True, null=True,
+        verbose_name="URL",
+        help_text="URL from where the data was downloaded"
+        )
+    downloaded = models.DateTimeField(
+        blank=True, null=True,
+        verbose_name="Date of data download",
+        help_text="When was the data downloaded"
+    )
 
     class Meta:
         ordering = ['id']
+
+    def get_absolute_url(self):
+        return reverse(
+            'shapes:source_detail', kwargs={'pk': self.id}
+        )
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('shapes:browse_sources')
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse('shapes:source_create')
 
     def get_next(self):
         next = Source.objects.filter(id__gt=self.id)

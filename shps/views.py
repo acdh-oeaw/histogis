@@ -93,3 +93,83 @@ class TempSpatialDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TempSpatialDelete, self).dispatch(*args, **kwargs)
+
+
+class SourceListView(GenericListView):
+    model = Source
+    table_class = SourceTable
+    filter_class = SourceListFilter
+    formhelper_class = SourceFilterFormHelper
+    init_columns = [
+        'id',
+        'name',
+        'part_of',
+    ]
+
+    def get_all_cols(self):
+        all_cols = list(self.table_class.base_columns.keys())
+        return all_cols
+
+    def get_context_data(self, **kwargs):
+        context = super(SourceListView, self).get_context_data()
+        context[self.context_filter_name] = self.filter
+        togglable_colums = [x for x in self.get_all_cols() if x not in self.init_columns]
+        context['togglable_colums'] = togglable_colums
+        return context
+
+    def get_table(self, **kwargs):
+        table = super(GenericListView, self).get_table()
+        RequestConfig(self.request, paginate={
+            'page': 1, 'per_page': self.paginate_by
+        }).configure(table)
+        default_cols = self.init_columns
+        all_cols = self.get_all_cols()
+        selected_cols = self.request.GET.getlist("columns") + default_cols
+        exclude_vals = [x for x in all_cols if x not in selected_cols]
+        table.exclude = exclude_vals
+        return table
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SourceListView, self).dispatch(*args, **kwargs)
+
+
+class SourceDetailView(DetailView):
+    model = Source
+    template_name = 'shps/source_detail.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SourceDetailView, self).dispatch(*args, **kwargs)
+
+
+class SourceCreate(BaseCreateView):
+
+    model = Source
+    form_class = SourceForm
+    template_name = 'shps/generic_create.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SourceCreate, self).dispatch(*args, **kwargs)
+
+
+class SourceUpdate(BaseUpdateView):
+
+    model = Source
+    form_class = SourceForm
+    template_name = 'shps/generic_create.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SourceUpdate, self).dispatch(*args, **kwargs)
+
+
+class SourceDelete(DeleteView):
+    model = Source
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('shapes:browse_shapes')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SourceDelete, self).dispatch(*args, **kwargs)
