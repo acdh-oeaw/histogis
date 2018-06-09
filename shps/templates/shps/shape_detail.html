@@ -63,20 +63,18 @@
             <table class="table table-bordered table-hover">
                 <tr>
                     <th>
-                        {% get_verbose_name tempspatial "source" %}
-                    </th>
-                    <td>
-                        <a href="{{ object.site_id.get_absolute_url }}">
-                            {{ object.site_id }}
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         {% get_verbose_name tempspatial "name" %}
                     </th>
                     <td>
                         {{ object.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {% get_verbose_name tempspatial "administrative_unit" %}
+                    </th>
+                    <td>
+                        {{ object.administrative_unit }}
                     </td>
                 </tr>
                 <tr>
@@ -87,7 +85,49 @@
                         {{ object.start_date }} - {{ object.end_date }}
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        Date Accuracy
+                    </th>
+                    <td>
+                        {{ object.date_accuracy }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {% get_verbose_name tempspatial "source" %}
+                    </th>
+                    <td>
+                        <a href="{{ object.source.get_absolute_url }}">
+                            {{ object.source }}
+                        </a>
+                    </td>
+                </tr>
             </table>
+            {% if object.part_of %}
+                <legend>
+                    part of <a href="{{ object.part_of.get_absolute_url }}">{{ object.part_of }}</a>
+                </legend>
+            {% endif %}
+            {% if object.has_children.all %}
+                <legend>
+                    superunit of
+                </legend>
+                <table class="table table-bordered table-hover">
+                    {% for x in object.has_children.all %}
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <td>
+                                <a href="{{ x.get_absolute_url }}">
+                                    {{ x }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
         </div>
 </div>
 </div>

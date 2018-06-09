@@ -154,11 +154,11 @@
 </header>
 <section class="main-content">
     <div id="content">
+        {% block content %}{% endblock %}
         <div class="alert alert-warning alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Warning!</strong> Draft Version.
         </div>
-        {% block content %}{% endblock %}
     </div>
 </section>
 <footer class="main-footer">
