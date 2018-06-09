@@ -8,7 +8,6 @@ from django.utils.text import slugify
 from django.utils.functional import cached_property
 
 
-
 try:
     DEFAULT_NAMESPACE = settings.VOCABS_SETTINGS['default_nsgg']
 except KeyError:

@@ -19,6 +19,19 @@
 <div class="col-md-6">
     <div class="card">
         <div class="card-header">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    {% for x in object.fetch_hierarchy %}
+                        {% if forloop.last %}
+                            <li class="breadcrumb-item active" aria-current="page">{{ x }}</li>
+                        {% else %}
+                            <li class="breadcrumb-item active">
+                                <a href="{{x.get_absolute_url }}">{{ x }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+              </ol>
+            </nav>
             <div class="row">
                 <div class="col-md-2">
                     {% if object.get_prev %}
@@ -104,11 +117,6 @@
                     </td>
                 </tr>
             </table>
-            {% if object.part_of %}
-                <legend>
-                    part of <a href="{{ object.part_of.get_absolute_url }}">{{ object.part_of }}</a>
-                </legend>
-            {% endif %}
             {% if object.has_children.all %}
                 <legend>
                     superunit of

@@ -134,6 +134,21 @@ class TempSpatial(IdProvider):
             return prev.first().id
         return False
 
+    def fetch_hierarchy(self):
+        hierarchy = [self]
+        while self.part_of:
+            self = self.part_of
+            hierarchy.append(self)
+        return list(reversed(hierarchy))
+
+    def print_hierarchy(self):
+        hierarchy_string = ""
+        hierarchy = self.fetch_hierarchy()
+        separator = " >> "
+        for x in hierarchy:
+            hierarchy_string = hierarchy_string + separator + x.name
+        return hierarchy_string[4:]
+
     def __str__(self):
         if self.name:
             return "{}".format(self.name)
