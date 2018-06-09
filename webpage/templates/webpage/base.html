@@ -117,6 +117,7 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Link to some API</a>
+                            <a class="dropdown-item" href="{% url 'shapes:where_was' %}">Where was Point XY in Year Z?</a>
                         </div>
                     </li>
                     {% if user.is_authenticated %}

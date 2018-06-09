@@ -1,0 +1,50 @@
+{% extends "webpage/base.html" %}
+{% block title %}{% endblock %}
+{% load leaflet_tags %}
+{% load crispy_forms_tags %}
+{% block scriptHeader %}
+    {% leaflet_js %}
+    {% leaflet_css %}
+{% endblock %}
+{% block content %}
+<style>
+    .leaflet-container {  /* all maps */
+        width:  100%;
+        height: 400px;
+    }
+</style>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-header">
+                        <h1>Temporalized Spatial Query</h1>
+                    </div>
+                    {% crispy form %}
+                    {% if answer %}
+                        {% for x in answer %}
+                            <li>
+                                <a href="{{ x.get_absolute_url }}"/>{{ x }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% if answer %}
+                    <div class="col-md-6">
+                        {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function map_init_basic (map, options) {
+            {% for x in answer %}
+                var geojsonFeature = {{ x.get_geojson|safe }};
+                var geojsonLayer = L.geoJson(geojsonFeature).addTo(map);
+            {% endfor %}
+            map.fitBounds(geojsonLayer.getBounds());
+        }
+    </script>
+
+{% endblock content %}

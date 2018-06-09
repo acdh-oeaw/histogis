@@ -4,6 +4,7 @@ from . import views
 app_name = 'shps'
 
 urlpatterns = [
+    url(r'^where-was/$', views.WhereWas.as_view(), name='where_was'),
     url(r'^shapes/$', views.TempSpatialListView.as_view(), name='browse_shapes'),
     url(r'^shape/detail/(?P<pk>[0-9]+)$', views.TempSpatialDetailView.as_view(),
         name='shape_detail'),

@@ -3,7 +3,9 @@ from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.decorators import login_required
+from django.contrib.gis.geos import Point
 from django.utils.decorators import method_decorator
+from django.views.generic.edit import FormView
 
 from django_tables2 import RequestConfig
 
@@ -13,6 +15,25 @@ from .models import *
 from .tables import *
 from .filters import *
 from .forms import *
+
+
+class WhereWas(FormView):
+    template_name = 'shps/where_was.html'
+    form_class = WhereWasForm
+    success_url = '.'
+
+    def form_valid(self, form, **kwargs):
+        context = super(WhereWas, self).get_context_data(**kwargs)
+        cd = form.cleaned_data
+        pnt = Point(cd['lat'], cd['lng'])
+        qs = TempSpatial.objects.filter(geom__contains=pnt)
+        if qs:
+            context['answer'] = qs
+            context['no_children'] = qs.exclude(has_children__isnull=False)
+        else:
+            context['answer'] = "No Match"
+        context['point'] = pnt
+        return render(self.request, self.template_name, context)
 
 
 class TempSpatialListView(GenericListView):

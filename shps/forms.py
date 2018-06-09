@@ -7,6 +7,22 @@ from leaflet.forms.widgets import LeafletWidget
 from .models import TempSpatial, Source
 
 
+class WhereWasForm(forms.Form):
+    lat = forms.FloatField(required=True)
+    lng = forms.FloatField(required=True)
+    not_before = forms.DateField(required=False)
+    not_after = forms.DateField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(WhereWasForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'submit'),)
+
+
 class SourceForm(forms.ModelForm):
     class Meta:
         model = Source
