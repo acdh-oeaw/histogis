@@ -150,13 +150,33 @@
 </div>
 </div>
 <script type="text/javascript">
+
+    function createTableRows(propertyObject){
+        var returnTable = "<table class='table table-hover table-striped table-condensed'>";
+        var linkToObject = "#";
+        returnTable += "<tr><td>linkToObject</td><td><a href='"+linkToObject+"'>follow link</a></td></tr>";
+        for (var [key, value] of Object.entries(propertyObject)) {
+            returnTable += "<tr><td>"+key+"</td><td>"+value+"</td></tr>";
+        };
+        return returnTable += "</table>";
+    };
+
+    function onEachFeature(feature, layer) {
+        if (feature.properties) {
+            var popupContent = createTableRows(feature.properties);
+            layer.bindPopup(popupContent);
+        }
+    };
+
     function map_init_basic (map, options) {
         $.ajax({
             dataType: "json",
             url: "{% url 'tempspatial-detail' pk=object.id %}?format=json",
             success: function(data) {
                 var geojsonFeature = data;
-                var geojsonLayer = L.geoJson(geojsonFeature).addTo(map);
+                var geojsonLayer = L.geoJson(geojsonFeature, {
+                    onEachFeature: onEachFeature
+                }).addTo(map);
                 map.fitBounds(geojsonLayer.getBounds());
             }
             }).error(function() {});
