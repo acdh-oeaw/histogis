@@ -71,9 +71,6 @@ class Source(models.Model):
         else:
             return "Source ID: {}".format(self.name)
 
-    # def get_absolute_url(self):
-    #     return reverse('world:source_detail', kwargs={'pk': self.id})
-
 
 class TempSpatial(IdProvider):
     """A class for temporalized spatial objects"""
@@ -105,7 +102,9 @@ class TempSpatial(IdProvider):
         geojson = serialize(
             'geojson', TempSpatial.objects.filter(id=self.id),
             geometry_field='geom',
-            fields=('name', 'start_date', )
+            fields=(
+                'name',
+            )
         )
         return geojson
 
