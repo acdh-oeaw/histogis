@@ -153,7 +153,7 @@
     function map_init_basic (map, options) {
         $.ajax({
             dataType: "json",
-            url: "{% url 'tempspatial-list' pk=object.id %}?format=json",
+            url: "{% url 'tempspatial-detail' pk=object.id %}?format=json",
             success: function(data) {
                 var geojsonFeature = data;
                 var geojsonLayer = L.geoJson(geojsonFeature).addTo(map);
