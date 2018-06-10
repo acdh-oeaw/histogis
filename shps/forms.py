@@ -97,6 +97,8 @@ class TempSpatialFilterFormHelper(FormHelper):
             Accordion(
                 AccordionGroup(
                     'Advanced search',
+                    'start_date',
+                    'end_date',
                     'administrative_unit',
                     css_id="more"
                     ),

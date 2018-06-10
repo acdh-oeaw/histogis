@@ -21,9 +21,17 @@ class SourceListFilter(django_filters.FilterSet):
 class TempSpatialListFilter(GeoFilterSet):
     name = django_filters.CharFilter(
         lookup_expr='icontains',
-        help_text=TempSpatial._meta.get_field('name').help_text,
+        help_text='Fuzzy search (icontains)',
         label=TempSpatial._meta.get_field('name').verbose_name
         )
+    start_date = django_filters.DateFromToRangeFilter(
+        label="Start Date",
+        help_text="Start Date not before - not after."
+    )
+    end_date = django_filters.DateFromToRangeFilter(
+        label="End Date",
+        help_text="End Date not before - not after."
+    )
     geom = GeometryFilter(
         name='geom', lookup_expr='contains',
     )
