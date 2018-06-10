@@ -1,5 +1,6 @@
 import django_filters
 from rest_framework_gis.filterset import GeoFilterSet
+from django_filters.rest_framework import FilterSet
 from rest_framework_gis.filters import GeometryFilter
 
 from .models import TempSpatial, Source

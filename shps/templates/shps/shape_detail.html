@@ -45,7 +45,13 @@
                 <div class="col-md-8">
                     <h2 style="text-align: center;">
                         {{ object }}
+                        <small>
+                            <a href="{% url 'tempspatial-detail' pk=object.id %}?format=json">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </small>
                         {% if user.is_authenticated %}
+                            |
                             <small>
                                 <a href="{% url 'shapes:shape_edit' pk=object.id %}">
                                     <i class="far fa-edit" title="edit"></i>
@@ -141,15 +147,19 @@
 </div>
 <div class="col-md-6">
     {% leaflet_map "yourmap" callback="window.map_init_basic" %}
-    <legend>GeoJSON</legend>
-    {{ object.get_geojson }}
 </div>
 </div>
 <script type="text/javascript">
     function map_init_basic (map, options) {
-        var geojsonFeature = {{ object.get_geojson|safe }};
-        var geojsonLayer = L.geoJson(geojsonFeature).addTo(map);
-        map.fitBounds(geojsonLayer.getBounds());
+        $.ajax({
+            dataType: "json",
+            url: "{% url 'tempspatial-list' pk=object.id %}?format=json",
+            success: function(data) {
+                var geojsonFeature = data;
+                var geojsonLayer = L.geoJson(geojsonFeature).addTo(map);
+                map.fitBounds(geojsonLayer.getBounds());
+            }
+            }).error(function() {});
     }
 </script>
 {% endblock %}
