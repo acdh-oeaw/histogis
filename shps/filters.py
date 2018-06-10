@@ -25,8 +25,6 @@ class TempSpatialListFilter(GeoFilterSet):
         )
     geom = GeometryFilter(
         name='geom', lookup_expr='contains',
-        help_text=TempSpatial._meta.get_field('geom').help_text,
-        label=TempSpatial._meta.get_field('geom').verbose_name
     )
 
     class Meta:
