@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
+from rest_framework.documentation import include_docs_urls
 from vocabs import api_views
 from shps import api_views as shps_api_views
 
@@ -14,6 +15,7 @@ router.register(r'source', shps_api_views.SourceViewSet)
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
+    url('api-docs/', include_docs_urls(title='HistoGIS-API')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', admin.site.urls),
     url(r'^charts/', include('charts.urls', namespace='charts')),
