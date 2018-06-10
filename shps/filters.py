@@ -1,4 +1,6 @@
 import django_filters
+from rest_framework_gis.filterset import GeoFilterSet
+from rest_framework_gis.filters import GeometryFilter
 
 from .models import TempSpatial, Source
 
@@ -15,13 +17,18 @@ class SourceListFilter(django_filters.FilterSet):
         fields = '__all__'
 
 
-class TempSpatialListFilter(django_filters.FilterSet):
+class TempSpatialListFilter(GeoFilterSet):
     name = django_filters.CharFilter(
         lookup_expr='icontains',
         help_text=TempSpatial._meta.get_field('name').help_text,
         label=TempSpatial._meta.get_field('name').verbose_name
         )
+    geom = GeometryFilter(
+        name='geom', lookup_expr='contains',
+        help_text=TempSpatial._meta.get_field('geom').help_text,
+        label=TempSpatial._meta.get_field('geom').verbose_name
+    )
 
     class Meta:
         model = TempSpatial
-        exclude = ['geom']
+        fields = '__all__'
