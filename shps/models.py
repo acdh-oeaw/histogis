@@ -82,7 +82,7 @@ class TempSpatial(IdProvider):
     """A class for temporalized spatial objects"""
 
     name = models.CharField(
-         max_length=250,
+         max_length=250, blank=True,
          verbose_name="The objects name",
          help_text="Usually the object's contemporary name",
     )
@@ -111,7 +111,7 @@ class TempSpatial(IdProvider):
         on_delete=models.SET_NULL
     )
     geom = models.MultiPolygonField(
-        blank=True, null=True
+        blank=True, null=True, srid=4326
     )
     administrative_unit = models.ForeignKey(
         SkosConcept, null=True, related_name="adm_unit",

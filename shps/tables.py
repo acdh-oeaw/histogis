@@ -4,6 +4,10 @@ from .models import TempSpatial, Source
 
 
 class TempSpatialTable(tables.Table):
+    id = tables.LinkColumn(
+        'shapes:shape_detail',
+        args=[A('pk')], verbose_name='ID'
+    )
     name = tables.LinkColumn(
         'shapes:shape_detail',
         args=[A('pk')], verbose_name='Name'
