@@ -38,3 +38,4 @@ dev_secret.py
 /arche/data/fileList.json
 /histogis/settings/pg_local.py
 /histogis/settings/dev_schloegl.py
+/auth.json

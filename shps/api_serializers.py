@@ -22,9 +22,8 @@ class SourceSerializer(serializers.HyperlinkedModelSerializer):
 class TempSpatialSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
     """ A class to serialize TempSpatial objects as GeoJSON compatible data """
 
-    source_name = serializers.CharField(source='source.name')
-    adm_name = serializers.CharField(source='administrative_unit.pref_label')
-    part_of_name = serializers.CharField(source='part_of.name', default=None)
+    # source_name = serializers.CharField(source='source.name')
+    # adm_name = serializers.CharField(source='administrative_unit.pref_label')
 
     class Meta:
         model = TempSpatial
@@ -32,12 +31,11 @@ class TempSpatialSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedMo
         fields = (
             'id',
             'name',
-            'source',
-            'source_name',
-            'part_of',
-            'part_of_name',
-            'administrative_unit',
-            'adm_name',
+            'alt_name',
+            # 'source',
+            # 'source_name',
+            # 'administrative_unit',
+            # 'adm_name',
             'start_date',
             'end_date',
         )

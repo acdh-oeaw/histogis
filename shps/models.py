@@ -11,6 +11,12 @@ DATE_ACCURACY = (
     ('DMY', 'Day')
 )
 
+QUALITY = (
+    ('red', 'red'),
+    ('yellow', 'yellow'),
+    ('green', 'green'),
+)
+
 
 class Source(models.Model):
     name = models.CharField(
@@ -76,7 +82,27 @@ class TempSpatial(IdProvider):
     """A class for temporalized spatial objects"""
 
     name = models.CharField(
-         max_length=250, verbose_name="The objects name"
+         max_length=250,
+         verbose_name="The objects name",
+         help_text="Usually the object's contemporary name",
+    )
+    alt_name = models.CharField(
+         max_length=500,  blank=True,
+         verbose_name="Alternative Names",
+         help_text="Alternative Names, use '; ' as separator in case of more names"
+    )
+    start_date = models.DateField(
+        verbose_name="Start Date.",
+        help_text="Earliest date this entity captures"
+    )
+    end_date = models.DateField(
+        verbose_name="End Date.",
+        help_text="Latest date this entity captures"
+    )
+    date_accuracy = models.CharField(
+        verbose_name="How accurate is the given date",
+        help_text="The value indicates if the date is accurate per YEAR, MONTH or DAY",
+        choices=DATE_ACCURACY, default=DATE_ACCURACY[0][0], max_length=3,
     )
     source = models.ForeignKey(
         Source, null=True, blank=True, related_name="source_of",
@@ -84,16 +110,25 @@ class TempSpatial(IdProvider):
         help_text="The source of this data.",
         on_delete=models.SET_NULL
     )
-    part_of = models.ForeignKey(
-        'self', related_name='has_children',
-        on_delete=models.SET_NULL, null=True, blank=True
-        )
-    geom = models.MultiPolygonField(blank=True, null=True)
+    geom = models.MultiPolygonField(
+        blank=True, null=True
+    )
     administrative_unit = models.ForeignKey(
         SkosConcept, null=True, related_name="adm_unit",
-        on_delete=models.SET_NULL, blank=True
+        on_delete=models.SET_NULL, blank=True,
+        verbose_name="Contemporary Administraiv unit",
+        help_text="A contemporary name of the administrative unit."
     )
-    orig_id = models.CharField(max_length=255, null=True, blank=True)
+    orig_id = models.CharField(
+        max_length=255, null=True, blank=True,
+        verbose_name="Any legacy Identifier",
+        help_text="The ID of this object from the dataset used to import this data."
+    )
+    quality = models.CharField(
+        verbose_name="Quality of this dataset",
+        help_text="An estimation of the HistoGis Team upon the quality of this dataset",
+        max_length=25, null=True, choices=QUALITY, default=QUALITY[1][1]
+    )
 
     class Meta:
         ordering = ['id']
@@ -134,19 +169,16 @@ class TempSpatial(IdProvider):
         return False
 
     def fetch_hierarchy(self):
-        hierarchy = [self]
-        while self.part_of:
-            self = self.part_of
-            hierarchy.append(self)
-        return list(reversed(hierarchy))
+        return []
 
     def print_hierarchy(self):
-        hierarchy_string = ""
-        hierarchy = self.fetch_hierarchy()
-        separator = " >> "
-        for x in hierarchy:
-            hierarchy_string = hierarchy_string + separator + x.name
-        return hierarchy_string[4:]
+        # hierarchy_string = ""
+        # hierarchy = self.fetch_hierarchy()
+        # separator = " >> "
+        # for x in hierarchy:
+        #     hierarchy_string = hierarchy_string + separator + x.name
+        # return hierarchy_string[4:]
+        return "needs to be implemented"
 
     def __str__(self):
         if self.name:
@@ -172,6 +204,17 @@ class TempStatialRel(IdProvider):
         SkosConcept,
         null=True, related_name="tmp_spatial_rel_relation",
         on_delete=models.SET_NULL
+    )
+    start_date = models.DateField(
+        verbose_name="Start Date.",
+        help_text="Earliest date this relation captures"
+    )
+    end_date = models.DateField(
+        verbose_name="End Date.",
+        help_text="Latest date this relation captures"
+    )
+    date_accuracy = models.CharField(
+        default="Y", max_length=3, choices=DATE_ACCURACY
     )
 
     def __str__(self):
