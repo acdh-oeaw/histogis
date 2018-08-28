@@ -1,9 +1,39 @@
-from django.urls import reverse
+import os
+from django.conf import settings
 from django.contrib.gis.db import models
+from django.core.files.storage import FileSystemStorage
 from django.core.serializers import serialize
-from idprovider.models import IdProvider
+from django.urls import reverse
 
+from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
+
+
+class OverwriteStorage(FileSystemStorage):
+
+    def get_available_name(self, name, max_length=None):
+        """Returns a filename that's free on the target storage system, and
+        available for new content to be written to.
+
+        Found at http://djangosnippets.org/snippets/976/
+
+        This file storage solves overwrite on upload problem. Another
+        proposed solution was to override the save method on the model
+        like so (from https://code.djangoproject.com/ticket/11663):
+
+        def save(self, *args, **kwargs):
+            try:
+                this = MyModelName.objects.get(id=self.id)
+                if this.MyImageFieldName != self.MyImageFieldName:
+                    this.MyImageFieldName.delete()
+            except: pass
+            super(MyModelName, self).save(*args, **kwargs)
+        """
+        # If the filename already exists, remove it as if it was a true file system
+        if self.exists(name):
+            os.remove(os.path.join(settings.MEDIA_ROOT, name))
+        return name
+
 
 DATE_ACCURACY = (
     ('Y', 'Year'),
@@ -16,6 +46,14 @@ QUALITY = (
     ('yellow', 'yellow'),
     ('green', 'green'),
 )
+
+
+class ShapeFile(models.Model):
+    description = models.TextField(
+        blank=True, null=True,
+        verbose_name="Description",
+        help_text="Some verbose description of the source"
+    )
 
 
 class Source(models.Model):
@@ -32,15 +70,16 @@ class Source(models.Model):
         verbose_name="Quote",
         help_text="How to quote."
     )
-    original_url = models.URLField(
+    original_url = models.TextField(
         blank=True, null=True,
-        verbose_name="URL",
-        help_text="URL from where the data was downloaded"
+        verbose_name="URLs",
+        help_text="URLs from where the data was downloaded, use '; ' as separator"
         )
-    downloaded = models.DateTimeField(
-        blank=True, null=True,
-        verbose_name="Date of data download",
-        help_text="When was the data downloaded"
+    upload = models.FileField(
+        max_length=250, blank=True,
+        verbose_name="A zipped ESRI Shape File",
+        help_text="A shape file following the HistoGIS data convention",
+        upload_to='data/', storage=OverwriteStorage(),
     )
 
     class Meta:

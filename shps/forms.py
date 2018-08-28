@@ -4,7 +4,8 @@ from crispy_forms.layout import Submit,  Layout, Fieldset, Div, MultiField, HTML
 from crispy_forms.bootstrap import Accordion, AccordionGroup
 from leaflet.forms.widgets import LeafletWidget
 
-from .models import TempSpatial, Source
+from . models import TempSpatial, Source
+from . process_upload import delete_and_create, import_shapes, unzip_shapes
 
 
 class WhereWasForm(forms.Form):
@@ -24,6 +25,12 @@ class WhereWasForm(forms.Form):
 
 
 class SourceForm(forms.ModelForm):
+    import_shapes = forms.BooleanField(
+        required=False, initial=False,
+        label="Import/Update related shapes?",
+        help_text="Would you like to import or update the realted shapes?"
+    )
+
     class Meta:
         model = Source
         fields = "__all__"
@@ -36,6 +43,19 @@ class SourceForm(forms.ModelForm):
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-9'
         self.helper.add_input(Submit('submit', 'save'),)
+
+    def save(self, commit=True):
+        print("HI from SAVE METHOD")
+        instance = super(SourceForm, self).save(commit=True)
+        if self.cleaned_data['import_shapes']:
+            uploaded_file = instance.upload
+            temp_dir = delete_and_create('shapes')
+            shapefiles = unzip_shapes(uploaded_file.path, temp_dir)
+            print(shapefiles)
+            import_shapes(shapefiles, instance)
+            print("temp_dir: {}, uploaded_file_path: {}".format(temp_dir, uploaded_file.path))
+
+        return instance
 
 
 class SourceFilterFormHelper(FormHelper):

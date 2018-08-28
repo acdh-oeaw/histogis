@@ -15,7 +15,9 @@ class SourceListFilter(django_filters.FilterSet):
 
     class Meta:
         model = Source
-        fields = '__all__'
+        exclude = [
+            'upload',
+        ]
 
 
 class TempSpatialListFilter(GeoFilterSet):
