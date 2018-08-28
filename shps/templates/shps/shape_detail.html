@@ -21,15 +21,15 @@
         <div class="card-header">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">
+                        <a href="{{ object.get_listview_url }}">all</a>
+                    </li>
                     {% for x in object.fetch_parents %}
-                        {% if forloop.last %}
-                            <li class="breadcrumb-item active" aria-current="page">{{ x }}</li>
-                        {% else %}
-                            <li class="breadcrumb-item active">
-                                <a href="{{x.get_absolute_url }}">{{ x }}</a>
-                            </li>
-                        {% endif %}
+                        <li class="breadcrumb-item active">
+                            <a href="{{x.get_absolute_url }}">{{ x }}</a>
+                        </li>
                     {% endfor %}
+                    <li class="breadcrumb-item active" aria-current="page">{{ object }}</li>
               </ol>
             </nav>
             <div class="row">
@@ -122,10 +122,18 @@
                         </a>
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        {% get_verbose_name tempspatial "quality" %}
+                    </th>
+                    <td>
+                        {{ object.quality }}
+                    </td>
+                </tr>
             </table>
             {% if object.fetch_parents %}
                 <legend>
-                    superunit of
+                    part of
                 </legend>
                 <table class="table table-bordered table-hover">
                     {% for x in object.fetch_parents %}
