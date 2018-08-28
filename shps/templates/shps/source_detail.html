@@ -94,5 +94,24 @@
                     </td>
                 </tr>
             </table>
+            <legend>Related Objects
+                <span class="badge badge-secondary">
+                    {{ object.source_of.count }}
+                </span>
+            </legend>
+            <table class="table table-bordered table-hover">
+                {% for x in object.source_of.all %}
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <td>
+                            <a href="{{ x.get_absolute_url }}">
+                                {{ x }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
 {% endblock %}

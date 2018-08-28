@@ -48,14 +48,6 @@ QUALITY = (
 )
 
 
-class ShapeFile(models.Model):
-    description = models.TextField(
-        blank=True, null=True,
-        verbose_name="Description",
-        help_text="Some verbose description of the source"
-    )
-
-
 class Source(models.Model):
     name = models.CharField(
         max_length=255, verbose_name="Name",

@@ -15,7 +15,6 @@ class SourceSerializer(serializers.HyperlinkedModelSerializer):
             'description',
             'quote',
             'original_url',
-            'downloaded',
         )
 
 
