@@ -21,7 +21,7 @@
         <div class="card-header">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    {% for x in object.fetch_hierarchy %}
+                    {% for x in object.fetch_parents %}
                         {% if forloop.last %}
                             <li class="breadcrumb-item active" aria-current="page">{{ x }}</li>
                         {% else %}
@@ -123,12 +123,31 @@
                     </td>
                 </tr>
             </table>
-            {% if object.has_children.all %}
+            {% if object.fetch_parents %}
                 <legend>
                     superunit of
                 </legend>
                 <table class="table table-bordered table-hover">
-                    {% for x in object.has_children.all %}
+                    {% for x in object.fetch_parents %}
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <td>
+                                <a href="{{ x.get_absolute_url }}">
+                                    {{ x }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+            {% if object.fetch_children %}
+                <legend>
+                    superunit of
+                </legend>
+                <table class="table table-bordered table-hover">
+                    {% for x in object.fetch_children %}
                         <tr>
                             <th>
                                 Name

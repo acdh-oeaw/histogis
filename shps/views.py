@@ -29,7 +29,7 @@ class WhereWas(FormView):
         qs = TempSpatial.objects.filter(geom__contains=pnt)
         if qs:
             context['answer'] = qs
-            context['no_children'] = qs.exclude(has_children__isnull=False)
+            # context['no_children'] = qs.exclude(has_children__isnull=False)
         else:
             context['answer'] = "No Match"
         context['point'] = pnt

@@ -207,17 +207,34 @@ class TempSpatial(IdProvider):
             return prev.first().id
         return False
 
-    def fetch_hierarchy(self):
-        return []
+    def fetch_children(self):
+        bigger = TempSpatial.objects.filter(geom__within=self.geom)
+        if bigger:
+            tuples = [(x, x.geom.length) for x in bigger]
+            sorted = tuples.sort(key=lambda tup: tup[1])
+            return [x[0] for x in tuples]
+        else:
+            return None
 
-    def print_hierarchy(self):
-        # hierarchy_string = ""
-        # hierarchy = self.fetch_hierarchy()
-        # separator = " >> "
-        # for x in hierarchy:
-        #     hierarchy_string = hierarchy_string + separator + x.name
-        # return hierarchy_string[4:]
-        return "needs to be implemented"
+    def fetch_parents(self):
+        bigger = TempSpatial.objects.filter(geom__contains=self.geom)
+        if bigger:
+            tuples = [(x, x.geom.length) for x in bigger]
+            sorted = tuples.sort(key=lambda tup: tup[1], reverse=True)
+            return [x[0] for x in tuples]
+        else:
+            return None
+
+    def print_parents(self):
+        hierarchy_string = ""
+        hierarchy = self.fetch_parents()
+        if hierarchy:
+            separator = " >> "
+            for x in hierarchy:
+                hierarchy_string = hierarchy_string + separator + x.name
+            return hierarchy_string[4:]
+        else:
+            return []
 
     def __str__(self):
         if self.name:

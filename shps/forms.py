@@ -120,6 +120,7 @@ class TempSpatialFilterFormHelper(FormHelper):
                     'start_date',
                     'end_date',
                     'administrative_unit',
+                    'source',
                     css_id="more"
                     ),
                 )
