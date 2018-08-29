@@ -1,11 +1,14 @@
+import glob
+import os
 from django import forms
+from django.conf import settings
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit,  Layout, Fieldset, Div, MultiField, HTML
 from crispy_forms.bootstrap import Accordion, AccordionGroup
 from leaflet.forms.widgets import LeafletWidget
 
 from . models import TempSpatial, Source
-from . process_upload import delete_and_create, import_shapes, unzip_shapes
+from . process_upload import import_shapes, unzip_shapes
 
 
 class WhereWasForm(forms.Form):
@@ -49,11 +52,13 @@ class SourceForm(forms.ModelForm):
         instance = super(SourceForm, self).save(commit=True)
         if self.cleaned_data['import_shapes']:
             uploaded_file = instance.upload
-            temp_dir = delete_and_create('shapes')
+            temp_dir = settings.TEMP_DIR
             shapefiles = unzip_shapes(uploaded_file.path, temp_dir)
             print(shapefiles)
             import_shapes(shapefiles, instance)
-            print("temp_dir: {}, uploaded_file_path: {}".format(temp_dir, uploaded_file.path))
+
+            # remove unzipped files
+            [os.remove(f) for f in glob.glob(os.path.join(settings.TEMP_DIR, '*.*'))]
 
         return instance
 

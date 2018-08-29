@@ -120,6 +120,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+TEMP_DIR = os.path.join(BASE_DIR, 'temp/')
 
 ARCHE_SETTINGS = {
     'project_name': ROOT_URLCONF.split('.')[0],
