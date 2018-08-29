@@ -9,7 +9,7 @@ from django.views.generic.edit import FormView
 
 from django_tables2 import RequestConfig
 
-from webpage.utils import GenericListView, BaseCreateView, BaseUpdateView
+from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateView
 
 from .models import *
 from .tables import *
@@ -44,7 +44,6 @@ class TempSpatialListView(GenericListView):
     init_columns = [
         'id',
         'name',
-        'part_of',
     ]
 
     def get_all_cols(self):

@@ -20,14 +20,13 @@
         <meta name="theme-color" content="#ffffff"/>
     <!--favicons end -->
     <!-- Bootstrap -->
-    <!-- <link rel="stylesheet" href="{% static 'webpage/libraries/bootstrap400/css/bootstrap.min.css' %}" /> -->
-    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,500" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'webpage/libraries/bootstrap400/css/bootstrap.min.css' %}" />
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,500" rel="stylesheet" />
     <!-- custom less -->
-    <link rel="stylesheet/less" type="text/css" href="{% static 'webpage/css/style.less' %}" />
-    <!--FUNDAMENT CSS-->
-    <link href="https://fundament.acdh.oeaw.ac.at/dist/fundament/css/fundament.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet/less" type="text/css" href="{% static 'webpage/css/style.less' %}" /> -->
+    <link href="https://fundament.acdh.oeaw.ac.at/dist/fundament/css/fundament.min.css" rel="stylesheet" />
     <!-- custom css -->
-    <link rel="stylesheet" href="{% static 'webpage/css/style.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'webpage/css/style.css' %}" /> -->
     <!--scroll to top CSS -->
     <link rel="stylesheet" href="{% static 'webpage/libraries/scroll-to-top/css/ap-scroll-top.min.css'%}" />
     <!-- LESS -->
@@ -68,98 +67,98 @@
 <body role="document" class="contained fixed-nav">
 <header>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white box-shadow">
-        <div class="container">
-        <a class="navbar-brand" href="/">
-          Home
-        </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                 <ul class="navbar-nav mr-auto">
-                 <!-- <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span>
-                    </a>
-                </li> -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'webpage:staticpage' template='about' %}">About</span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                        {% if user.is_authenticated %}
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Curate and Browse the Data
-                        <span class="caret"/>
-                        </a>
-                        {% else %}
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse the Data
-                        <span class="caret"/>
-                        </a>
-                        {% endif %}
-                        <div class="dropdown-menu">
-                            {% nav_menu app='shps' as links %}
-                            {% for x in links %}
-                                <a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a>
-                            {% endfor %}
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analyze Data
-                            <span class="caret"/>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'charts:chart_selector' %}">Charts</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Retrieve the Data
-                            <span class="caret"/>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/api">API</a>
-                            <a class="dropdown-item" href="/api-docs">API-Docs</a>
-                            <a class="dropdown-item" href="{% url 'shapes:where_was' %}">Where was Point XY in Year Z?</a>
-                        </div>
-                    </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vocabs Curation
-                    <span class="caret"/>
-                    </a>
-                        <div class="dropdown-menu">
-                            {% nav_menu app='vocabs' as links %}
-                            {% for x in links %}
-                                <a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a>
-                            {% endfor %}
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'api-root' %}">Export SKOS (API)</a>
-                        </div>
-                    </li>
-                    {% endif %}
-                    {% if user.is_authenticated %}
-                    <li class="nav-item dropdown ml-auto">
-                        <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            {{ user.get_username }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="nav-link" href="{% url 'webpage:user_logout' %}">Log-Out</a>
-                        </div>
-                    </li>
-                    {% else %}
-                    <li class="nav-item dropdown ml-auto">
-                        <a class="nav-link" href="{% url 'webpage:user_login' %}">
-                        <i class="fas fa-sign-in-alt"></i>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-                <div class="navbar-icons">
-                <a href="https://github.com/acdh-oeaw/histogis" target="_blank" rel="noopener">
-              <i class="fab fa-github"></i>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white box-shadow">
+            <div class="container">
+            <a class="navbar-brand" href="/">
+              Home
             </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav mr-auto">
+                     <!-- <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span>
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'webpage:staticpage' template='about' %}">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                            {% if user.is_authenticated %}
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Curate and Browse the Data
+                            <span class="caret"/>
+                            </a>
+                            {% else %}
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse the Data
+                            <span class="caret"/>
+                            </a>
+                            {% endif %}
+                            <div class="dropdown-menu">
+                                {% nav_menu app='shps' as links %}
+                                {% for x in links %}
+                                    <a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analyze Data
+                                <span class="caret"/>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'charts:chart_selector' %}">Charts</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Retrieve the Data
+                                <span class="caret"/>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/api">API</a>
+                                <a class="dropdown-item" href="/api-docs">API-Docs</a>
+                                <a class="dropdown-item" href="{% url 'shapes:where_was' %}">Where was Point XY in Year Z?</a>
+                            </div>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vocabs Curation
+                        <span class="caret"/>
+                        </a>
+                            <div class="dropdown-menu">
+                                {% nav_menu app='vocabs' as links %}
+                                {% for x in links %}
+                                    <a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a>
+                                {% endfor %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'api-root' %}">Export SKOS (API)</a>
+                            </div>
+                        </li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown ml-auto">
+                            <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                {{ user.get_username }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="nav-link" href="{% url 'webpage:user_logout' %}">Log-Out</a>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item dropdown ml-auto">
+                            <a class="nav-link" href="{% url 'webpage:user_login' %}">
+                            <i class="fas fa-sign-in-alt"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <div class="navbar-icons">
+                    <a href="https://github.com/acdh-oeaw/histogis" target="_blank" rel="noopener">
+                  <i class="fab fa-github"></i>
+                </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </nav>
     </nav>
 </header>
 <section class="main-content">
@@ -216,7 +215,7 @@
 {% block scripts %}
 <!-- <script type="text/javascript" src="{% static 'webpage/libraries/bootstrap400/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'webpage/libraries/bootstrap400/js/bootstrap-tab.js' %}"></script> -->
-<script defer src="https://fundament.acdh.oeaw.ac.at/dist/fundament/vendor/js/fontawesome-all.min.js"></script>
+<script src="https://fundament.acdh.oeaw.ac.at/dist/fundament/vendor/js/fontawesome-all.min.js"></script>
 <!-- <script src="https://fundament.acdh.oeaw.ac.at/dist/fundament/vendor/js/jquery.min.js"></script> -->
 <script src="https://fundament.acdh.oeaw.ac.at/dist/fundament/js/fundament.min.js"></script>
 <!--bootstrap-select must be after bootstrap js-->
