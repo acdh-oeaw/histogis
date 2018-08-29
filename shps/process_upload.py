@@ -41,19 +41,28 @@ def import_shapes(shapefiles, source):
                         geom=mp
                     )
             try:
-                adm, _ = SkosConcept.objects.get_or_create(
-                    pref_label=row['adm_type']
-                )
-            except IntegrityError:
-                adm, _ = SkosConcept.objects.get_or_create(
-                    pref_label="unknown adm"
-                )
+                try:
+                    adm, _ = SkosConcept.objects.get_or_create(
+                        pref_label=row['adm_type']
+                    )
+                except IntegrityError:
+                    adm, _ = SkosConcept.objects.get_or_create(
+                        pref_label="unknown adm"
+                    )
+            except KeyError:
+                pass
             adm.scheme.add(adm_scheme)
             spat.administrative_unit = adm
-            if row['name']:
-                spat.name = row['name']
-            if row['name_alt']:
-                spat.alt_name = row['name_alt']
+            try:
+                if row['name']:
+                    spat.name = row['name']
+            except KeyError:
+                pass
+            try:
+                if row['name_alt']:
+                    spat.alt_name = row['name_alt']
+            except KeyError:
+                pass
 
             spat.source = source
             spat.save()
