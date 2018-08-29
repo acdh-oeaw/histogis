@@ -188,7 +188,7 @@ class SourceUpdate(BaseUpdateView):
 class SourceDelete(DeleteView):
     model = Source
     template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('shapes:browse_shapes')
+    success_url = reverse_lazy('shapes:browse_sources')
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

@@ -144,7 +144,7 @@ class TempSpatial(IdProvider):
         Source, null=True, blank=True, related_name="source_of",
         verbose_name="Source",
         help_text="The source of this data.",
-        on_delete=models.SET_NULL
+        on_delete=models.CASCADE
     )
     geom = models.MultiPolygonField(
         blank=True, null=True, srid=4326
