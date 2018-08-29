@@ -82,6 +82,11 @@ class Source(models.Model):
             'shapes:source_detail', kwargs={'pk': self.id}
         )
 
+    def delete(self, using=None, keep_parents=False):
+        """ Delete the file from disk because Django doesn't do it. Kudos to AlexanderWatzinger"""
+        self.upload.delete()
+        super(Source, self).delete(using, keep_parents)
+
     @classmethod
     def get_listview_url(self):
         return reverse('shapes:browse_sources')
@@ -232,7 +237,7 @@ class TempSpatial(IdProvider):
         if self.name:
             return "{}".format(self.name)
         else:
-            return "TempStatial ID: {}".format(self.name)
+            return "TempStatial ID: {}".format(self.id)
 
 
 class TempStatialRel(IdProvider):

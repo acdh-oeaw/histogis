@@ -111,7 +111,7 @@ class TempSpatialFilterFormHelper(FormHelper):
         self.layout = Layout(
             Fieldset(
                 'Basic search options',
-                'name',
+                # 'name',
                 css_id="basic_search_fields"
                 ),
             Accordion(

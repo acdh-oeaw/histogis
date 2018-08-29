@@ -35,7 +35,7 @@ class TempSpatialListFilter(GeoFilterSet):
         help_text="End Date not before - not after."
     )
     geom = GeometryFilter(
-        name='geom', lookup_expr='contains',
+        field_name='geom', lookup_expr='contains',
     )
 
     class Meta:
