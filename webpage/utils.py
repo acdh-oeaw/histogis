@@ -53,7 +53,7 @@ class GenericListView(SingleTableView):
     formhelper_class = None
     context_filter_name = 'filter'
     paginate_by = 25
-    template_name = 'webpage/generic_list.html'
+    template_name = 'browsing/generic_list.html'
 
     def get_queryset(self, **kwargs):
         qs = super(GenericListView, self).get_queryset()
