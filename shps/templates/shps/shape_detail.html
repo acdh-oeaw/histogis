@@ -134,6 +134,9 @@
             {% if object.fetch_parents %}
                 <legend>
                     part of
+                    <span class="badge badge-secondary">
+                        {{ object.fetch_parents|length  }}
+                    </span>
                 </legend>
                 <table class="table table-bordered table-hover">
                     {% for x in object.fetch_parents %}
@@ -153,6 +156,9 @@
             {% if object.fetch_children %}
                 <legend>
                     superunit of
+                    <span class="badge badge-secondary">
+                        {{ object.fetch_children|length  }}
+                    </span>
                 </legend>
                 <table class="table table-bordered table-hover">
                     {% for x in object.fetch_children %}
