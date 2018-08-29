@@ -93,7 +93,7 @@ class GenericListView(SingleTableView):
 class BaseCreateView(CreateView):
     model = None
     form_class = None
-    template_name = 'webpage/generic_create.html'
+    template_name = 'browsing/generic_create.html'
 
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data()
@@ -108,7 +108,7 @@ class BaseCreateView(CreateView):
 class BaseUpdateView(UpdateView):
     model = None
     form_class = None
-    template_name = 'webpage/generic_create.html'
+    template_name = 'browsing/generic_create.html'
 
     def get_context_data(self, **kwargs):
         context = super(BaseUpdateView, self).get_context_data()
