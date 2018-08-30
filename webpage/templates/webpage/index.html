@@ -3,15 +3,15 @@
 {% load stats_extras %}
 {% load webpage_extras %}
 {% block content %}
-    <div class="container">
-        <div class="jumbotron" style="background-color: #ffffff;">
-            <div class="container" style="color: #000;">
+
+        <div class="jumbotron" style="background-image: url({% static 'webpage/img/histogis-background-nussbraun.jpg' %}) ">
+            <div class="container" style="font-color: #000;">
                 <h1 style="text-align:center">{% projects_metadata 'title' %}</h1>
                 <h3>{% projects_metadata 'subtitle' %}</h3>
                 <p>{% projects_metadata 'description' %}</p>
             </div>
         </div>
-    </div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
