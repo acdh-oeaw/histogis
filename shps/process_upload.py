@@ -4,7 +4,6 @@ import shutil
 import zipfile
 import pandas as pd
 import geopandas as gp
-from osgeo import ogr
 
 from django.core.files import File
 from django.contrib.gis import geos
