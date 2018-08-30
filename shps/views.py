@@ -69,18 +69,10 @@ class TempSpatialListView(GenericListView):
         table.exclude = exclude_vals
         return table
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(TempSpatialListView, self).dispatch(*args, **kwargs)
-
 
 class TempSpatialDetailView(DetailView):
     model = TempSpatial
     template_name = 'shps/shape_detail.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(TempSpatialDetailView, self).dispatch(*args, **kwargs)
 
 
 class TempSpatialCreate(BaseCreateView):
@@ -149,18 +141,10 @@ class SourceListView(GenericListView):
         table.exclude = exclude_vals
         return table
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(SourceListView, self).dispatch(*args, **kwargs)
-
 
 class SourceDetailView(DetailView):
     model = Source
     template_name = 'shps/source_detail.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(SourceDetailView, self).dispatch(*args, **kwargs)
 
 
 class SourceCreate(BaseCreateView):
