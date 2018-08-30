@@ -69,6 +69,9 @@
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white box-shadow">
             <a class="navbar-brand" href="/">
                 <img src="{% static 'webpage/img/histogis_projektlogo_black.png' %}" alt="HistoGIS" title="Official project logo created by Sandra Lehecka"/>
+                {% if DEV_VERSION %}
+                    <small>dev</small>
+                {% endif %}
             </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -161,10 +164,6 @@
 <section class="main-content">
     <div id="content">
         {% block content %}{% endblock %}
-        <div class="alert alert-warning alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Warning!</strong> Draft Version.
-        </div>
     </div>
 </section>
 <footer class="main-footer">
