@@ -5,8 +5,10 @@
 {% block content %}
 <div class="container">
     <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">{% projects_metadata 'title' %}</h1>
+        </div>
         <div class="card-body">
-            <h1>{% projects_metadata 'title' %}</h1>
             <div>
                 <p>Information about historical political/administrative units is usually communicated through
                 maps. Our human perception allows us to extract diverse information by just looking at a map;
@@ -30,6 +32,7 @@
                 analytical tool, be it as an enrichment service, be it as a workbench for data creation
                 and curation or be it as a publishing platform and stable repository for data,
                 crafted in their own projects.</p>
+                <p>The project is funded by <a href="https://www.oeaw.ac.at/en/fellowship-funding/promotional-programmes/innovation-fund-research-science-and-society/">Innovation Fund "Research, Science and Society"</a> by the <a href="https://www.oeaw.ac.at/">Austrian Academy of Sciences</a></p>
             </div>
         </div>
     </div>

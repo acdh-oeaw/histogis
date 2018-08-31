@@ -40,7 +40,7 @@
             "message":"This website uses cookies to ensure you get the best experience on our website",
             "dismiss":"Got it!",
             "learnMore":"More info",
-            "link":"{% url 'webpage:staticpage' template='imprint' %}",
+            "link":"{% projects_metadata 'imprint' %}",
             "theme":"dark-bottom"};
     </script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
@@ -82,8 +82,14 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span>
                         </a>
                     </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'webpage:staticpage' template='about' %}">About</a>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About
+                            <span class="caret"/>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">About</a>
+                            <a class="dropdown-item" href="{% url 'webpage:staticpage' template='team' %}">Team</a>
+                        </div>
                     </li>
                     <li class="nav-item dropdown">
                             {% if user.is_authenticated %}
@@ -205,7 +211,7 @@
       </div>
     </div>
     <div class="footer-imprint-bar">
-     <a href="{% url 'webpage:staticpage' template='imprint' %}">Impressum/Imprint</a>
+     <a href="{% projects_metadata 'imprint' %}">Impressum/Imprint</a>
     </div>
   </footer>
 
