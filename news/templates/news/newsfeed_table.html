@@ -1,0 +1,24 @@
+<style>
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+}
+</style>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th>Author</th>
+    <th>Created</th>
+    <th>Updated</th>
+  </tr>
+  {% for feed in feeds %}
+  <tr>
+    <td>{{ feed.title }}</td>
+    <td>{{ feed.body|safe }}</td>
+    <td>{{ feed.author }}</td>
+    <td>{{ feed.created }}</td>
+    <td>{{ feed.updated }}</td>
+  </tr>
+  {% endfor %}
+</table>

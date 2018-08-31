@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'shps',
     'charts',
     'browsing',
+    'news',
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"

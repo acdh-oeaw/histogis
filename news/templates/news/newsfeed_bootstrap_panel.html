@@ -1,0 +1,37 @@
+{% for feed in feeds %}
+<style>
+/* remove or change style */
+.news-wrapper {
+  border: none !important;
+    box-shadow: none;
+    text-align: justify;
+    margin: 10px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 2px 2px 24px 0 rgba(0, 0, 0, .1);
+}
+.news-wrapper:hover {
+  box-shadow: 10px 10px 40px 10px rgba(0, 0, 0, .1);
+}
+.news-wrapper-header {
+  border: none !important;
+  background-color: #fff;
+}
+.news-wrapper-body {
+  border: none !important;
+}
+</style>
+
+  <div class="card news-wrapper">
+    <div class="card-header news-wrapper-header">
+      <span class="feed title"><b>{{ feed.title }}</b></span><span class="feed meta">
+        <br><span class="feed updated"><abbr title="updated">{{ feed.updated|date:"d M Y" }}</abbr></span>
+      </span>
+    </div>
+    <div class="card-body news-wrapper-body">
+
+    <span class="feed body">{{ feed.body|safe }}</span>
+  </div>
+  </div>
+
+{% endfor %}

@@ -1,0 +1,7 @@
+{% for feed in feeds %}
+<p class="feed">
+    <span class="feed title">{{ feed.title }}</span> <span class="feed body">{{ feed.body|safe }}</span> <span class="feed meta">
+        <span class="feed author"><abbr title="posted by">{{ feed.author }}</abbr></span> | <span class="feed updated"><abbr title="updated">{{ feed.updated|date:"M Y d" }}</abbr></span> | <span class="feed created"><abbr title="created">{{ feed.created|date:"M Y d" }}</abbr></span>
+    </span>
+</p>
+{% endfor %}
