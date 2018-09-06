@@ -21,21 +21,7 @@
 
             {% create_object_count app='shps' as models %}
             {% for x in models %}
-                <div class="col-md-3  text-center">
-                    <div class="card flex-md-row mb-4 box-shadow">
-                        <div class="card-body">
-                            <h4 class="mb-0">{{x.name}}</h4>
-                            <h4 class="count">{{ x.count }}</h4>
-                            {% if x.link %}
-                                <a class="btn btn-main btn-outline-primary btn-sm" href="{{ x.link }}" role="button">View Details</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            {% create_object_count app='arche' as models %}
-            {% for x in models %}
-                <div class="col-md-3  text-center">
+                <div class="col-md-4  text-center">
                     <div class="card flex-md-row mb-4 box-shadow">
                         <div class="card-body">
                             <h4 class="mb-0">{{x.name}}</h4>
