@@ -87,6 +87,12 @@ class Source(models.Model):
         self.upload.delete()
         super(Source, self).delete(using, keep_parents)
 
+    def __str__(self):
+        if self.name:
+            return "{}".format(self.name)
+        else:
+            return "Source ID: {}".format(self.name)
+
     @classmethod
     def get_listview_url(self):
         return reverse('shapes:browse_sources')
@@ -107,11 +113,11 @@ class Source(models.Model):
             return prev.first().id
         return False
 
-    def __str__(self):
-        if self.name:
-            return "{}".format(self.name)
-        else:
-            return "Source ID: {}".format(self.name)
+    def get_file_size(self):
+        try:
+            return "{}".format(self.upload.size)
+        except Exception as e:
+            return None
 
 
 class TempSpatial(IdProvider):

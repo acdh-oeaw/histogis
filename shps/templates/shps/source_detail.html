@@ -38,11 +38,16 @@
                             </small>
                         {% endif %}
                     </h2>
-                    <h2 style="text-align: center;">
-                        <a href="{{ object.upload.url }}">
-                            <i class="fas fa-download" title="download {{ object.upload.name }}"></i>
-                        </a>
-                    </h2>
+                    {% if object.get_file_size %}
+                        <h2 style="text-align: center;">
+                            <a href="{{ object.upload.url }}">
+                                <i class="fas fa-download" title="download {{ object.upload.name }}, size: {{ object.get_file_size }}"></i>
+                            </a>
+                        </h2>
+                    {% else %}
+                        <h2 style="text-align: center;">File not found on the server</h2>
+                    {% endif %}
+
                 </div>
             <div class="col-md-2">
                 <h2>
