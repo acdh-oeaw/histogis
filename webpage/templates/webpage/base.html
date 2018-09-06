@@ -64,8 +64,7 @@
     {% endblock %}
 </head>
 <body role="document" class="contained fixed-nav">
-<header>
-    <!-- <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light"> -->
+    <header>
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white box-shadow">
             <a class="navbar-brand" href="/">
                 <img src="{% static 'webpage/img/histogis_projektlogo_black.png' %}" alt="HistoGIS" title="Official project logo created by Sandra Lehecka"/>
@@ -165,55 +164,54 @@
                     </div>
                 </div>
         </nav>
-    </nav>
-</header>
+    </header>
 <section class="main-content">
     <div id="content">
         {% block content %}{% endblock %}
     </div>
 </section>
-<footer class="main-footer">
-    <div class="container">
-      <div class="footer-wrapper">
-        <div class="footer-sep">
-          <i class="far fa-comment"></i> CONTACT
+    <footer class="main-footer">
+        <div class="container">
+          <div class="footer-wrapper">
+            <div class="footer-sep">
+              <i class="far fa-comment"></i> CONTACT
+            </div>
+            <div class="row">
+              <div class="col-md-1 pl-0">
+                <a href="https://www.oeaw.ac.at/acdh/acdh-home/" target="_blank" rel="noopener" aria-label="ACDH">
+                  <img src="{% static 'webpage/img/acdh_logo.png' %}" alt="ACDH" title="Austrian Centre for Digital Humanities"/>
+                </a>
+              </div>
+              <div class="col-md-4">
+                  <p>
+                    ACDH-OeAW
+                    <br>
+                    Austrian Centre for Digital Humanities
+                    <br>
+                    Austrian Academy of Sciences
+                  </p>
+                  <p>
+                    Sonnenfelsgasse 19,
+                    <br>
+                    1010 Vienna
+                  </p>
+                  <p>
+                    T: +43 1 51581-2200
+                    <br>
+                    E: <a href="javascript:linkTo_UnCryptMailto('nbjmup;bdeiApfbx/bd/bu');">acdh(at)oeaw.ac.at</a>
+                  </p>
+              </div>
+              <div class="col-md-3 ml-auto">
+                  <img src="{% static 'webpage/img/histogis_projektlogo_black.png' %}" alt="HistoGIS" title="Official project logo created by Sandra Lehecka"/>
+                <!-- <p>Funded by <a href="https://www.oeaw.ac.at/en/fellowship-funding/promotional-programmes/innovation-fund-research-science-and-society/">Innovation Fund "Research, Science and Society"</a> by the <a href="https://www.oeaw.ac.at/">Austrian Academy of Scirences</a></p> -->
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="row">
-          <div class="col-md-1 pl-0">
-            <a href="https://www.oeaw.ac.at/acdh/acdh-home/" target="_blank" rel="noopener" aria-label="ACDH">
-              <img src="{% static 'webpage/img/acdh_logo.png' %}" alt="ACDH" title="Austrian Centre for Digital Humanities"/>
-            </a>
-          </div>
-          <div class="col-md-4">
-              <p>
-                ACDH-OeAW
-                <br>
-                Austrian Centre for Digital Humanities
-                <br>
-                Austrian Academy of Sciences
-              </p>
-              <p>
-                Sonnenfelsgasse 19,
-                <br>
-                1010 Vienna
-              </p>
-              <p>
-                T: +43 1 51581-2200
-                <br>
-                E: <a href="javascript:linkTo_UnCryptMailto('nbjmup;bdeiApfbx/bd/bu');">acdh(at)oeaw.ac.at</a>
-              </p>
-          </div>
-          <div class="col-md-3 ml-auto">
-              <img src="{% static 'webpage/img/histogis_projektlogo_black.png' %}" alt="HistoGIS" title="Official project logo created by Sandra Lehecka"/>
-            <!-- <p>Funded by <a href="https://www.oeaw.ac.at/en/fellowship-funding/promotional-programmes/innovation-fund-research-science-and-society/">Innovation Fund "Research, Science and Society"</a> by the <a href="https://www.oeaw.ac.at/">Austrian Academy of Scirences</a></p> -->
-          </div>
+        <div class="footer-imprint-bar">
+            <a href="{% projects_metadata 'imprint' %}">Impressum/Imprint</a>
         </div>
-      </div>
-    </div>
-    <div class="footer-imprint-bar">
-     <a href="{% projects_metadata 'imprint' %}">Impressum/Imprint</a>
-    </div>
-  </footer>
+    </footer>
 
 {% block scripts %}
 <!-- <script type="text/javascript" src="{% static 'webpage/libraries/bootstrap400/js/bootstrap.min.js' %}"></script>
