@@ -65,6 +65,5 @@ def get_datatables_data(request):
     return JsonResponse(payload)
 
 
-@method_decorator(login_required, name='dispatch')
-class WorkAnalyze(TemplateView):
+class AnalyzeView(TemplateView):
     template_name = "analyze/basic.html"
