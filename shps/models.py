@@ -211,7 +211,10 @@ class TempSpatial(IdProvider):
         return False
 
     def fetch_children(self):
-        bigger = TempSpatial.objects.filter(geom__within=self.geom).exclude(id=self.id).distinct()
+        bigger = TempSpatial.objects.filter(geom__within=self.geom)\
+            .filter(start_date__range=(self.start_date, self.end_date))\
+            .filter(end_date__range=(self.start_date, self.end_date))\
+            .exclude(id=self.id).distinct()
         if bigger:
             tuples = [(x, x.geom.length) for x in bigger]
             sorted = tuples.sort(key=lambda tup: tup[1])
@@ -220,7 +223,10 @@ class TempSpatial(IdProvider):
             return None
 
     def fetch_parents(self):
-        bigger = TempSpatial.objects.filter(geom__contains=self.geom).exclude(id=self.id).distinct()
+        bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
+            .filter(start_date__range=(self.start_date, self.end_date))\
+            .filter(end_date__range=(self.start_date, self.end_date))\
+            .exclude(id=self.id).distinct()
         if bigger:
             tuples = [(x, x.geom.length) for x in bigger]
             sorted = tuples.sort(key=lambda tup: tup[1], reverse=True)
@@ -241,7 +247,7 @@ class TempSpatial(IdProvider):
 
     def __str__(self):
         if self.name:
-            return "{}".format(self.name)
+            return "{} ({} - {})".format(self.name, self.start_date, self.end_date)
         else:
             return "TempStatial ID: {}".format(self.id)
 
