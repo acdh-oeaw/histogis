@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^vocabs-ac/', include('vocabs.dal_urls', namespace='vocabs-ac')),
     url(r'^', include('webpage.urls', namespace='webpage')),
     url(r'^shapes/', include('shps.urls', namespace='shapes')),
+    url(r'^analyze/', include('analyze.urls', namespace='analyze')),
 ]

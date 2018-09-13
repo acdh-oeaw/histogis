@@ -1,0 +1,82 @@
+{% extends "webpage/base.html" %}
+{% load staticfiles %}
+{% load django_tables2 %}
+{% block titel %} Analysen {% endblock %}
+{% block scriptHeader %}
+
+{{ block.super }}
+<style>
+  html {margin: 0; padding: 0}
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    display : none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
+
+
+{% endblock scriptHeader %}
+{% block content %}
+    <h1>Analysen</h1>
+
+    <div id="selectRelations">
+        <h2>select Relation Type</h2>
+        <button type="button" class="btn btn-default" onclick='loadTable("{% url 'analyze:get_data' %}")'>TempSpatials</button>
+
+    </div>
+
+        <div class="loader"></div>
+        <div id="tableDiv"></div>
+
+{% endblock %}
+{% block scripts2 %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.2/b-colvis-1.5.2/b-flash-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/r-2.2.2/datatables.min.css"/>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.2/b-colvis-1.5.2/b-flash-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/r-2.2.2/datatables.min.js"></script>
+
+<script>
+function loadTable(value) {
+    console.log(value);
+    $('.loader').show()
+    $.ajax({
+            "url": value,
+            "success": function(json) {
+                var tableHeaders;
+                $.each(json.columns, function(i, val){
+                    tableHeaders += "<th>" + val + "</th>";
+                });
+
+                $("#tableDiv").empty();
+                $("#tableDiv").append('<table id="displayTable" class="table" cellspacing="0" width="100%"><thead><tr>' + tableHeaders + '</tr></thead></table>');
+                $('.table').DataTable({
+                    "data": json.data,
+                    "initComplete": function( settings, json ) {
+                        $('.loader').remove();
+                    },
+                    "deferRender": true,
+                    "paging":   true,
+                    responsive: true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'excel', 'columnsToggle'
+                    ]
+                });
+                $('#selectRelations').remove();
+            },
+            "dataType": "json"
+        });
+}
+</script>
+{% endblock scripts2 %}
