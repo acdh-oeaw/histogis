@@ -166,6 +166,11 @@
         </nav>
     </header>
 <section class="main-content">
+    {% if DEV_VERSION %}
+    <div class="alert alert-danger" role="alert">
+        This is a the DEVELOPEMENT instance. Click <a href="https://histogis.acdh.oeaw.ac.at">here</a> for the Production version
+    </div>
+    {% endif %}
     <div id="content">
         {% block content %}{% endblock %}
     </div>
