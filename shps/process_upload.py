@@ -1,3 +1,4 @@
+import json
 import os
 import glob
 import shutil
@@ -14,6 +15,17 @@ from django.conf import settings
 from vocabs.models import SkosConcept, SkosConceptScheme
 from . models import TempSpatial, Source
 
+mandatory_keys = [
+    'id',
+    'name',
+    'name_alt',
+    'start_date',
+    'end_date',
+    'date_acc',
+    'adm_type',
+    'geometry',
+]
+
 
 def unzip_shapes(path_to_zipfile, shape_temp_dir):
     zf = zipfile.ZipFile(path_to_zipfile, 'r')
@@ -29,6 +41,7 @@ def import_shapes(shapefiles, source):
     for x in shapefiles:
         df = gp.read_file(x).to_crs({'proj': 'longlat', 'ellps': 'WGS84', 'datum': 'WGS84'})
         for i, row in df.iterrows():
+            add_data = {}
             if row['geometry'].geom_type == 'MultiPolygon':
                 mp = row['geometry'].wkt
             else:
@@ -62,7 +75,15 @@ def import_shapes(shapefiles, source):
                     spat.alt_name = row['name_alt']
             except KeyError:
                 pass
-
+            try:
+                if row['id']:
+                    spat.orig_id = row['id']
+            except KeyError:
+                pass
+            for x in list(df.keys()):
+                if x not in mandatory_keys:
+                    add_data[x] = row[x]
+            spat.additional_data = json.dumps(add_data)
             spat.source = source
             spat.save()
             print(spat.id)

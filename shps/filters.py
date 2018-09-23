@@ -40,4 +40,7 @@ class TempSpatialListFilter(GeoFilterSet):
 
     class Meta:
         model = TempSpatial
-        fields = '__all__'
+        exclude = [
+            'additional_data',
+            'centroid',
+        ]

@@ -1,6 +1,9 @@
 import os
+import hashlib
 from django.conf import settings
 from django.contrib.gis.db import models
+from django.contrib.gis.db.models.functions import Centroid, GeoHash
+from django.contrib.postgres.fields import JSONField
 from django.core.files.storage import FileSystemStorage
 from django.core.serializers import serialize
 from django.urls import reverse
@@ -171,6 +174,26 @@ class TempSpatial(IdProvider):
         help_text="An estimation of the HistoGis Team upon the quality of this dataset",
         max_length=25, null=True, choices=QUALITY, default=QUALITY[1][1]
     )
+    additional_data = JSONField(
+        verbose_name="Additional data provided from the object's source.",
+        blank=True, null=True
+    )
+    unique = models.CharField(
+        blank=True, null=True, max_length=300, unique=True
+    )
+    centroid = models.PointField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.geom and not self.centroid:
+            cent = self.geom.centroid
+            self.centroid = cent
+        unique_str = "".join([
+            str(self.start_date),
+            str(self.end_date),
+            str(self.geom.wkt)
+        ]).encode('utf-8')
+        self.unique = hashlib.md5(unique_str).hexdigest()
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['id']

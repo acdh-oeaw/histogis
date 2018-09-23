@@ -1,3 +1,4 @@
+import json
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
@@ -73,6 +74,11 @@ class TempSpatialListView(GenericListView):
 class TempSpatialDetailView(DetailView):
     model = TempSpatial
     template_name = 'shps/shape_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TempSpatialDetailView, self).get_context_data()
+        context['more'] = json.loads(self.object.additional_data)
+        return context
 
 
 class TempSpatialCreate(BaseCreateView):
