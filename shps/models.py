@@ -234,9 +234,9 @@ class TempSpatial(IdProvider):
         return False
 
     def fetch_children(self):
-        bigger = TempSpatial.objects.filter(geom__within=self.geom)\
-            .filter(start_date__range=(self.start_date, self.end_date))\
-            .filter(end_date__range=(self.start_date, self.end_date))\
+        bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
+            .filter(start_date__lte=self.start_date)\
+            .filter(end_date__lte=self.end_date)\
             .exclude(id=self.id).distinct()
         if bigger:
             tuples = [(x, x.geom.length) for x in bigger]
@@ -246,9 +246,9 @@ class TempSpatial(IdProvider):
             return None
 
     def fetch_parents(self):
-        bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
-            .filter(start_date__range=(self.start_date, self.end_date))\
-            .filter(end_date__range=(self.start_date, self.end_date))\
+        bigger = TempSpatial.objects.filter(geom__within=self.geom)\
+            .filter(start_date__gte=self.start_date)\
+            .filter(end_date__gte=self.end_date)\
             .exclude(id=self.id).distinct()
         if bigger:
             tuples = [(x, x.geom.length) for x in bigger]
