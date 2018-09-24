@@ -158,7 +158,7 @@ class TempSpatial(IdProvider):
     administrative_unit = models.ForeignKey(
         SkosConcept, null=True, related_name="adm_unit",
         on_delete=models.SET_NULL, blank=True,
-        verbose_name="Contemporary Administrativ unit",
+        verbose_name="Contemporary Administrative unit",
         help_text="A contemporary name of the administrative unit."
     )
     orig_id = models.CharField(
