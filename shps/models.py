@@ -158,7 +158,7 @@ class TempSpatial(IdProvider):
     administrative_unit = models.ForeignKey(
         SkosConcept, null=True, related_name="adm_unit",
         on_delete=models.SET_NULL, blank=True,
-        verbose_name="Contemporary Administrative unit",
+        verbose_name="Contemporary Administrative Unit",
         help_text="A contemporary name of the administrative unit."
     )
     orig_id = models.CharField(
@@ -273,6 +273,7 @@ class TempStatialRel(IdProvider):
         help_text="Latest date this relation captures"
     )
     date_accuracy = models.CharField(
+        verbose_name="Date Accuracy",
         default="Y", max_length=3, choices=DATE_ACCURACY
     )
 
