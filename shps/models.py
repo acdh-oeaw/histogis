@@ -128,7 +128,7 @@ class TempSpatial(IdProvider):
 
     name = models.CharField(
          max_length=250, blank=True,
-         verbose_name="The objects name",
+         verbose_name="Name",
          help_text="Usually the object's contemporary name",
     )
     alt_name = models.CharField(
