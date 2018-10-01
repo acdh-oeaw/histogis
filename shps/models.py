@@ -190,10 +190,14 @@ class TempSpatial(IdProvider):
         unique_str = "".join([
             str(self.start_date),
             str(self.end_date),
-            str(self.geom.wkt)
+            str(self.geom.wkt),
+            str(self.date_accuracy)
         ]).encode('utf-8')
         self.unique = hashlib.md5(unique_str).hexdigest()
-        super().save(*args, **kwargs)
+        try:
+            super().save(*args, **kwargs)
+        except Exception as e:
+            print(e)
 
     class Meta:
         ordering = ['id']
@@ -234,7 +238,7 @@ class TempSpatial(IdProvider):
         return False
 
     def fetch_children(self):
-        bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
+        bigger = TempSpatial.objects.filter(geom__within=self.geom)\
             .filter(start_date__lte=self.start_date)\
             .filter(end_date__lte=self.end_date)\
             .exclude(id=self.id).distinct()
@@ -246,7 +250,7 @@ class TempSpatial(IdProvider):
             return None
 
     def fetch_parents(self):
-        bigger = TempSpatial.objects.filter(geom__within=self.geom)\
+        bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
             .filter(start_date__gte=self.start_date)\
             .filter(end_date__gte=self.end_date)\
             .exclude(id=self.id).distinct()

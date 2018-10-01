@@ -85,7 +85,11 @@ def import_shapes(shapefiles, source):
                     add_data[x] = row[x]
             spat.additional_data = json.dumps(add_data)
             spat.source = source
-            spat.save()
-            print(spat.id)
-            temp_spatial_ids.append(spat.id)
+            try:
+                spat.save()
+                print(spat.id)
+                temp_spatial_ids.append(spat.id)
+            except Exception as e:
+                print(e)
+
     return temp_spatial_ids
