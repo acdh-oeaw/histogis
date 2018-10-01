@@ -239,7 +239,7 @@ class TempSpatial(IdProvider):
 
     def fetch_children(self):
         bigger = TempSpatial.objects.filter(geom__within=self.geom)\
-            .filter(start_date__lte=self.start_date)\
+            .filter(start_date__gte=self.start_date)\
             .filter(end_date__lte=self.end_date)\
             .exclude(id=self.id).distinct()
         if bigger:
@@ -251,7 +251,7 @@ class TempSpatial(IdProvider):
 
     def fetch_parents(self):
         bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
-            .filter(start_date__gte=self.start_date)\
+            .filter(start_date__lte=self.start_date)\
             .filter(end_date__gte=self.end_date)\
             .exclude(id=self.id).distinct()
         if bigger:
