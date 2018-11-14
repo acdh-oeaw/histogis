@@ -26,7 +26,7 @@ class WhereWas(FormView):
     def form_valid(self, form, **kwargs):
         context = super(WhereWas, self).get_context_data(**kwargs)
         cd = form.cleaned_data
-        pnt = Point(cd['lat'], cd['lng'])
+        pnt = Point(cd['lng'], cd['lat'])
         qs = TempSpatial.objects.filter(geom__contains=pnt)
         if qs:
             context['answer'] = qs
