@@ -1,3 +1,4 @@
+from rest_framework.schemas import AutoSchema
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework_gis.pagination import GeoJsonPagination
@@ -8,6 +9,8 @@ from . api_serializers import TempSpatialSerializer, SourceSerializer
 from django.contrib.gis.geos import Point
 from dateutil.parser import *
 import re
+import coreapi
+import coreschema
 
 
 class StandardResultsSetPagination(GeoJsonPagination):
@@ -46,7 +49,34 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
     """
     serializer_class = TempSpatialSerializer
     pagination_class = StandardResultsSetPagination
-    
+    schema = AutoSchema(
+        manual_fields=[
+            coreapi.Field(
+                name="lng",
+                required=True,
+                location='query',
+                schema=coreschema.String(description="Longitude of the place to query for.")
+            ),
+            coreapi.Field(
+                "lat",
+                required=True,
+                location='query',
+                schema=coreschema.String(description="Latitude of the place to query for.")
+            ),
+            coreapi.Field(
+                "temp_start",
+                required=False,
+                location='query',
+                schema=coreschema.String(description="Start date of the period to search in.")
+            ),
+            coreapi.Field(
+                "temp_end",
+                required=False,
+                location='query',
+                schema=coreschema.String(description="End date of the period to search in.")
+            ),
+        ]
+    ) 
     def get_queryset(self):
         lng = self.request.query_params.get('lng', None)
         lat = self.request.query_params.get('lat', None)
