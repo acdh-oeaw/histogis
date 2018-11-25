@@ -1,12 +1,18 @@
 import json
+import geopandas as gp
+import pandas as pd
+from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.decorators import login_required
+from django.contrib.gis import geos
 from django.contrib.gis.geos import Point
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
+
+from shapely import wkt
 
 from django_tables2 import RequestConfig
 
@@ -69,6 +75,25 @@ class TempSpatialListView(GenericListView):
         exclude_vals = [x for x in all_cols if x not in selected_cols]
         table.exclude = exclude_vals
         return table
+
+    def render_to_response(self, context, **kwargs):
+        if self.request.GET.get('dl-geojson', None):
+            df = pd.DataFrame(list(self.get_queryset().values()))
+            df['geometry'] = df.apply(
+                lambda row: wkt.loads(row['geom'].wkt), axis=1
+            )
+            print('#######################')
+            str_df = df.astype('str').drop(['geom'], axis=1)
+            gdf = gp.GeoDataFrame(str_df)
+            gdf['geometry'] = gdf.apply(
+                lambda row: wkt.loads(row['geometry']), axis=1
+            )
+            response = HttpResponse(gdf.to_json(), content_type='application/json')
+            response['Content-Disposition'] = 'attachment; filename="out.geojson"'
+            return response
+        else:
+            response = super(GenericListView, self).render_to_response(context)
+            return response
 
 
 class TempSpatialDetailView(DetailView):
