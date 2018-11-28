@@ -52,16 +52,16 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
     schema = AutoSchema(
         manual_fields=[
             coreapi.Field(
-                name="lng",
-                required=True,
-                location='query',
-                schema=coreschema.String(description="Longitude of the place to query for.")
-            ),
-            coreapi.Field(
                 "lat",
                 required=True,
                 location='query',
                 schema=coreschema.String(description="Latitude of the place to query for.")
+            ),
+            coreapi.Field(
+                name="lng",
+                required=True,
+                location='query',
+                schema=coreschema.String(description="Longitude of the place to query for.")
             ),
             coreapi.Field(
                 "temp_start",
@@ -76,22 +76,31 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
                 schema=coreschema.String(description="End date of the period to search in.")
             ),
         ]
-    ) 
+    )
+
     def get_queryset(self):
-        lng = self.request.query_params.get('lng', None)
         lat = self.request.query_params.get('lat', None)
+        lng = self.request.query_params.get('lng', None)
         pnt = Point(float(lng), float(lat))
         qs = TempSpatial.objects.filter(geom__contains=pnt)
         temp_start = self.request.query_params.get('temp_start', None)
         temp_end = self.request.query_params.get('temp_end', None)
         if temp_start is not None:
-            if re.match('[0-9]{4}', temp_start):
-                temp_start += '-1-1'
-            temp_start = parse(temp_start)
-            qs = qs.filter(start_date__gte=temp_start)
+            # if re.match('[0-9]{4}', temp_start):
+            #     temp_start += '-1-1'
+            try:
+                temp_start = parse(temp_start)
+            except ValueError:
+                temp_start = None
+            if temp_start:
+                qs = qs.filter(start_date__gte=temp_start)
         if temp_end is not None:
-            if re.match('[0-9]{4}', temp_end):
-                temp_end += '-12-31'
-            temp_end = parse(temp_end)
-            qs = qs.filter(end_date__lte=temp_end)
+            # if re.match('[0-9]{4}', temp_end):
+            #     temp_end += '-12-31'
+            try:
+                temp_end = parse(temp_end)
+            except ValueError:
+                temp_end = None
+            if temp_end:
+                qs = qs.filter(end_date__lte=temp_end)
         return qs

@@ -3,11 +3,11 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card">
+        <div class="card-header">
             {% block objectType %} {% endblock %}
         </div>
-        <div class="panel-body">
+        <div class="card-body">
              {% crispy form %}
         </div>
     </div>

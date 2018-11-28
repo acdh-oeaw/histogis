@@ -4,12 +4,14 @@ import time
 import pandas as pd
 import django_filters
 
+from django.apps import apps
 from django.conf import settings
+from django.db.models.fields.related import ManyToManyField
 from django.http import HttpResponse
-from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
+
 from . models import BrowsConf
 
 if 'charts' in settings.INSTALLED_APPS:
@@ -126,9 +128,15 @@ class GenericListView(django_tables2.SingleTableView):
             BrowsConf.objects.filter(model_name=model_name)
             .values_list('field_path', 'label')
         )
-        print(context['conf_items'])
         if 'charts' in settings.INSTALLED_APPS:
-            context['vis_list'] = ChartConfig.objects.filter(model_name=model_name)
+            model = self.model
+            app_label = model._meta.app_label
+            print(app_label)
+            filtered_objs = ChartConfig.objects.filter(
+                model_name=model.__name__.lower(),
+                app_name=app_label
+            )
+            context['vis_list'] = filtered_objs
             context['property_name'] = self.request.GET.get('property')
             context['charttype'] = self.request.GET.get('charttype')
             if context['charttype'] and context['property_name']:
@@ -137,7 +145,8 @@ class GenericListView(django_tables2.SingleTableView):
                     context['entity'],
                     context['property_name'],
                     context['charttype'],
-                    qs
+                    qs,
+                    app_label=app_label
                 )
                 context = dict(context, **chartdata)
         return context
@@ -189,10 +198,7 @@ class BaseCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data()
         context['docstring'] = "{}".format(self.model.__doc__)
-        if self.model.__name__.endswith('s'):
-            context['class_name'] = "{}".format(self.model.__name__)
-        else:
-            context['class_name'] = "{}s".format(self.model.__name__)
+        context['class_name'] = "{}".format(self.model.__name__)
         return context
 
 
@@ -204,8 +210,67 @@ class BaseUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(BaseUpdateView, self).get_context_data()
         context['docstring'] = "{}".format(self.model.__doc__)
-        if self.model.__name__.endswith('s'):
-            context['class_name'] = "{}".format(self.model.__name__)
-        else:
-            context['class_name'] = "{}s".format(self.model.__name__)
+        context['class_name'] = "{}".format(self.model.__name__)
+        # if self.model.__name__.endswith('s'):
+        #     context['class_name'] = "{}".format(self.model.__name__)
+        # else:
+        #     context['class_name'] = "{}s".format(self.model.__name__)
         return context
+
+
+def model_to_dict(instance):
+    """
+    serializes a model.object to dict, including non editable fields as well as
+    ManyToManyField fields
+    Taken from https://stackoverflow.com/questions/21925671/
+    """
+    opts = instance._meta
+    data = {}
+    for f in opts.concrete_fields + opts.many_to_many:
+        if isinstance(f, ManyToManyField):
+            if instance.pk is None:
+                data[f.name] = []
+            else:
+                try:
+                    data[f.name] = list(f.value_from_object(instance).values_list('pk', flat=True))
+                except Exception as e:
+                    print(e)
+                    data[f.name] = []
+        else:
+            data[f.name] = f.value_from_object(instance)
+    return data
+
+
+def create_brows_config_obj(app_name, exclude_fields=[]):
+    """
+    Creates BrowsConf objects for all models defined in chosen app
+    """
+    exclude = exclude_fields
+    try:
+        models = [x for x in apps.get_app_config(app_name).get_models()]
+    except LookupError:
+        print("The app '{}' does not exist".format(app_name))
+        return False
+
+    for x in models:
+        model_name = "{}".format(x.__name__.lower())
+        print("Model: {}".format(model_name))
+        for f in x._meta.get_fields(include_parents=False):
+            if f.name not in exclude:
+                field_name = f.name
+                verbose_name = getattr(f, 'verbose_name', f.name)
+                help_text = getattr(f, 'help_text', 'no helptext')
+                print("{}: {} ({})".format(
+                    model_name,
+                    field_name,
+                    help_text
+                    )
+                )
+                brc, _ = BrowsConf.objects.get_or_create(
+                    model_name=model_name,
+                    field_path=field_name,
+                )
+                brc.label = verbose_name
+                brc.save()
+            else:
+                print("skipped: {}".format(f.name))
