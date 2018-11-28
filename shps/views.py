@@ -101,7 +101,11 @@ class TempSpatialDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(TempSpatialDetailView, self).get_context_data()
         context['more'] = json.loads(self.object.additional_data)
-        context['project_url'] = "https://hansi4ever.com"
+        try:
+            project_url = settings.BASE_URL
+        except AttributeError:
+            project_url = "https//provide/a/base-url"
+        context['project_url'] = project_url
         return context
 
 
