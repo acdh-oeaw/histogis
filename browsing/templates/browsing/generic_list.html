@@ -1,14 +1,14 @@
 {% extends "webpage/base.html" %}
 {% load staticfiles %}
 {% load django_tables2 %}
-{% load charts_extras %}
 {% load browsing_extras %}
+{% load charts_extras %}
 {% load i18n %}
 {% load crispy_forms_field %}
 {% load crispy_forms_tags %}
 {% block title %} Browse {{ class_name }} {% endblock %}
 {% block scriptHeader %}
-{% load_highcharts_js %}
+
 {% endblock %}
 {% block content %}
 
@@ -109,6 +109,9 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        {% if shapes %}
+                                            <li><a class="dropdown-item" href="{% querystring %}&dl-geojson=true">GeoJSON</a></li>
+                                        {% endif %}
                                         <li><a class="dropdown-item" href="{% querystring %}&sep=comma">"," separated</a></li>
                                         <li><a class="dropdown-item" href="{% querystring %}&sep=semicolon">";" separated</a></li>
                                         <li><a class="dropdown-item" href="{% querystring %}&sep=tab">"tab" separated</a></li>
@@ -238,6 +241,25 @@
                 </div>
             </div>
         </div>
+        {% if 'entities' in APPS %}
+        {% endif %}
+        {% if user.is_authenticated %}
+            {% if entity_create_stanbol %}
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Import new {{ entity|title }} from GND</h4>
+                    </div>
+                    <div class="card-body">
+                        {% crispy entity_create_stanbol  entity_create_stanbol.helper %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
-    {% config_highcharts %}
+
+
 {% endblock %}
+{% block scripts2 %}
+    {% load_highcharts_js %}
+    {% config_highcharts %}
+{% endblock scripts2 %}
