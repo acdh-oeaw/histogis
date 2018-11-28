@@ -3,13 +3,15 @@ import geopandas as gp
 import pandas as pd
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.contrib.gis import geos
 from django.contrib.gis.geos import Point
 from django.utils.decorators import method_decorator
+from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView
 
 from shapely import wkt
@@ -22,6 +24,16 @@ from .models import *
 from .tables import *
 from .filters import *
 from .forms import *
+
+
+class PermaLinkView(RedirectView):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        shp = get_object_or_404(TempSpatial, unique=kwargs['unique'])
+        url = shp.get_absolute_url()
+        return url
 
 
 class WhereWas(FormView):
@@ -89,6 +101,7 @@ class TempSpatialDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(TempSpatialDetailView, self).get_context_data()
         context['more'] = json.loads(self.object.additional_data)
+        context['project_url'] = "https://hansi4ever.com"
         return context
 
 

@@ -217,6 +217,11 @@ class TempSpatial(IdProvider):
             'shapes:shape_detail', kwargs={'pk': self.id}
         )
 
+    def get_permalink_url(self):
+        return reverse(
+            'shapes:permalink-view', kwargs={'unique': self.unique}
+        )
+
     @classmethod
     def get_listview_url(self):
         return reverse('shapes:browse_shapes')
