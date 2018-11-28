@@ -14,7 +14,7 @@
         height: 600px;
     }
 </style>
-<!-- <div class="container"> -->
+<div class="container-fluid">
 <div class="row">
 <div class="col-md-6">
     <div class="card">
@@ -143,6 +143,20 @@
                         {% endfor %}
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        Quote
+                    </th>
+                    <td>
+                        <i><a href="{{ object.get_permalink_url}}">{{ object}}</a>, {{ object.source.quote }}</i>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Permalink</th>
+                    <td>
+                        <a href="{{ object.get_permalink_url}}">{{ object.get_permalink_url }}</a>
+                    </td>
+                </tr>
             </table>
             {% if object.fetch_parents %}
                 <legend>
@@ -189,10 +203,11 @@
                 </table>
             {% endif %}
         </div>
-</div>
+    </div>
 </div>
 <div class="col-md-6">
     {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+</div>
 </div>
 </div>
 <script type="text/javascript">
