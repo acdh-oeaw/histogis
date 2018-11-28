@@ -24,7 +24,5 @@ urlpatterns = [
     url(r'^source/edit/(?P<pk>[0-9]+)$', views.SourceUpdate.as_view(),
         name='source_edit'),
     url(r'^source/create/$', views.SourceCreate.as_view(),
-        name='source_create'),
-    url(r'^shape/edit/(?P<pk>[0-9]+)$', views.SourceUpdate.as_view(),
-        name='source_edit'),
+        name='source_create')
 ]
