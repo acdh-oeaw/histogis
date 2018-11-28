@@ -34,6 +34,10 @@ class WhereWas(FormView):
         cd = form.cleaned_data
         pnt = Point(cd['lng'], cd['lat'])
         qs = TempSpatial.objects.filter(geom__contains=pnt)
+        if cd['not_before']:
+            qs = qs.filter(start_date__gte=cd['not_before'])
+        if cd['not_after']:
+            qs = qs.filter(end_date__lte=cd['not_after'])
         if qs:
             context['answer'] = qs
             # context['no_children'] = qs.exclude(has_children__isnull=False)

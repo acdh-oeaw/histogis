@@ -52,16 +52,16 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
     schema = AutoSchema(
         manual_fields=[
             coreapi.Field(
-                name="lng",
-                required=True,
-                location='query',
-                schema=coreschema.String(description="Longitude of the place to query for.")
-            ),
-            coreapi.Field(
                 "lat",
                 required=True,
                 location='query',
                 schema=coreschema.String(description="Latitude of the place to query for.")
+            ),
+            coreapi.Field(
+                name="lng",
+                required=True,
+                location='query',
+                schema=coreschema.String(description="Longitude of the place to query for.")
             ),
             coreapi.Field(
                 "temp_start",
@@ -79,8 +79,8 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
     )
 
     def get_queryset(self):
-        lng = self.request.query_params.get('lng', None)
         lat = self.request.query_params.get('lat', None)
+        lng = self.request.query_params.get('lng', None)
         pnt = Point(float(lng), float(lat))
         qs = TempSpatial.objects.filter(geom__contains=pnt)
         temp_start = self.request.query_params.get('temp_start', None)
