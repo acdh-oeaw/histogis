@@ -37,5 +37,5 @@ PROJECT_METADATA = {
     'matomo_id': '87',
     'matomo_url': '//piwik.apollo.arz.oeaw.ac.at/',
     'imprint': 'https://www.oeaw.ac.at/die-oeaw/impressum/',
-    'app_type': 'database',
+    'app_type': 'service',
 }
