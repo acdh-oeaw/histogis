@@ -62,9 +62,10 @@ def import_shapes(shapefiles, source):
                         pref_label="unknown adm"
                     )
             except KeyError:
-                pass
-            adm.scheme.add(adm_scheme)
-            spat.administrative_unit = adm
+                adm = None
+            if adm is not None:
+                adm.scheme.add(adm_scheme)
+                spat.administrative_unit = adm
             try:
                 if row['name']:
                     spat.name = row['name']
