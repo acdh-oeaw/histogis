@@ -62,7 +62,9 @@ def import_shapes(shapefiles, source):
                         pref_label="unknown adm"
                     )
             except KeyError:
-                adm = None
+                adm, _ = SkosConcept.objects.get_or_create(
+                    pref_label="unknown adm"
+                )
             if adm is not None:
                 adm.scheme.add(adm_scheme)
                 spat.administrative_unit = adm
