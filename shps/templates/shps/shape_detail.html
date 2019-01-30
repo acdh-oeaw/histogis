@@ -118,7 +118,9 @@
                         {% get_verbose_name tempspatial "source" %}
                     </th>
                     <td>
-                        {{ object.source }}
+                        <a href="{{ object.source.get_absolute_url }}">
+                            {{ object.source }}
+                        </a>
                     </td>
                 </tr>
                 <tr>
