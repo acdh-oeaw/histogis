@@ -92,15 +92,7 @@
                         {% get_verbose_name source "original_url" %}
                     </th>
                     <td>
-                        <a href="{{ object.original_url }}">{{ object.original_url }}</a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {% get_verbose_name source "downloaded" %}
-                    </th>
-                    <td>
-                        <a href="{{ object.downloaded }}">{{ object.downloaded }}</a>
+                        {{ object.original_url }}
                     </td>
                 </tr>
             </table>
