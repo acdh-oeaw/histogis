@@ -256,26 +256,32 @@ class TempSpatial(IdProvider):
         return False
 
     def fetch_children(self):
-        bigger = TempSpatial.objects.filter(geom__within=self.geom)\
-            .filter(temp_extent__overlap=self.temp_extent)\
-            .exclude(id=self.id).distinct()
-        if bigger:
-            tuples = [(x, x.geom.length) for x in bigger]
-            sorted = tuples.sort(key=lambda tup: tup[1])
-            return [x[0] for x in tuples]
-        else:
-            return None
+        try:
+            bigger = TempSpatial.objects.filter(geom__within=self.geom)\
+                .filter(temp_extent__overlap=self.temp_extent)\
+                .exclude(id=self.id).distinct()
+            if bigger:
+                tuples = [(x, x.geom.length) for x in bigger]
+                sorted = tuples.sort(key=lambda tup: tup[1])
+                return [x[0] for x in tuples]
+            else:
+                return None
+        except Exception as e:
+            return ['Looks like there is some error in a child shape', "{}".format(e)]
 
     def fetch_parents(self):
-        bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
-            .filter(temp_extent__overlap=self.temp_extent)\
-            .exclude(id=self.id).distinct()
-        if bigger:
-            tuples = [(x, x.geom.length) for x in bigger]
-            sorted = tuples.sort(key=lambda tup: tup[1], reverse=True)
-            return [x[0] for x in tuples]
-        else:
-            return None
+        try:
+            bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
+                .filter(temp_extent__overlap=self.temp_extent)\
+                .exclude(id=self.id).distinct()
+            if bigger:
+                tuples = [(x, x.geom.length) for x in bigger]
+                sorted = tuples.sort(key=lambda tup: tup[1], reverse=True)
+                return [x[0] for x in tuples]
+            else:
+                return None
+        except Exception as e:
+            return ['Looks like there is some error in a parent shape', "{}".format(e)]
 
     def print_parents(self):
         hierarchy_string = ""
