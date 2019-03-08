@@ -43,4 +43,5 @@ class TempSpatialListFilter(GeoFilterSet):
         exclude = [
             'additional_data',
             'centroid',
+            'temp_extent'
         ]

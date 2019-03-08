@@ -1,9 +1,11 @@
 import os
 import hashlib
+import datetime
+
 from django.conf import settings
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models.functions import Centroid, GeoHash
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import JSONField, DateRangeField
 from django.core.files.storage import FileSystemStorage
 from django.core.serializers import serialize
 from django.urls import reverse
@@ -181,7 +183,16 @@ class TempSpatial(IdProvider):
     unique = models.CharField(
         blank=True, null=True, max_length=300, unique=True
     )
-    centroid = models.PointField(blank=True, null=True)
+    centroid = models.PointField(
+        blank=True, null=True,
+        verbose_name="Centroid",
+        help_text="The object's centroid"
+    )
+    temp_extent = DateRangeField(
+        blank=True, null=True,
+        verbose_name="Temporal Extent",
+        help_text="The objects temporal extent (Start and end date)"
+    )
 
     def save(self, *args, **kwargs):
         if self.geom and not self.centroid:
@@ -194,6 +205,8 @@ class TempSpatial(IdProvider):
             str(self.date_accuracy)
         ]).encode('utf-8')
         self.unique = hashlib.md5(unique_str).hexdigest()
+        if self.start_date and self.end_date:
+            self.temp_extent = (self.start_date, self.end_date)
         try:
             super().save(*args, **kwargs)
         except Exception as e:
@@ -244,8 +257,7 @@ class TempSpatial(IdProvider):
 
     def fetch_children(self):
         bigger = TempSpatial.objects.filter(geom__within=self.geom)\
-            .filter(start_date__gte=self.start_date)\
-            .filter(end_date__lte=self.end_date)\
+            .filter(temp_extent__overlap=self.temp_extent)\
             .exclude(id=self.id).distinct()
         if bigger:
             tuples = [(x, x.geom.length) for x in bigger]
@@ -256,8 +268,7 @@ class TempSpatial(IdProvider):
 
     def fetch_parents(self):
         bigger = TempSpatial.objects.filter(geom__contains=self.geom)\
-            .filter(start_date__lte=self.start_date)\
-            .filter(end_date__gte=self.end_date)\
+            .filter(temp_extent__overlap=self.temp_extent)\
             .exclude(id=self.id).distinct()
         if bigger:
             tuples = [(x, x.geom.length) for x in bigger]

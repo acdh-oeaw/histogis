@@ -48,7 +48,6 @@ class SourceForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'save'),)
 
     def save(self, commit=True):
-        print("HI from SAVE METHOD")
         instance = super(SourceForm, self).save(commit=True)
         if self.cleaned_data['import_shapes']:
             uploaded_file = instance.upload
@@ -124,6 +123,7 @@ class TempSpatialFilterFormHelper(FormHelper):
                     'Advanced search',
                     'start_date',
                     'end_date',
+                    'temp_extent',
                     'administrative_unit',
                     'source',
                     css_id="more"
