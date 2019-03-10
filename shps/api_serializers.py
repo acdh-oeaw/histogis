@@ -23,12 +23,15 @@ class TempSpatialSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedMo
 
     source_name = serializers.CharField(source='source.name')
     adm_name = serializers.CharField(source='administrative_unit.pref_label')
+    spatial_extent_sqm = serializers.ReadOnlyField(source="sq_km")
+    parents = serializers.ListField("parents")
 
     class Meta:
         model = TempSpatial
         geo_field = "geom"
         fields = (
             'id',
+            'wikidata_id',
             'name',
             'alt_name',
             'source',
@@ -37,5 +40,8 @@ class TempSpatialSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedMo
             'adm_name',
             'start_date',
             'end_date',
+            'spatial_extent',
+            'spatial_extent_sqm',
+            'parents',
         )
         auto_bbox = True

@@ -122,7 +122,6 @@ class TempSpatialFilterFormHelper(FormHelper):
                     'Advanced search',
                     'start_date',
                     'end_date',
-                    'temp_extent',
                     'administrative_unit',
                     'source',
                     css_id="more"

@@ -139,6 +139,12 @@ class TempSpatial(IdProvider):
          verbose_name="Alternative Names",
          help_text="Alternative Names, use '; ' as separator in case of more names"
     )
+    wikidata_id = models.CharField(
+         max_length=500,  blank=True,
+         verbose_name="Wikidata ID",
+         help_text="The ID of a wiki data entry which can be\
+         reasonable associated with the current object."
+    )
     start_date = models.DateField(
         verbose_name="Start Date.",
         help_text="Earliest date this entity captures"
@@ -178,7 +184,8 @@ class TempSpatial(IdProvider):
         max_length=25, null=True, choices=QUALITY, default=QUALITY[1][1]
     )
     additional_data = JSONField(
-        verbose_name="Additional data provided from the object's source.",
+        verbose_name="Additional data",
+        help_text="Additional data provided from the object's source.",
         blank=True, null=True
     )
     unique = models.CharField(
@@ -194,9 +201,16 @@ class TempSpatial(IdProvider):
         verbose_name="Temporal Extent",
         help_text="The objects temporal extent (Start and end date)"
     )
+    spatial_extent = models.FloatField(
+        blank=True, null=True,
+        verbose_name="Spatial Extent",
+        help_text="Saves the area of the object"
+    )
 
     def save(self, *args, **kwargs):
-        """ customized save function stores centroid, a hash and temp_extent on save"""
+        """ customized save function stores
+        centroid, a hash, temp_extent and spatial_extent on save
+        """
         if self.geom and not self.centroid:
             cent = self.geom.centroid
             self.centroid = cent
@@ -209,6 +223,7 @@ class TempSpatial(IdProvider):
         self.unique = hashlib.md5(unique_str).hexdigest()
         if self.start_date and self.end_date:
             self.temp_extent = (self.start_date, self.end_date)
+        self.spatial_extent = self.geom.area
         try:
             super().save(*args, **kwargs)
         except Exception as e:
@@ -257,41 +272,44 @@ class TempSpatial(IdProvider):
             return prev.first().id
         return False
 
-    def fetch_children(self, distance=1000):
+    def fetch_children(self, distance=0):
         """ returns all TempSpatial objects covered spatially by the current object and with\
         overlapping time spans """
         try:
             buffer_width = distance / 40000000.0 * 360.0
             bufferd_poly = self.geom.buffer(buffer_width)
-            bigger = TempSpatial.objects.filter(geom__within=bufferd_poly)\
+            bigger = TempSpatial.objects.filter(centroid__within=bufferd_poly)\
+                .filter(spatial_extent__lte=self.spatial_extent)\
                 .filter(temp_extent__overlap=self.temp_extent)\
-                .exclude(id=self.id).exclude(name=self.name).distinct()
-            if bigger:
-                tuples = [(x, x.geom.length) for x in bigger]
-                sorted = tuples.sort(key=lambda tup: tup[1])
-                return [x[0] for x in tuples]
-            else:
-                return None
+                .exclude(id=self.id).exclude(name=self.name).distinct().order_by('spatial_extent')
+            return bigger
         except Exception as e:
             return ['Looks like there is some error in a child shape', "{}".format(e)]
 
-    def fetch_parents(self, distance=-1000):
+    def fetch_parents(self, distance=-0):
         """ returns all TempSpatial objects covering spatially the current object and with\
         overlapping time spans """
         try:
             buffer_width = distance / 40000000.0 * 360.0
             bufferd_poly = self.geom.buffer(buffer_width)
-            bigger = TempSpatial.objects.filter(geom__covers=bufferd_poly)\
+            bigger = TempSpatial.objects.filter(geom__covers=self.centroid)\
+                .filter(spatial_extent__gte=self.spatial_extent)\
                 .filter(temp_extent__overlap=self.temp_extent)\
-                .exclude(id=self.id).exclude(name=self.name).distinct()
-            if bigger:
-                tuples = [(x, x.geom.length) for x in bigger]
-                sorted = tuples.sort(key=lambda tup: tup[1], reverse=True)
-                return [x[0] for x in tuples]
-            else:
-                return None
+                .exclude(id=self.id).exclude(name=self.name).distinct().order_by('spatial_extent')
+            return bigger
         except Exception as e:
             return ['Looks like there is some error in a parent shape', "{}".format(e)]
+
+    def parents(self, distance=-0):
+        return [
+            {
+                "id": x.id,
+                "start_date": x.start_date,
+                "end_date": x.end_date,
+                "name": x.name,
+                "permalink": x.get_permalink_url()
+            } for x in self.fetch_parents(distance=distance)
+        ]
 
     def fetch_close_by(self, radius=10):
         point = self.centroid
@@ -310,6 +328,12 @@ class TempSpatial(IdProvider):
             return hierarchy_string[4:]
         else:
             return []
+
+    def sq_km(self, ct=3035):
+        """ returns the size of the spatial extent in square km"""
+        self.geom.transform(ct=ct)
+        sq_km = self.geom.area / 1000000
+        return sq_km
 
     def __str__(self):
         if self.name:

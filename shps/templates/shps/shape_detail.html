@@ -83,15 +83,31 @@
             <table class="table table-bordered table-hover">
                 <tr>
                     <th>
-                        {% get_verbose_name tempspatial "name" %}
+                        <abbr title="{% get_help_text tempspatial 'name' %}">
+                            {% get_verbose_name tempspatial "name" %}
+                        </abbr>
                     </th>
                     <td>
                         {{ object.name }}
                     </td>
                 </tr>
+                {% if object.wikidata_id %}
                 <tr>
                     <th>
-                        {% get_verbose_name tempspatial "administrative_unit" %}
+                        <abbr title="{% get_help_text tempspatial 'wikidata_id' %}">
+                            {% get_verbose_name tempspatial "wikidata_id" %}
+                        </abbr>
+                    </th>
+                    <td>
+                        <a href="object.wikidata_id">{{ object.wikidata_id }}</a>
+                    </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>
+                        <abbr title="{% get_help_text tempspatial 'administrative_unit' %}">
+                            {% get_verbose_name tempspatial "administrative_unit" %}
+                        </abbr>
                     </th>
                     <td>
                         {{ object.administrative_unit }}
@@ -99,7 +115,9 @@
                 </tr>
                 <tr>
                     <th>
-                        Time Span
+                        <abbr title="{% get_help_text tempspatial 'temp_extent' %}">
+                            {% get_verbose_name tempspatial "temp_extent" %}
+                        </abbr>
                     </th>
                     <td>
                         {{ object.start_date }} - {{ object.end_date }}
@@ -107,7 +125,19 @@
                 </tr>
                 <tr>
                     <th>
-                        Date Accuracy
+                        <abbr title="{% get_help_text tempspatial 'spatial_extent' %}">
+                            {% get_verbose_name tempspatial "spatial_extent" %}
+                        </abbr>
+                    </th>
+                    <td>
+                        <abbr title="about {{ object.sq_km }} km2">{{ object.spatial_extent }}</abbr>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <abbr title="{% get_help_text tempspatial 'date_accuracy' %}">
+                            {% get_verbose_name tempspatial "date_accuracy" %}
+                        </abbr>
                     </th>
                     <td>
                         {{ object.date_accuracy }}
@@ -115,7 +145,9 @@
                 </tr>
                 <tr>
                     <th>
-                        {% get_verbose_name tempspatial "source" %}
+                        <abbr title="{% get_help_text tempspatial 'source' %}">
+                            {% get_verbose_name tempspatial "source" %}
+                        </abbr>
                     </th>
                     <td>
                         <a href="{{ object.source.get_absolute_url }}">
@@ -125,7 +157,9 @@
                 </tr>
                 <tr>
                     <th>
-                        Quality of this Dataset
+                        <abbr title="{% get_help_text tempspatial 'quality' %}">
+                            {% get_verbose_name tempspatial "quality" %}
+                        </abbr>
                     </th>
                     <td>
                         {{ object.quality }}
@@ -133,7 +167,9 @@
                 </tr>
                 <tr>
                     <th>
-                        Centroid
+                        <abbr title="{% get_help_text tempspatial 'centroid' %}">
+                            {% get_verbose_name tempspatial "centroid" %}
+                        </abbr>
                     </th>
                     <td>
                         {{ object.centroid }}
@@ -142,7 +178,9 @@
                 {% if object.additional_data %}
                     <tr>
                         <th>
-                            {% get_verbose_name tempspatial "additional_data" %}
+                            <abbr title="{% get_help_text tempspatial 'additional_data' %}">
+                                {% get_verbose_name tempspatial "additional_data" %}
+                            </abbr>
                         </th>
                         <td>
                             {% for key, value in more.items %}
@@ -155,14 +193,20 @@
                 {% endif %}
                 <tr>
                     <th>
-                        Quote
+                        <abbr title="Suggestion on how to quote this data set">
+                            Quote
+                        </abbr>
                     </th>
                     <td>
                         <i><a href="{{ object.get_permalink_url}}">{{ object}}</a>, {{ object.source.quote }}</i>
                     </td>
                 </tr>
                 <tr>
-                    <th>Permalink</th>
+                    <th>
+                        <abbr title="Permalink to this dataset.">
+                            Permalink
+                        </abbr>
+                    </th>
                     <td>
                         <a href="{{ object.get_permalink_url}}">{{project_url}}{{ object.get_permalink_url }}</a>
                     </td>

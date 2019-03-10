@@ -92,6 +92,5 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
             except ValueError:
                 when = None
             if when:
-                qs = qs.filter(temp_extent__contains=when)
-
+                qs = qs.filter(temp_extent__contains=when).order_by('spatial_extent')
         return qs

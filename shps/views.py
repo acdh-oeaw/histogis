@@ -52,7 +52,7 @@ class WhereWas(FormView):
         else:
             qs = qs
         if qs:
-            context['answer'] = qs
+            context['answer'] = qs.order_by('spatial_extent')
         else:
             context['answer'] = ["No Match"]
         context['point'] = pnt
