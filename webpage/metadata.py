@@ -33,7 +33,7 @@ PROJECT_METADATA = {
     'github': 'https://github.com/acdh-oeaw/histogis',
     'purpose_de': 'Ziel von HistoGIS ist die Publikation von Forschungsdaten.',
     'purpose_en': 'The purpose of HistoGIS is the publication of research data.',
-    'version': '0.0.1',
+    'version': '0.1.0',
     'matomo_id': '87',
     'matomo_url': '//piwik.apollo.arz.oeaw.ac.at/',
     'imprint': 'https://www.oeaw.ac.at/die-oeaw/impressum/',
