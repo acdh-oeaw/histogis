@@ -14,7 +14,7 @@ import coreschema
 
 
 class StandardResultsSetPagination(GeoJsonPagination):
-    page_size = 5
+    page_size = 1
     page_size_query_param = 'page_size'
     max_page_size = 25
 
@@ -52,6 +52,12 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
     schema = AutoSchema(
         manual_fields=[
             coreapi.Field(
+                "page_size",
+                required=False,
+                location='query',
+                schema=coreschema.String(description="Defaults to 1 due to performance reasons.")
+            ),
+            coreapi.Field(
                 "lat",
                 required=True,
                 location='query',
@@ -64,16 +70,12 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
                 schema=coreschema.String(description="Longitude of the place to query for.")
             ),
             coreapi.Field(
-                "temp_start",
+                "when",
                 required=False,
                 location='query',
-                schema=coreschema.String(description="Start date of the period to search in.")
-            ),
-            coreapi.Field(
-                "temp_end",
-                required=False,
-                location='query',
-                schema=coreschema.String(description="End date of the period to search in.")
+                schema=coreschema.String(
+                    description="Date the TempSpatial temporal extent has to contain."
+                )
             ),
         ]
     )
@@ -83,24 +85,13 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
         lng = self.request.query_params.get('lng', None)
         pnt = Point(float(lng), float(lat))
         qs = TempSpatial.objects.filter(geom__contains=pnt)
-        temp_start = self.request.query_params.get('temp_start', None)
-        temp_end = self.request.query_params.get('temp_end', None)
-        if temp_start is not None:
-            # if re.match('[0-9]{4}', temp_start):
-            #     temp_start += '-1-1'
+        when = self.request.query_params.get('when', None)
+        if when is not None:
             try:
-                temp_start = parse(temp_start)
+                when = parse(when)
             except ValueError:
-                temp_start = None
-            if temp_start:
-                qs = qs.filter(start_date__gte=temp_start)
-        if temp_end is not None:
-            # if re.match('[0-9]{4}', temp_end):
-            #     temp_end += '-12-31'
-            try:
-                temp_end = parse(temp_end)
-            except ValueError:
-                temp_end = None
-            if temp_end:
-                qs = qs.filter(end_date__lte=temp_end)
+                when = None
+            if when:
+                qs = qs.filter(temp_extent__contains=when)
+
         return qs

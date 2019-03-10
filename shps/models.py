@@ -257,7 +257,7 @@ class TempSpatial(IdProvider):
             return prev.first().id
         return False
 
-    def fetch_children(self, distance=5000):
+    def fetch_children(self, distance=1000):
         """ returns all TempSpatial objects covered spatially by the current object and with\
         overlapping time spans """
         try:
@@ -275,7 +275,7 @@ class TempSpatial(IdProvider):
         except Exception as e:
             return ['Looks like there is some error in a child shape', "{}".format(e)]
 
-    def fetch_parents(self, distance=-5000):
+    def fetch_parents(self, distance=-1000):
         """ returns all TempSpatial objects covering spatially the current object and with\
         overlapping time spans """
         try:

@@ -14,8 +14,7 @@ from . process_upload import import_shapes, unzip_shapes
 class WhereWasForm(forms.Form):
     lat = forms.FloatField(required=True)
     lng = forms.FloatField(required=True)
-    not_before = forms.DateField(required=False)
-    not_after = forms.DateField(required=False)
+    when = forms.DateField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(WhereWasForm, self).__init__(*args, **kwargs)
