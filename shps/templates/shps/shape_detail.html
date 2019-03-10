@@ -139,18 +139,20 @@
                         {{ object.centroid }}
                     </td>
                 </tr>
-                <tr>
-                    <th>
-                        {% get_verbose_name tempspatial "additional_data" %}
-                    </th>
-                    <td>
-                        {% for key, value in more.items %}
-                            <li>
-                                {{ key }}: {{ value}}
-                            </li>
-                        {% endfor %}
-                    </td>
-                </tr>
+                {% if additional_data %}
+                    <tr>
+                        <th>
+                            {% get_verbose_name tempspatial "additional_data" %}
+                        </th>
+                        <td>
+                            {% for key, value in more.items %}
+                                <li>
+                                    {{ key }}: {{ value}}
+                                </li>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <th>
                         Quote
