@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from rest_framework_gis.serializers import GeoFeatureModelSerializer
-
+from . serializer_base import LinkedPastsSerializer
 from . models import TempSpatial, Source
 
 
@@ -18,7 +17,7 @@ class SourceSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class TempSpatialSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
+class TempSpatialSerializer(LinkedPastsSerializer, serializers.HyperlinkedModelSerializer):
     """ A class to serialize TempSpatial objects as GeoJSON compatible data """
 
     source_name = serializers.CharField(source='source.name')

@@ -11,7 +11,6 @@ from rest_framework import viewsets
 from rest_framework_gis.pagination import GeoJsonPagination
 from django_filters import rest_framework as df_rest_framework
 
-from . api_renderers import LinkedPastsRenderer
 from . models import TempSpatial, Source
 from . filters import TempSpatialListFilter
 from . api_serializers import TempSpatialSerializer, SourceSerializer
@@ -37,7 +36,6 @@ class TempSpatialViewSet(viewsets.ModelViewSet):
     renderer_classes = (
         rest_framework.renderers.BrowsableAPIRenderer,
         rest_framework.renderers.JSONRenderer,
-        LinkedPastsRenderer,
     )
 
 

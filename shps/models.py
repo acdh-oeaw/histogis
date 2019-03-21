@@ -207,6 +207,14 @@ class TempSpatial(IdProvider):
         help_text="Saves the area of the object"
     )
 
+    def alt_name_list(self):
+        """
+        returns a list of alt names
+        :return: a python list of alt names
+        """
+
+        return [x.strip() for x in self.alt_name.split(";")]
+
     def save(self, *args, **kwargs):
         """ customized save function stores
         centroid, a hash, temp_extent and spatial_extent on save
