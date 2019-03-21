@@ -1,16 +1,20 @@
-from rest_framework.schemas import AutoSchema
-from rest_framework import generics
-from rest_framework import viewsets
-from rest_framework_gis.pagination import GeoJsonPagination
-from django_filters import rest_framework
-from . models import TempSpatial, Source
-from . filters import TempSpatialListFilter
-from . api_serializers import TempSpatialSerializer, SourceSerializer
-from django.contrib.gis.geos import Point
-from dateutil.parser import *
 import re
 import coreapi
 import coreschema
+from dateutil.parser import *
+import rest_framework
+from django.contrib.gis.geos import Point
+from rest_framework.schemas import AutoSchema
+from rest_framework.settings import api_settings
+from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework_gis.pagination import GeoJsonPagination
+from django_filters import rest_framework as df_rest_framework
+
+from . api_renderers import LinkedPastsRenderer
+from . models import TempSpatial, Source
+from . filters import TempSpatialListFilter
+from . api_serializers import TempSpatialSerializer, SourceSerializer
 
 
 class StandardResultsSetPagination(GeoJsonPagination):
@@ -28,8 +32,13 @@ class TempSpatialViewSet(viewsets.ModelViewSet):
     queryset = TempSpatial.objects.all()
     serializer_class = TempSpatialSerializer
     pagination_class = StandardResultsSetPagination
-    filter_backends = (rest_framework.DjangoFilterBackend, )
+    filter_backends = (df_rest_framework.DjangoFilterBackend, )
     filter_class = TempSpatialListFilter
+    renderer_classes = (
+        rest_framework.renderers.BrowsableAPIRenderer,
+        rest_framework.renderers.JSONRenderer,
+        LinkedPastsRenderer,
+    )
 
 
 class SourceViewSet(viewsets.ModelViewSet):

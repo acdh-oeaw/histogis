@@ -276,8 +276,11 @@ class TempSpatial(IdProvider):
         """ returns all TempSpatial objects covered spatially by the current object and with\
         overlapping time spans """
         try:
-            buffer_width = distance / 40000000.0 * 360.0
-            bufferd_poly = self.geom.buffer(buffer_width)
+            # lat = self.Lat
+            # coef = cos(lat)
+            #
+            # buffer_width = 360 * distance / (40000.0 * coef)
+            # bufferd_poly = self.geom.buffer(buffer_width)
             bigger = TempSpatial.objects.filter(centroid__within=bufferd_poly)\
                 .filter(spatial_extent__lte=self.spatial_extent)\
                 .filter(temp_extent__overlap=self.temp_extent)\
