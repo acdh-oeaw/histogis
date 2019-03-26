@@ -1,0 +1,28 @@
+{% extends "webpage/base.html" %}
+{% load staticfiles %}
+{% load webpage_extras %}
+{% block title %} Things we promise to do {% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">Things we promise to do</h1>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        enable download of shapefiles <a href="=https://github.com/acdh-oeaw/histogis/issues/11">#11</a>
+                    </li>
+                    <li>
+                        improve user interface
+                        <ul>
+                            <li>
+                                Users should be able to increase/shrink the TempSpatial's buffer to fetch more/less parent/child features. <a href="https://github.com/acdh-oeaw/histogis/issues/10">#10</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+{% endblock %}

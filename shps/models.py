@@ -289,7 +289,7 @@ class TempSpatial(IdProvider):
             #
             # buffer_width = 360 * distance / (40000.0 * coef)
             # bufferd_poly = self.geom.buffer(buffer_width)
-            bigger = TempSpatial.objects.filter(centroid__within=bufferd_poly)\
+            bigger = TempSpatial.objects.filter(centroid__within=self.geom)\
                 .filter(spatial_extent__lte=self.spatial_extent)\
                 .filter(temp_extent__overlap=self.temp_extent)\
                 .exclude(id=self.id).exclude(name=self.name).distinct().order_by('spatial_extent')
