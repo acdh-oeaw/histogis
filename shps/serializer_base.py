@@ -2,10 +2,10 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from django.conf import settings
 
 try:
-    if settings.SERVER_BASE_URL.endswith('/'):
-        base_url = settings.SERVER_BASE_URL[:-1]
+    if settings.BASE_URL.endswith('/'):
+        base_url = settings.BASE_URL[:-1]
     else:
-        base_url = settings.SERVER_BASE_URL
+        base_url = settings.BASE_URL
 except AttributeError:
     base_url = "http://PROVIDE-A-SERVER-BASE-URL"
 
