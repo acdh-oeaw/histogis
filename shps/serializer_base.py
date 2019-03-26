@@ -1,4 +1,13 @@
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
+from django.conf import settings
+
+try:
+    if settings.SERVER_BASE_URL.endswith('/'):
+        base_url = settings.SERVER_BASE_URL[:-1]
+    else:
+        base_url = settings.SERVER_BASE_URL
+except AttributeError:
+    base_url = "http://PROVIDE-A-SERVER-BASE-URL"
 
 
 class LinkedPastsSerializer(GeoFeatureModelSerializer):
@@ -26,8 +35,9 @@ class LinkedPastsSerializer(GeoFeatureModelSerializer):
             all_names = names
         types = [
             {
-                "identifier": "histogisadm:{}".format(
-                    instance.administrative_unit.id
+                "identifier": "{}{}".format(
+                    base_url,
+                    instance.administrative_unit.get_absolute_url()
                 ),
                 "label": instance.administrative_unit.pref_label
             }
@@ -47,9 +57,10 @@ class LinkedPastsSerializer(GeoFeatureModelSerializer):
         else:
             links = [
                 {
-                    "type": "seeAlso",
+                    "type": "skos:closeMatch",
                     "identifier": instance.wikidata_id
                 }
             ]
             feature["links"] = links
+        feature["@id"] = "{}{}".format(base_url, instance.get_permalink_url())
         return feature
