@@ -35,7 +35,7 @@ PROJECT_METADATA = {
     'purpose_en': 'The purpose of HistoGIS is the publication of research data.',
     'version': '0.1.0',
     'matomo_id': '87',
-    'matomo_url': '//piwik.apollo.arz.oeaw.ac.at/',
+    'matomo_url': '//matomo.acdh.oeaw.ac.at/',
     'imprint': 'https://www.oeaw.ac.at/die-oeaw/impressum/',
     'app_type': 'service',
 }
