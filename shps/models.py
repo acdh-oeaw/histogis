@@ -10,6 +10,7 @@ from django.contrib.postgres.fields import JSONField, DateRangeField
 from django.core.files.storage import FileSystemStorage
 from django.core.serializers import serialize
 from django.urls import reverse
+from django.utils.text import slugify
 
 from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
@@ -345,6 +346,11 @@ class TempSpatial(IdProvider):
         self.geom.transform(ct=ct)
         sq_km = self.geom.area / 1000000
         return sq_km
+
+    def slug_name(self):
+        return "{}__{}_{}".format(
+            slugify(self.name), self.start_date, self.end_date
+        )
 
     def __str__(self):
         if self.name:

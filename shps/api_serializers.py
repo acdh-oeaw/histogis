@@ -24,6 +24,7 @@ class TempSpatialSerializer(LinkedPastsSerializer, serializers.HyperlinkedModelS
     adm_name = serializers.CharField(source='administrative_unit.pref_label')
     spatial_extent_sqm = serializers.ReadOnlyField(source="sq_km")
     parents = serializers.ListField("parents")
+    slugged_name = serializers.ReadOnlyField(source="slug_name")
 
     class Meta:
         model = TempSpatial
@@ -42,5 +43,6 @@ class TempSpatialSerializer(LinkedPastsSerializer, serializers.HyperlinkedModelS
             'spatial_extent',
             'spatial_extent_sqm',
             'parents',
+            'slugged_name',
         )
         auto_bbox = True
