@@ -1,6 +1,11 @@
 import os
 import hashlib
-import datetime
+from datetime import datetime
+
+import rdflib
+from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef, RDFS, ConjunctiveGraph
+from rdflib.namespace import DC, FOAF, RDFS, XSD
+from rdflib.namespace import SKOS
 
 from django.conf import settings
 from django.contrib.gis.db import models
@@ -14,6 +19,11 @@ from django.utils.text import slugify
 
 from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
+
+ARCHE = Namespace('https://vocabs.acdh.oeaw.ac.at/schema#')
+ACDH = Namespace('https://id.acdh.oeaw.ac.at/')
+
+curent_date = datetime.now().strftime('%Y-%m-%d')
 
 
 class OverwriteStorage(FileSystemStorage):
@@ -351,6 +361,32 @@ class TempSpatial(IdProvider):
         return "{}__{}_{}".format(
             slugify(self.name), self.start_date, self.end_date
         )
+
+    def as_arche_res(self):
+        pandorfer = URIRef("http://d-nb.info/gnd/1043833846")
+        mschloegl = URIRef("http://d-nb.info/gnd/1154715620")
+        apiechl = URIRef("https://orcid.org/0000-0002-9239-5577")
+        adueck = URIRef("https://orcid.org/non-provided-yet")
+        pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
+        veccol = "https://id.acdh.oeaw.ac.at/histogis/vectordata"
+        res_uri = URIRef("{}/{}.json".format(veccol, self.slug_name()))
+
+        g = rdflib.Graph()
+        g.add((res_uri, RDF.type, ARCHE.Resource))
+        g.add((res_uri, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
+        g.add((res_uri, ARCHE.isPartOf, URIRef(veccol)))
+        g.add((res_uri, ARCHE.hasTitle, Literal(
+            "{} ({} - {})".format(self.name, self.start_date, self.end_date)
+        )))
+        g.add((res_uri, ARCHE.hasCoverageStartDate, Literal(self.start_date, datatype=XSD.date)))
+        g.add((res_uri, ARCHE.hasCoverageEndDate, Literal(self.end_date, datatype=XSD.date)))
+        g.add((res_uri, ARCHE.hasContributor, pandorfer))
+        g.add((res_uri, ARCHE.hasContributor, mschloegl))
+        g.add((res_uri, ARCHE.hasCreator, pmarck))
+        g.add((res_uri, ARCHE.hasCreator, apiechl))
+        g.add((res_uri, ARCHE.hasCreator, adueck))
+        g.add((res_uri, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
+        return g
 
     def __str__(self):
         if self.name:
