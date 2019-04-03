@@ -52,7 +52,7 @@ def project_to_arche():
     g.add((apiechl, ARCHE.hasLastName, Literal('Anna')))
     g.add((project, ARCHE.hasCreator, apiechl))
 
-    adueck = URIRef("https://orcid.org/non-provided-yet")
+    adueck = URIRef("https://orcid.org/0000-0003-3392-2610")
     g.add((adueck, ARCHE.hasFirstName, Literal('Dückelmann')))
     g.add((adueck, ARCHE.hasLastName, Literal('Antonia')))
     g.add((project, ARCHE.hasCreator, adueck))
@@ -95,7 +95,7 @@ def project_to_arche():
     g.add((vecol, ARCHE.hasCoverageStartDate, Literal('1815-01-01', datatype=XSD.date)))
     g.add((vecol, ARCHE.hasCoverageEndDate, Literal('1919-01-01', datatype=XSD.date)))
 
-    for x in TempSpatial.objects.all()[:3]:
+    for x in TempSpatial.objects.all():
         res = x.as_arche_res()
         g.add((vecol, ARCHE.hasContributor, pandorfer))
         g.add((vecol, ARCHE.hasContributor, mschloegl))

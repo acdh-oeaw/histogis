@@ -366,7 +366,7 @@ class TempSpatial(IdProvider):
         pandorfer = URIRef("http://d-nb.info/gnd/1043833846")
         mschloegl = URIRef("http://d-nb.info/gnd/1154715620")
         apiechl = URIRef("https://orcid.org/0000-0002-9239-5577")
-        adueck = URIRef("https://orcid.org/non-provided-yet")
+        adueck = URIRef("https://orcid.org/0000-0003-3392-2610")
         pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
         veccol = "https://id.acdh.oeaw.ac.at/histogis/vectordata"
         res_uri = URIRef("{}/{}.json".format(veccol, self.slug_name()))

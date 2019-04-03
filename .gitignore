@@ -41,3 +41,4 @@ dev_secret.py
 /auth.json
 /idprovider/migrations/0001_initial.py
 /dump.sql
+arche.xml
