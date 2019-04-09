@@ -139,6 +139,8 @@ VOCABS_SETTINGS = {
     'default_lang': "eng"
 }
 
+ACDH_IMPRINT_URL = "https://shared.acdh.oeaw.ac.at/acdh-common-assets/api/imprint.php?serviceID="
+
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (47, 16),
     'DEFAULT_ZOOM': 6,
