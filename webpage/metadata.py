@@ -36,6 +36,6 @@ PROJECT_METADATA = {
     'version': '0.1.0',
     'matomo_id': '87',
     'matomo_url': '//matomo.acdh.oeaw.ac.at/',
-    'imprint': 'https://www.oeaw.ac.at/die-oeaw/impressum/',
+    'imprint': '/imprint',
     'app_type': 'service',
 }
