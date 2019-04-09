@@ -369,7 +369,7 @@ class TempSpatial(IdProvider):
         adueck = URIRef("https://orcid.org/0000-0003-3392-2610")
         pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
         veccol = "https://id.acdh.oeaw.ac.at/histogis/vectordata"
-        res_uri = URIRef("{}/{}.json".format(veccol, self.slug_name()))
+        res_uri = URIRef("{}/{}.geojson".format(veccol, self.slug_name()))
 
         g = rdflib.Graph()
         g.add((res_uri, RDF.type, ARCHE.Resource))
@@ -386,6 +386,7 @@ class TempSpatial(IdProvider):
         g.add((res_uri, ARCHE.hasCreator, apiechl))
         g.add((res_uri, ARCHE.hasCreator, adueck))
         g.add((res_uri, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
+        g.add((res_uri, ARCHE.hasFormat, Literal("application/vnd.geo+json")))
         return g
 
     def __str__(self):
