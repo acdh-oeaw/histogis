@@ -58,7 +58,7 @@ def project_to_arche():
     g.add((project, ARCHE.hasCreator, adueck))
 
     pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
-    g.add((pmarck, ARCHE.hasFirstName, Literal('Marckghott-Sanabria')))
+    g.add((pmarck, ARCHE.hasFirstName, Literal('Marckhgott-Sanabria')))
     g.add((pmarck, ARCHE.hasLastName, Literal('Peter Paul')))
     g.add((project, ARCHE.hasCreator, pmarck))
 
