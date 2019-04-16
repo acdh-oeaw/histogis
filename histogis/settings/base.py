@@ -15,6 +15,8 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, '../'))))
 
+ACDH_IMPRINT_URL = "https://shared.acdh.oeaw.ac.at/acdh-common-assets/api/imprint.php?serviceID="
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -138,8 +140,6 @@ VOCABS_SETTINGS = {
     'default_ns': "http://www.vocabs/{}/".format(VOCABS_DEFAULT_PEFIX),
     'default_lang': "eng"
 }
-
-ACDH_IMPRINT_URL = "https://shared.acdh.oeaw.ac.at/acdh-common-assets/api/imprint.php?serviceID="
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (47, 16),
