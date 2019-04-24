@@ -77,6 +77,26 @@ def project_to_arche():
     g.add((topcol, ARCHE.hasCoverageStartDate, Literal('1815-01-01', datatype=XSD.date)))
     g.add((topcol, ARCHE.hasCoverageEndDate, Literal('1919-01-01', datatype=XSD.date)))
 
+    # add summary-file
+    res_uri = URIRef("https://id.acdh.oeaw.ac.at/histogis/histogis_geojson.geojson")
+    g = rdflib.Graph()
+    g.add((res_uri, ARCHE.hasTitle, Literal('HistoGIS Data as GeoJSON')))
+    g.add((res_uri, RDF.type, ARCHE.Resource))
+    g.add((res_uri, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
+    g.add((res_uri, ARCHE.isPartOf, topcol))
+    g.add((res_uri, ARCHE.hasContact, mschloegl))
+    g.add((res_uri, ARCHE.hasContact, pandorfer))
+    g.add((res_uri, ARCHE.hasContributor, pandorfer))
+    g.add((res_uri, ARCHE.hasContributor, mschloegl))
+    g.add((res_uri, ARCHE.hasCreator, pmarck))
+    g.add((res_uri, ARCHE.hasCreator, apiechl))
+    g.add((res_uri, ARCHE.hasCreator, adueck))
+    g.add((res_uri, ARCHE.hasDescription, Literal(
+        "A GeoJSON FeatureCollection of all HistoGIS Vector Data"
+    )))
+    g.add((res_uri, ARCHE.hasCoverageStartDate, Literal('1815-01-01', datatype=XSD.date)))
+    g.add((res_uri, ARCHE.hasCoverageEndDate, Literal('1919-01-01', datatype=XSD.date)))
+
     # vector-collection
     vecol = URIRef('https://id.acdh.oeaw.ac.at/histogis/vectordata')
     g.add((vecol, RDF.type, ARCHE.Collection))
@@ -84,8 +104,6 @@ def project_to_arche():
     g.add((vecol, ARCHE.hasTitle, Literal('HistoGIS Vector Data')))
     g.add((vecol, ARCHE.isPartOf, topcol))
     g.add((vecol, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
-    g.add((vecol, ARCHE.hasContact, mschloegl))
-    g.add((vecol, ARCHE.hasContact, pandorfer))
     g.add((vecol, ARCHE.hasContributor, pandorfer))
     g.add((vecol, ARCHE.hasContributor, mschloegl))
     g.add((vecol, ARCHE.hasCreator, pmarck))
