@@ -79,7 +79,6 @@ def project_to_arche():
 
     # add summary-file
     res_uri = URIRef("https://id.acdh.oeaw.ac.at/histogis/histogis_geojson.geojson")
-    g = rdflib.Graph()
     g.add((res_uri, ARCHE.hasTitle, Literal('HistoGIS Data as GeoJSON')))
     g.add((res_uri, RDF.type, ARCHE.Resource))
     g.add((res_uri, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
