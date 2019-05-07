@@ -83,6 +83,11 @@ def import_shapes(shapefiles, source):
                     spat.orig_id = row['id']
             except KeyError:
                 pass
+            try:
+                if row['wiki_id']:
+                    spat.wikidata_id = row['wiki_id']
+            except KeyError:
+                pass
             for x in list(df.keys()):
                 if x not in mandatory_keys:
                     add_data[x] = row[x]

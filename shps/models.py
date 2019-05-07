@@ -389,6 +389,15 @@ class TempSpatial(IdProvider):
         g.add((res_uri, ARCHE.hasFormat, Literal("application/vnd.geo+json")))
         return g
 
+    def sanitize_wikidataid(self):
+        if self.wikidata_id is not None:
+            if self.wikidata_id.startswith('http'):
+                return self.wikidata_id
+            else:
+                return "https://www.wikidata.org/wiki/{}".format(self.wikidata_id)
+        else:
+            return None
+
     def __str__(self):
         if self.name:
             return "{} ({} - {})".format(self.name, self.start_date, self.end_date)

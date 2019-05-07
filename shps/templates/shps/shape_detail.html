@@ -99,7 +99,7 @@
                         </abbr>
                     </th>
                     <td>
-                        <a href="object.wikidata_id">{{ object.wikidata_id }}</a>
+                        <a href="{{ object.sanitize_wikidataid }}">{{ object.wikidata_id }}</a>
                     </td>
                 </tr>
                 {% endif %}
