@@ -8,34 +8,24 @@ from rest_framework.schemas import AutoSchema
 from rest_framework.settings import api_settings
 from rest_framework import generics
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
 from rest_framework_gis.pagination import GeoJsonPagination
 from django_filters import rest_framework as df_rest_framework
 
 from . models import TempSpatial, Source
 from . filters import TempSpatialListFilter
-from . api_serializers import TempSpatialSerializer, SourceSerializer, TempSpatialSimpleSerializer
+from . api_serializers import TempSpatialSerializer, SourceSerializer, SimpleSerializer
+
+
+class SimpledResultsSetPagination(PageNumberPagination):
+    page_size = 1000
+    page_size_query_param = 'page_size'
 
 
 class StandardResultsSetPagination(GeoJsonPagination):
     page_size = 1
     page_size_query_param = 'page_size'
     max_page_size = 25
-
-
-class TempSpatialSimpleViewSet(viewsets.ModelViewSet):
-
-    """
-    API endpoint that allows TempSpatial objects to be viewed or edited.
-    """
-
-    queryset = TempSpatial.objects.all()
-    serializer_class = TempSpatialSimpleSerializer
-    filter_backends = (df_rest_framework.DjangoFilterBackend, )
-    filter_class = TempSpatialListFilter
-    renderer_classes = (
-        rest_framework.renderers.BrowsableAPIRenderer,
-        rest_framework.renderers.JSONRenderer,
-    )
 
 
 class TempSpatialViewSet(viewsets.ModelViewSet):
@@ -47,6 +37,23 @@ class TempSpatialViewSet(viewsets.ModelViewSet):
     queryset = TempSpatial.objects.all()
     serializer_class = TempSpatialSerializer
     pagination_class = StandardResultsSetPagination
+    filter_backends = (df_rest_framework.DjangoFilterBackend, )
+    filter_class = TempSpatialListFilter
+    renderer_classes = (
+        rest_framework.renderers.BrowsableAPIRenderer,
+        rest_framework.renderers.JSONRenderer,
+    )
+
+
+class SimpleViewSet(viewsets.ModelViewSet):
+
+    """
+    API endpoint for TempSpatial objects (without GIS data-points)
+    """
+
+    queryset = TempSpatial.objects.all()
+    serializer_class = SimpleSerializer
+    pagination_class = SimpledResultsSetPagination
     filter_backends = (df_rest_framework.DjangoFilterBackend, )
     filter_class = TempSpatialListFilter
     renderer_classes = (

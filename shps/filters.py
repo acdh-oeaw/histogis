@@ -26,6 +26,11 @@ class TempSpatialListFilter(GeoFilterSet):
         help_text='Fuzzy search (icontains)',
         label=TempSpatial._meta.get_field('name').verbose_name
         )
+    alt_name = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text='Fuzzy search (icontains)',
+        label=TempSpatial._meta.get_field('alt_name').verbose_name
+        )
     start_date = django_filters.DateFromToRangeFilter(
         label="Start Date",
         help_text="Start Date not before - not after."

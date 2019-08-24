@@ -115,6 +115,7 @@ class TempSpatialFilterFormHelper(FormHelper):
             Fieldset(
                 'Basic search options',
                 'name',
+                'alt_name',
                 css_id="basic_search_fields"
                 ),
             Accordion(

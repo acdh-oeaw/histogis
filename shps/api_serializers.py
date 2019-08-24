@@ -3,7 +3,7 @@ from . serializer_base import LinkedPastsSerializer
 from . models import TempSpatial, Source
 
 
-class TempSpatialSimpleSerializer(serializers.HyperlinkedModelSerializer):
+class SimpleSerializer(serializers.HyperlinkedModelSerializer):
 
     """ A class to serialize TempSpatial objects without GIS data points """
 
