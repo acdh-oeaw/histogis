@@ -13,13 +13,29 @@ from django_filters import rest_framework as df_rest_framework
 
 from . models import TempSpatial, Source
 from . filters import TempSpatialListFilter
-from . api_serializers import TempSpatialSerializer, SourceSerializer
+from . api_serializers import TempSpatialSerializer, SourceSerializer, TempSpatialSimpleSerializer
 
 
 class StandardResultsSetPagination(GeoJsonPagination):
     page_size = 1
     page_size_query_param = 'page_size'
     max_page_size = 25
+
+
+class TempSpatialSimpleViewSet(viewsets.ModelViewSet):
+
+    """
+    API endpoint that allows TempSpatial objects to be viewed or edited.
+    """
+
+    queryset = TempSpatial.objects.all()
+    serializer_class = TempSpatialSimpleSerializer
+    filter_backends = (df_rest_framework.DjangoFilterBackend, )
+    filter_class = TempSpatialListFilter
+    renderer_classes = (
+        rest_framework.renderers.BrowsableAPIRenderer,
+        rest_framework.renderers.JSONRenderer,
+    )
 
 
 class TempSpatialViewSet(viewsets.ModelViewSet):

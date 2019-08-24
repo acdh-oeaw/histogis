@@ -11,6 +11,7 @@ router.register(r'skosnamespaces', api_views.SkosNamespaceViewSet)
 router.register(r'skosconceptschemes', api_views.SkosConceptSchemeViewSet)
 router.register(r'skosconcepts', api_views.SkosConceptViewSet)
 router.register(r'tempspatial', shps_api_views.TempSpatialViewSet)
+router.register(r'tempspatialsimple', shps_api_views.TempSpatialSimpleViewSet)
 router.register(r'source', shps_api_views.SourceViewSet)
 
 urlpatterns = [

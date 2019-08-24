@@ -3,6 +3,17 @@ from . serializer_base import LinkedPastsSerializer
 from . models import TempSpatial, Source
 
 
+class TempSpatialSimpleSerializer(serializers.HyperlinkedModelSerializer):
+
+    """ A class to serialize TempSpatial objects without GIS data points """
+
+    class Meta:
+        model = TempSpatial
+        exclude = (
+            'geom',
+        )
+
+
 class SourceSerializer(serializers.HyperlinkedModelSerializer):
 
     """ A class to serialize Source objects as JSON compatible data """
