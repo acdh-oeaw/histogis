@@ -385,6 +385,7 @@ class TempSpatial(IdProvider):
         g.add((res_uri, ARCHE.hasCreator, pmarck))
         g.add((res_uri, ARCHE.hasCreator, apiechl))
         g.add((res_uri, ARCHE.hasCreator, adueck))
+        g.add((res_uri, ARCHE.hasDescription, Literal(f"{self.source.description}")))
         g.add((res_uri, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
         g.add((res_uri, ARCHE.hasFormat, Literal("application/vnd.geo+json")))
         return g

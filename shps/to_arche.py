@@ -37,27 +37,32 @@ def project_to_arche():
 
     # persons
     pandorfer = URIRef("http://d-nb.info/gnd/1043833846")
+    g.add((pandorfer, RDF.type, ARCHE.Person))
     g.add((pandorfer, ARCHE.hasFirstName, Literal('Peter')))
     g.add((pandorfer, ARCHE.hasLastName, Literal('Andorfer')))
     g.add((project, ARCHE.hasPrincipalInvestigator, pandorfer))
     g.add((project, ARCHE.hasContact, pandorfer))
 
     mschloegl = URIRef("http://d-nb.info/gnd/1154715620")
+    g.add((mschloegl, RDF.type, ARCHE.Person))
     g.add((mschloegl, ARCHE.hasFirstName, Literal('Matthias')))
     g.add((mschloegl, ARCHE.hasLastName, Literal('Schlögl')))
     g.add((project, ARCHE.hasContact, mschloegl))
 
     apiechl = URIRef("https://orcid.org/0000-0002-9239-5577")
+    g.add((apiechl, RDF.type, ARCHE.Person))
     g.add((apiechl, ARCHE.hasFirstName, Literal('Piechl')))
     g.add((apiechl, ARCHE.hasLastName, Literal('Anna')))
     g.add((project, ARCHE.hasCreator, apiechl))
 
     adueck = URIRef("https://orcid.org/0000-0003-3392-2610")
+    g.add((adueck, RDF.type, ARCHE.Person))
     g.add((adueck, ARCHE.hasFirstName, Literal('Dückelmann')))
     g.add((adueck, ARCHE.hasLastName, Literal('Antonia')))
     g.add((project, ARCHE.hasCreator, adueck))
 
     pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
+    g.add((pmarck, ARCHE.type, ARCHE.Person))
     g.add((pmarck, ARCHE.hasFirstName, Literal('Marckhgott-Sanabria')))
     g.add((pmarck, ARCHE.hasLastName, Literal('Peter Paul')))
     g.add((project, ARCHE.hasCreator, pmarck))
@@ -113,12 +118,6 @@ def project_to_arche():
     g.add((vecol, ARCHE.hasCoverageEndDate, Literal('1919-01-01', datatype=XSD.date)))
 
     for x in TempSpatial.objects.all():
-        res = x.as_arche_res()
-        g.add((vecol, ARCHE.hasContributor, pandorfer))
-        g.add((vecol, ARCHE.hasContributor, mschloegl))
-        g.add((vecol, ARCHE.hasCreator, pmarck))
-        g.add((vecol, ARCHE.hasCreator, apiechl))
-        g.add((vecol, ARCHE.hasCreator, adueck))
         g = g + x.as_arche_res()
 
     return g
