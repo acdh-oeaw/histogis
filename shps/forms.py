@@ -114,6 +114,7 @@ class TempSpatialFilterFormHelper(FormHelper):
         self.layout = Layout(
             Fieldset(
                 'Basic search options',
+                'all_name',
                 'name',
                 'alt_name',
                 css_id="basic_search_fields"

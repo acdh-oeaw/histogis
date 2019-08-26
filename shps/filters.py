@@ -1,4 +1,5 @@
 import django_filters
+from django.db.models import Q
 from rest_framework_gis.filterset import GeoFilterSet
 from django_filters.rest_framework import FilterSet
 from rest_framework_gis.filters import GeometryFilter
@@ -21,6 +22,9 @@ class SourceListFilter(django_filters.FilterSet):
 
 
 class TempSpatialListFilter(GeoFilterSet):
+    all_name = django_filters.CharFilter(
+        method='all_name_filter',
+        label="Name", help_text="Fuzzy search in Name and Alternative Name fields")
     name = django_filters.CharFilter(
         lookup_expr='icontains',
         help_text='Fuzzy search (icontains)',
@@ -50,3 +54,8 @@ class TempSpatialListFilter(GeoFilterSet):
             'centroid',
             'temp_extent'
         ]
+
+    def all_name_filter(self, queryset, name, value):
+        return queryset.filter(
+            Q(name__icontains=value) | Q(alt_name__icontains=value)
+        )
