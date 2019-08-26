@@ -7,10 +7,27 @@ class SimpleSerializer(serializers.HyperlinkedModelSerializer):
 
     """ A class to serialize TempSpatial objects without GIS data points """
 
+    source_name = serializers.CharField(source='source.name')
+    adm_name = serializers.CharField(source='administrative_unit.pref_label')
+    spatial_extent_sqm = serializers.ReadOnlyField(source="sq_km")
+    slugged_name = serializers.ReadOnlyField(source="slug_name")
+
     class Meta:
         model = TempSpatial
-        exclude = (
-            'geom',
+        fields = (
+            'id',
+            'wikidata_id',
+            'name',
+            'alt_name',
+            'source',
+            'source_name',
+            'administrative_unit',
+            'adm_name',
+            'start_date',
+            'end_date',
+            'date_accuracy',
+            'spatial_extent_sqm',
+            'slugged_name',
         )
 
 
@@ -51,6 +68,7 @@ class TempSpatialSerializer(LinkedPastsSerializer, serializers.HyperlinkedModelS
             'adm_name',
             'start_date',
             'end_date',
+            'date_accuracy',
             'spatial_extent',
             'spatial_extent_sqm',
             'parents',
