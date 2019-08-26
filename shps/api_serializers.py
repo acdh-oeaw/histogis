@@ -16,6 +16,7 @@ class SimpleSerializer(serializers.HyperlinkedModelSerializer):
         model = TempSpatial
         fields = (
             'id',
+            'url',
             'wikidata_id',
             'name',
             'alt_name',
