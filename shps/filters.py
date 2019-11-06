@@ -4,7 +4,10 @@ from rest_framework_gis.filterset import GeoFilterSet
 from django_filters.rest_framework import FilterSet
 from rest_framework_gis.filters import GeometryFilter
 
-from .models import TempSpatial, Source
+from vocabs.models import SkosConcept
+from . models import TempSpatial, Source
+
+
 
 
 class SourceListFilter(django_filters.FilterSet):
@@ -35,6 +38,16 @@ class TempSpatialListFilter(GeoFilterSet):
         help_text='Fuzzy search (icontains)',
         label=TempSpatial._meta.get_field('alt_name').verbose_name
         )
+    administrative_unit = django_filters.ModelMultipleChoiceFilter(
+        queryset=SkosConcept.objects.all(),
+        label=TempSpatial._meta.get_field('administrative_unit').verbose_name,
+        help_text=TempSpatial._meta.get_field('administrative_unit').help_text
+    )
+    source = django_filters.ModelMultipleChoiceFilter(
+        queryset=Source.objects.all(),
+        label=TempSpatial._meta.get_field('source').verbose_name,
+        help_text=TempSpatial._meta.get_field('source').help_text
+    )
     start_date = django_filters.DateFromToRangeFilter(
         label="Start Date",
         help_text="Start Date not before - not after."
