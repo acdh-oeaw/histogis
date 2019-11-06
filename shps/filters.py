@@ -8,8 +8,6 @@ from vocabs.models import SkosConcept
 from . models import TempSpatial, Source
 
 
-
-
 class SourceListFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(
         lookup_expr='icontains',
