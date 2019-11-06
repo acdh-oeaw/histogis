@@ -80,7 +80,6 @@ class TempSpatialListView(GenericListView):
             df['geometry'] = df.apply(
                 lambda row: wkt.loads(row['geom'].wkt), axis=1
             )
-            print('#######################')
             str_df = df.astype('str').drop(['geom'], axis=1)
             gdf = gp.GeoDataFrame(str_df)
             gdf['geometry'] = gdf.apply(

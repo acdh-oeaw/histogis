@@ -52,7 +52,6 @@ class SourceForm(forms.ModelForm):
             uploaded_file = instance.upload
             temp_dir = settings.TEMP_DIR
             shapefiles = unzip_shapes(uploaded_file.path, temp_dir)
-            print(shapefiles)
             import_shapes(shapefiles, instance)
 
             # remove unzipped files

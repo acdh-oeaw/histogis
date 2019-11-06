@@ -149,7 +149,6 @@ class Csv2SkosImporter(Csv2SkosReader):
         failed = []
         success = []
         for x in self.get_concepts():
-            # print(x['concept'])
             pass
         report['after'] = len(SkosConcept.objects.all())
         return report

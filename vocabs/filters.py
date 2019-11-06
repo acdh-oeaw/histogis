@@ -24,11 +24,8 @@ def generous_concept_filter(queryset, name, value):
     """ call this function through "method=generous_concept_filter" """
     if value:
         lookup = '__'.join([name, 'in'])
-        print("name: {}".format(name))
-        print("value: {}".format(value))
         starter = value[0]
         all = get_all_children(starter, include_self=True)
-        print("all :{}".format(all))
         qs = queryset.filter(**{lookup: all})
         return qs
     return queryset

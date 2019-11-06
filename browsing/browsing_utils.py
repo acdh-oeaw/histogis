@@ -77,8 +77,6 @@ class GenericListView(django_tables2.SingleTableView):
         )
 
     def get_all_cols(self):
-        print('get_table')
-        print(self.get_table().base_columns.keys())
         all_cols = list(self.get_table().base_columns.keys())
         return all_cols
 
@@ -131,7 +129,7 @@ class GenericListView(django_tables2.SingleTableView):
         if 'charts' in settings.INSTALLED_APPS:
             model = self.model
             app_label = model._meta.app_label
-            print(app_label)
+
             filtered_objs = ChartConfig.objects.filter(
                 model_name=model.__name__.lower(),
                 app_name=app_label

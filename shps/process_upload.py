@@ -95,7 +95,6 @@ def import_shapes(shapefiles, source):
             spat.source = source
             try:
                 spat.save()
-                print(spat.id)
                 temp_spatial_ids.append(spat.id)
             except Exception as e:
                 print(e)
