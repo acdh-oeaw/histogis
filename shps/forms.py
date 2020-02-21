@@ -1,10 +1,14 @@
 import glob
 import os
+
 from django import forms
 from django.conf import settings
+from django.core.exceptions import ValidationError
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit,  Layout, Fieldset, Div, MultiField, HTML
 from crispy_forms.bootstrap import Accordion, AccordionGroup
+
 from leaflet.forms.widgets import LeafletWidget
 
 from . models import TempSpatial, Source
@@ -47,12 +51,18 @@ class SourceForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'save'),)
 
     def save(self, commit=True):
+        # make sure the temp folder is clean
+        [os.remove(f) for f in glob.glob(os.path.join(settings.TEMP_DIR, '*.*'))]
         instance = super(SourceForm, self).save(commit=True)
         if self.cleaned_data['import_shapes']:
             uploaded_file = instance.upload
             temp_dir = settings.TEMP_DIR
             shapefiles = unzip_shapes(uploaded_file.path, temp_dir)
-            import_shapes(shapefiles, instance)
+            try:
+                import_shapes(shapefiles, instance)
+            except Exception as e:
+                [os.remove(f) for f in glob.glob(os.path.join(settings.TEMP_DIR, '*.*'))]
+                raise ValidationError(e)
 
             # remove unzipped files
             [os.remove(f) for f in glob.glob(os.path.join(settings.TEMP_DIR, '*.*'))]
