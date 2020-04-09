@@ -1,7 +1,7 @@
 import json
 import geopandas as gp
 import pandas as pd
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
@@ -26,6 +26,19 @@ from .filters import *
 from .forms import *
 
 from .to_arche import serialize_project
+
+
+def get_ids(request):
+    base_uri = request.build_absolute_uri().split('/shapes')[0]
+    data = {
+        "ids": [
+            {
+                "md": f"{base_uri}{x.get_arche_url()}",
+                "html": f"{base_uri}{x.get_absolute_url()}",
+                "payload": f"{base_uri}{x.get_json_url()}?format=json"
+            } for x in TempSpatial.objects.all()],
+    }
+    return JsonResponse(data)
 
 
 def project_as_arche_graph(request):

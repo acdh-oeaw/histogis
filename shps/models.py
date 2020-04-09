@@ -267,6 +267,16 @@ class TempSpatial(IdProvider):
             'shapes:shape_detail', kwargs={'pk': self.id}
         )
 
+    def get_arche_url(self):
+        return reverse(
+            'shapes:shape_arche', kwargs={'pk': self.id}
+        )
+
+    def get_json_url(self):
+        return reverse(
+            'tempspatial-detail', kwargs={'pk': self.id}
+        )
+
     def get_permalink_url(self):
         return reverse(
             'shapes:permalink-view', kwargs={'unique': self.unique}
