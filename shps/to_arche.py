@@ -80,6 +80,20 @@ def serialize_project():
     # top-collection more
     g.add((project, ARCHE.hasRelatedCollection, topcol))
     g.add((project, ARCHE.hasMetadataCreator, pandorfer))
+    g.add(
+        (
+            project,
+            ARCHE.hasRelatedDiscipline,
+            URIRef('https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601')
+        )
+    )
+    g.add(
+        (
+            topcol,
+            ARCHE.hasRelatedDiscipline,
+            URIRef('https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601')
+        )
+    )
     g.add((topcol, ARCHE.hasRelatedProject, project))
     g.add((topcol, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
     g.add((topcol, ARCHE.hasContact, mschloegl))
