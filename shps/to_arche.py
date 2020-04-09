@@ -79,10 +79,12 @@ def serialize_project():
 
     # top-collection more
     g.add((project, ARCHE.hasRelatedCollection, topcol))
+    g.add((project, ARCHE.hasMetadataCreator, pandorfer))
     g.add((topcol, ARCHE.hasRelatedProject, project))
     g.add((topcol, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
     g.add((topcol, ARCHE.hasContact, mschloegl))
     g.add((topcol, ARCHE.hasContact, pandorfer))
+    g.add((topcol, ARCHE.hasMetadataCreator, pandorfer))
     g.add((topcol, ARCHE.hasContributor, pandorfer))
     g.add((topcol, ARCHE.hasContributor, mschloegl))
     g.add((topcol, ARCHE.hasCreator, pmarck))
@@ -95,6 +97,7 @@ def serialize_project():
     # vector-collection
     vecol = URIRef('https://id.acdh.oeaw.ac.at/histogis/vectordata')
     g.add((vecol, RDF.type, ARCHE.Collection))
+    g.add((vecol, ARCHE.hasMetadataCreator, pandorfer))
     g.add((vecol, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
     g.add((vecol, ARCHE.hasTitle, Literal('HistoGIS Vector Data', lang="en")))
     g.add((vecol, ARCHE.isPartOf, topcol))

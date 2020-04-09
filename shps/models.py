@@ -385,6 +385,7 @@ class TempSpatial(IdProvider):
 
         g = rdflib.Graph()
         g.add((res_uri, RDF.type, ARCHE.Resource))
+        g.add((project, ARCHE.hasMetadataCreator, pandorfer))
         g.add((res_uri, ARCHE.hasOwner, URIRef('https://d-nb.info/gnd/1123037736')))
         g.add((res_uri, ARCHE.hasRightsHolder, URIRef('https://d-nb.info/gnd/1123037736')))
         g.add((res_uri, ARCHE.hasLicensor, URIRef('https://d-nb.info/gnd/1123037736')))
