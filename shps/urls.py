@@ -10,6 +10,8 @@ urlpatterns = [
     path('permalink/<unique>/', views.PermaLinkView.as_view(), name='permalink-view'),
     url(r'^shape/detail/(?P<pk>[0-9]+)$', views.TempSpatialDetailView.as_view(),
         name='shape_detail'),
+    url(r'^shape/arche/(?P<pk>[0-9]+)$', views.res_as_arche_graph,
+        name='shape_arche'),
     url(r'^shape/delete/(?P<pk>[0-9]+)$', views.TempSpatialDelete.as_view(),
         name='shape_delete'),
     url(r'^shape/edit/(?P<pk>[0-9]+)$', views.TempSpatialUpdate.as_view(),

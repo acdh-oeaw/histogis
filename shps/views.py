@@ -26,6 +26,23 @@ from .filters import *
 from .forms import *
 
 
+def res_as_arche_graph(request, pk):
+    format = request.GET.get('format', 'xml')
+    try:
+        res = TempSpatial.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        raise Http404(f"No object with id: {pk} found")
+    g = res.as_arche_res()
+    if format == 'turtle':
+        return HttpResponse(
+            g.serialize(encoding='utf-8', format='turtle'), content_type='text/turtle'
+        )
+    else:
+        return HttpResponse(
+            g.serialize(encoding='utf-8'), content_type='application/xml'
+        )
+
+
 class PermaLinkView(RedirectView):
     permanent = False
     query_string = True

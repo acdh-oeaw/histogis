@@ -46,7 +46,12 @@
                     <h2 style="text-align: center;">
                         {{ object }}
                         <small>
-                            <a href="{% url 'tempspatial-detail' pk=object.id %}?format=json">
+                            <a href="{% url 'tempspatial-detail' pk=object.id %}?format=json" title="GeoJSON">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </small>
+                        <small>
+                            <a href="{% url 'shapes:shape_arche' pk=object.id %}" title="ARCHE-RDF (XML); add ?format=turtle to get a .ttl">
                                 <i class="fas fa-download"></i>
                             </a>
                         </small>
