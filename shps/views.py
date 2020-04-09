@@ -31,6 +31,7 @@ from .to_arche import serialize_project
 def get_ids(request):
     base_uri = request.build_absolute_uri().split('/shapes')[0]
     data = {
+        "arche_constants": f"{base_uri}{reverse('shapes:project_as_arche')}",
         "ids": [
             {
                 "md": f"{base_uri}{x.get_arche_url()}",
