@@ -137,6 +137,29 @@ def serialize_project():
     # vector-collection
     vecol = URIRef('https://id.acdh.oeaw.ac.at/histogis/vectordata')
     g.add((vecol, RDF.type, ARCHE.Collection))
+    g.add(
+        (
+            vecol,
+            ARCHE.hasRelatedDiscipline,
+            URIRef('https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601')
+        )
+    )
+    g.add(
+        (
+            vecol,
+            ARCHE.hasSubject, Literal('History', lang='en')
+        )
+    )
+    g.add(
+        (
+            vecol,
+            ARCHE.hasSubject, Literal('GIS', lang='en')
+        )
+    )
+    g.add((vecol, ARCHE.hasContact, mschloegl))
+    g.add((vecol, ARCHE.hasContact, pandorfer))
+    g.add((vecol, ARCHE.hasDepositor, pandorfer))
+    g.add((vecol, ARCHE.hasMetadataCreator, pandorfer))
     g.add((vecol, ARCHE.hasMetadataCreator, pandorfer))
     g.add((vecol, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
     g.add((vecol, ARCHE.hasTitle, Literal('HistoGIS Vector Data', lang="en")))

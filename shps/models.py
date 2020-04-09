@@ -394,6 +394,7 @@ class TempSpatial(IdProvider):
             )
         )
         g.add((res_uri, ARCHE.hasDepositor, pandorfer))
+        g.add((res_uri, ARCHE.hasContact, pandorfer))
         g.add((res_uri, ARCHE.hasOwner, URIRef('https://d-nb.info/gnd/1123037736')))
         g.add((res_uri, ARCHE.hasRightsHolder, URIRef('https://d-nb.info/gnd/1123037736')))
         g.add((res_uri, ARCHE.hasLicensor, URIRef('https://d-nb.info/gnd/1123037736')))
