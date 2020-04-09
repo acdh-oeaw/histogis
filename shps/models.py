@@ -419,7 +419,7 @@ class TempSpatial(IdProvider):
         g.add(
             (
                 res_uri,
-                ARCHE.isPartOf,
+                ARCHE.hasCategory,
                 URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/dataset/geojson")
             )
         )
