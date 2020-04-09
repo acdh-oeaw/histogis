@@ -83,6 +83,30 @@ def serialize_project():
     g.add(
         (
             project,
+            ARCHE.hasSubject, Literal('History', lang='en')
+        )
+    )
+    g.add(
+        (
+            project,
+            ARCHE.hasSubject, Literal('GIS', lang='en')
+        )
+    )
+    g.add(
+        (
+            topcol,
+            ARCHE.hasSubject, Literal('History', lang='en')
+        )
+    )
+    g.add(
+        (
+            topcol,
+            ARCHE.hasSubject, Literal('GIS', lang='en')
+        )
+    )
+    g.add(
+        (
+            project,
             ARCHE.hasRelatedDiscipline,
             URIRef('https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601')
         )
