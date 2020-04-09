@@ -16,53 +16,63 @@ ACDH = Namespace('https://id.acdh.oeaw.ac.at/')
 curent_date = datetime.now().strftime('%Y-%m-%d')
 
 
-def project_to_arche():
+def serialize_project():
     g = rdflib.Graph()
 
     # top-collection
     topcol = URIRef('https://id.acdh.oeaw.ac.at/histogis')
     g.add((topcol, RDF.type, ARCHE.Collection))
-    g.add((topcol, ARCHE.hasTitle, Literal('HistoGIS Data')))
+    g.add((topcol, ARCHE.hasTitle, Literal('HistoGIS Data', lang="en")))
     g.add((topcol, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
+    g.add((topcol, ARCHE.hasOwner, URIRef('https://d-nb.info/gnd/1123037736')))
+    g.add((topcol, ARCHE.hasRightsHolder, URIRef('https://d-nb.info/gnd/1123037736')))
+    g.add((topcol, ARCHE.hasLicensor, URIRef('https://d-nb.info/gnd/1123037736')))
 
     # project
     project = URIRef('https://id.acdh.oeaw.ac.at/histogis/project')
     g.add((project, RDF.type, ARCHE.Project))
-    g.add((project, ARCHE.hasTitle, Literal('HistoGIS Project')))
-    g.add((project, ARCHE.hasDescription, Literal(PROJECT_METADATA['description'])))
+    g.add((project, ARCHE.hasTitle, Literal('HistoGIS Project', lang="en")))
+    g.add((project, ARCHE.hasDescription, Literal(PROJECT_METADATA['description'], lang="en")))
     g.add((project, ARCHE.hasStartDate, Literal('2018-04-01', datatype=XSD.date)))
     g.add((project, ARCHE.hasEndDate, Literal('2020-03-31', datatype=XSD.date)))
     g.add((project, ARCHE.language, Literal('eng')))
+    g.add((project, ARCHE.hasOwner, URIRef('https://d-nb.info/gnd/1123037736')))
+    g.add((project, ARCHE.hasRightsHolder, URIRef('https://d-nb.info/gnd/1123037736')))
+    g.add((project, ARCHE.hasLicensor, URIRef('https://d-nb.info/gnd/1123037736')))
     g.add((topcol, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
 
     # persons
-    pandorfer = URIRef("http://d-nb.info/gnd/1043833846")
+    pandorfer = URIRef("https://d-nb.info/gnd/1043833846")
     g.add((pandorfer, RDF.type, ARCHE.Person))
-    g.add((pandorfer, ARCHE.hasFirstName, Literal('Peter')))
-    g.add((pandorfer, ARCHE.hasLastName, Literal('Andorfer')))
+    g.add((pandorfer, ARCHE.hasTitle, Literal('Peter Andorfer', lang="de")))
     g.add((project, ARCHE.hasPrincipalInvestigator, pandorfer))
     g.add((project, ARCHE.hasContact, pandorfer))
 
-    mschloegl = URIRef("http://d-nb.info/gnd/1154715620")
+    mschloegl = URIRef("https://d-nb.info/gnd/1154715620")
     g.add((mschloegl, RDF.type, ARCHE.Person))
+    g.add((mschloegl, ARCHE.hasFirstName, Literal('Matthias Schlögl', lang="de")))
     g.add((mschloegl, ARCHE.hasFirstName, Literal('Matthias')))
     g.add((mschloegl, ARCHE.hasLastName, Literal('Schlögl')))
+    g.add((project, ARCHE.hasPrincipalInvestigator, mschloegl))
     g.add((project, ARCHE.hasContact, mschloegl))
 
     apiechl = URIRef("https://orcid.org/0000-0002-9239-5577")
     g.add((apiechl, RDF.type, ARCHE.Person))
+    g.add((apiechl, ARCHE.hasTitle, Literal('Anna Piechl', lang="de")))
     g.add((apiechl, ARCHE.hasFirstName, Literal('Piechl')))
     g.add((apiechl, ARCHE.hasLastName, Literal('Anna')))
     g.add((project, ARCHE.hasCreator, apiechl))
 
     adueck = URIRef("https://orcid.org/0000-0003-3392-2610")
     g.add((adueck, RDF.type, ARCHE.Person))
+    g.add((adueck, ARCHE.hasTitle, Literal('Antonia Dückelmann', lang="de")))
     g.add((adueck, ARCHE.hasFirstName, Literal('Dückelmann')))
     g.add((adueck, ARCHE.hasLastName, Literal('Antonia')))
     g.add((project, ARCHE.hasCreator, adueck))
 
     pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
     g.add((pmarck, ARCHE.type, ARCHE.Person))
+    g.add((pmarck, ARCHE.hasTitle, Literal('Peter Paul Marckhgott-Sanabria', lang="de")))
     g.add((pmarck, ARCHE.hasFirstName, Literal('Marckhgott-Sanabria')))
     g.add((pmarck, ARCHE.hasLastName, Literal('Peter Paul')))
     g.add((project, ARCHE.hasCreator, pmarck))
@@ -78,34 +88,15 @@ def project_to_arche():
     g.add((topcol, ARCHE.hasCreator, pmarck))
     g.add((topcol, ARCHE.hasCreator, apiechl))
     g.add((topcol, ARCHE.hasCreator, adueck))
-    g.add((topcol, ARCHE.hasDescription, Literal(PROJECT_METADATA['description'])))
+    g.add((topcol, ARCHE.hasDescription, Literal(PROJECT_METADATA['description'], lang="en")))
     g.add((topcol, ARCHE.hasCoverageStartDate, Literal('1815-01-01', datatype=XSD.date)))
     g.add((topcol, ARCHE.hasCoverageEndDate, Literal('1919-01-01', datatype=XSD.date)))
-
-    # add summary-file
-    res_uri = URIRef("https://id.acdh.oeaw.ac.at/histogis/histogis_geojson.geojson")
-    g.add((res_uri, ARCHE.hasTitle, Literal('HistoGIS Data as GeoJSON')))
-    g.add((res_uri, RDF.type, ARCHE.Resource))
-    g.add((res_uri, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
-    g.add((res_uri, ARCHE.isPartOf, topcol))
-    g.add((res_uri, ARCHE.hasContact, mschloegl))
-    g.add((res_uri, ARCHE.hasContact, pandorfer))
-    g.add((res_uri, ARCHE.hasContributor, pandorfer))
-    g.add((res_uri, ARCHE.hasContributor, mschloegl))
-    g.add((res_uri, ARCHE.hasCreator, pmarck))
-    g.add((res_uri, ARCHE.hasCreator, apiechl))
-    g.add((res_uri, ARCHE.hasCreator, adueck))
-    g.add((res_uri, ARCHE.hasDescription, Literal(
-        "A GeoJSON FeatureCollection of all HistoGIS Vector Data"
-    )))
-    g.add((res_uri, ARCHE.hasCoverageStartDate, Literal('1815-01-01', datatype=XSD.date)))
-    g.add((res_uri, ARCHE.hasCoverageEndDate, Literal('1919-01-01', datatype=XSD.date)))
 
     # vector-collection
     vecol = URIRef('https://id.acdh.oeaw.ac.at/histogis/vectordata')
     g.add((vecol, RDF.type, ARCHE.Collection))
     g.add((vecol, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
-    g.add((vecol, ARCHE.hasTitle, Literal('HistoGIS Vector Data')))
+    g.add((vecol, ARCHE.hasTitle, Literal('HistoGIS Vector Data', lang="en")))
     g.add((vecol, ARCHE.isPartOf, topcol))
     g.add((vecol, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
     g.add((vecol, ARCHE.hasContributor, pandorfer))
@@ -113,10 +104,21 @@ def project_to_arche():
     g.add((vecol, ARCHE.hasCreator, pmarck))
     g.add((vecol, ARCHE.hasCreator, apiechl))
     g.add((vecol, ARCHE.hasCreator, adueck))
-    g.add((vecol, ARCHE.hasDescription, Literal("This collections provides vectordata (GeoJson)")))
+    g.add(
+        (
+            vecol,
+            ARCHE.hasDescription,
+            Literal("This collections provides vectordata (GeoJson)", lang="en")
+        )
+    )
     g.add((vecol, ARCHE.hasCoverageStartDate, Literal('1815-01-01', datatype=XSD.date)))
     g.add((vecol, ARCHE.hasCoverageEndDate, Literal('1919-01-01', datatype=XSD.date)))
 
+    return g
+
+
+def project_to_arche():
+    g = serialize_project()
     for x in TempSpatial.objects.all():
         g = g + x.as_arche_res()
 

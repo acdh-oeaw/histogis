@@ -7,6 +7,9 @@ app_name = 'shps'
 urlpatterns = [
     url(r'^where-was/$', views.WhereWas.as_view(), name='where_was'),
     url(r'^shapes/$', views.TempSpatialListView.as_view(), name='browse_shapes'),
+    url(r'^arche$', views.project_as_arche_graph,
+        name='project_as_arche'
+    ),
     path('permalink/<unique>/', views.PermaLinkView.as_view(), name='permalink-view'),
     url(r'^shape/detail/(?P<pk>[0-9]+)$', views.TempSpatialDetailView.as_view(),
         name='shape_detail'),

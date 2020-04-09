@@ -20,6 +20,7 @@ from django.utils.text import slugify
 from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
 
+
 ARCHE = Namespace('https://vocabs.acdh.oeaw.ac.at/schema#')
 ACDH = Namespace('https://id.acdh.oeaw.ac.at/')
 
@@ -363,8 +364,9 @@ class TempSpatial(IdProvider):
         )
 
     def as_arche_res(self):
-        pandorfer = URIRef("http://d-nb.info/gnd/1043833846")
-        mschloegl = URIRef("http://d-nb.info/gnd/1154715620")
+        quote = self.source.quote
+        pandorfer = URIRef("https://d-nb.info/gnd/1043833846")
+        mschloegl = URIRef("https://d-nb.info/gnd/1154715620")
         apiechl = URIRef("https://orcid.org/0000-0002-9239-5577")
         adueck = URIRef("https://orcid.org/0000-0003-3392-2610")
         pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
@@ -373,21 +375,34 @@ class TempSpatial(IdProvider):
 
         g = rdflib.Graph()
         g.add((res_uri, RDF.type, ARCHE.Resource))
+        g.add((res_uri, ARCHE.hasOwner, URIRef('https://d-nb.info/gnd/1123037736')))
+        g.add((res_uri, ARCHE.hasRightsHolder, URIRef('https://d-nb.info/gnd/1123037736')))
+        g.add((res_uri, ARCHE.hasLicensor, URIRef('https://d-nb.info/gnd/1123037736')))
         g.add((res_uri, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
         g.add((res_uri, ARCHE.isPartOf, URIRef(veccol)))
         g.add((res_uri, ARCHE.hasTitle, Literal(
-            "{} ({} - {})".format(self.name, self.start_date, self.end_date)
+            "{} ({} - {})".format(self.name, self.start_date, self.end_date), lang="de"
         )))
         g.add((res_uri, ARCHE.hasCoverageStartDate, Literal(self.start_date, datatype=XSD.date)))
         g.add((res_uri, ARCHE.hasCoverageEndDate, Literal(self.end_date, datatype=XSD.date)))
         g.add((res_uri, ARCHE.hasContributor, pandorfer))
         g.add((res_uri, ARCHE.hasContributor, mschloegl))
-        g.add((res_uri, ARCHE.hasCreator, pmarck))
-        g.add((res_uri, ARCHE.hasCreator, apiechl))
-        g.add((res_uri, ARCHE.hasCreator, adueck))
-        g.add((res_uri, ARCHE.hasDescription, Literal(f"{self.source.description}")))
+        if 'Marckhgott' in quote:
+            g.add((res_uri, ARCHE.hasCreator, pmarck))
+        if 'Piechl' in quote:
+            g.add((res_uri, ARCHE.hasCreator, apiechl))
+        if 'Dückelmann' in quote:
+            g.add((res_uri, ARCHE.hasCreator, adueck))
+        g.add((res_uri, ARCHE.hasDescription, Literal(f"{self.source.description}", lang="en")))
         g.add((res_uri, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
-        g.add((res_uri, ARCHE.hasFormat, Literal("application/vnd.geo+json")))
+        g.add((res_uri, ARCHE.hasFormat, Literal("application/vnd.geo+json", lang="en")))
+        g.add(
+            (
+                res_uri,
+                ARCHE.isPartOf,
+                URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/dataset/geojson")
+            )
+        )
         return g
 
     def sanitize_wikidataid(self):

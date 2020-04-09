@@ -25,6 +25,20 @@ from .tables import *
 from .filters import *
 from .forms import *
 
+from .to_arche import serialize_project
+
+
+def project_as_arche_graph(request):
+    g = serialize_project()
+    if format == 'turtle':
+        return HttpResponse(
+            g.serialize(encoding='utf-8', format='turtle'), content_type='text/turtle'
+        )
+    else:
+        return HttpResponse(
+            g.serialize(encoding='utf-8'), content_type='application/xml'
+        )
+
 
 def res_as_arche_graph(request, pk):
     format = request.GET.get('format', 'xml')
