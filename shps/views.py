@@ -40,7 +40,7 @@ def get_ids(request):
                 "md": f"{base_uri}{x.get_arche_url()}",
                 "html": f"{base_uri}{x.get_absolute_url()}",
                 "payload": f"{base_uri}{x.get_json_url()}?format=json"
-            } for x in TempSpatial.objects.all()[:10]],
+            } for x in TempSpatial.objects.all()],
     }
     return JsonResponse(data)
 
