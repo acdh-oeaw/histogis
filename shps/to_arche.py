@@ -80,6 +80,8 @@ def serialize_project():
     # top-collection more
     g.add((project, ARCHE.hasRelatedCollection, topcol))
     g.add((project, ARCHE.hasMetadataCreator, pandorfer))
+    g.add((project, ARCHE.hasDepositor, pandorfer))
+    g.add((topcol, ARCHE.hasDepositor, pandorfer))
     g.add(
         (
             project,
