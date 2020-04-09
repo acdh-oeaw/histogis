@@ -32,13 +32,15 @@ def get_ids(request):
     base_uri = request.build_absolute_uri().split('/shapes')[0]
     data = {
         "arche_constants": f"{base_uri}{reverse('shapes:project_as_arche')}",
+        "id_prefix": "https://id.acdh.oeaw.ac.at/histogis/vectordata",
         "ids": [
             {
                 "id": f"https://id.acdh.oeaw.ac.at/histogis/vectordata/{x.slug_name()}.geojson",
+                "filename": f"{x.slug_name()}.geojson",
                 "md": f"{base_uri}{x.get_arche_url()}",
                 "html": f"{base_uri}{x.get_absolute_url()}",
                 "payload": f"{base_uri}{x.get_json_url()}?format=json"
-            } for x in TempSpatial.objects.all()],
+            } for x in TempSpatial.objects.all()[:10]],
     }
     return JsonResponse(data)
 
