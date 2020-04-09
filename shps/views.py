@@ -34,6 +34,7 @@ def get_ids(request):
         "arche_constants": f"{base_uri}{reverse('shapes:project_as_arche')}",
         "ids": [
             {
+                "id": f"https://id.acdh.oeaw.ac.at/histogis/vectordata/{x.slug_name()}.geojson",
                 "md": f"{base_uri}{x.get_arche_url()}",
                 "html": f"{base_uri}{x.get_absolute_url()}",
                 "payload": f"{base_uri}{x.get_json_url()}?format=json"
