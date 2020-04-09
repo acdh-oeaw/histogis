@@ -172,7 +172,7 @@ def serialize_project():
     g.add((vecol, ARCHE.hasCreator, adueck))
     g.add((vecol, ARCHE.hasLicensor, URIRef('https://d-nb.info/gnd/1123037736')))
     g.add((vecol, ARCHE.hasOwner, URIRef('https://d-nb.info/gnd/1123037736')))
-
+    g.add((vecol, ARCHE.hasRightsHolder, URIRef('https://d-nb.info/gnd/1123037736')))
     g.add(
         (
             vecol,
