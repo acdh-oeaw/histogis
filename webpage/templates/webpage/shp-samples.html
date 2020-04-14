@@ -1,0 +1,34 @@
+{% extends "webpage/base.html" %}
+{% load static %}
+{% load webpage_extras %}
+{% block title %} Sample Shape Files {% endblock %}
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">Sample Shape Files</h1>
+    </div>
+    <div class="card-body">
+      <div>
+        <p>Sample shape files to give examples of how the shape-files look like the HistoGIS Data Curators are working with.</p>
+        <p>
+          <ul>
+            <li>
+              <a href="https://shared.acdh.oeaw.ac.at/histogis/austrian_empire_adm2_crownlands_1860.zip">
+                austrian_empire_adm2_crownlands_1860</a>
+            </li>
+            <li>
+              <a href="https://shared.acdh.oeaw.ac.at/histogis/german_confederation_adm2_1834.zip">
+                german_confederation_adm2_1834</a>
+            </li>
+            <li>
+              <a href="https://shared.acdh.oeaw.ac.at/histogis/reichskreise_1512.zip">
+                reichskreise_1512</a>
+            </li>
+          </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
