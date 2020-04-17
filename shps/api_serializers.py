@@ -11,6 +11,7 @@ class SimpleSerializer(serializers.HyperlinkedModelSerializer):
     adm_name = serializers.CharField(source='administrative_unit.pref_label')
     spatial_extent_sqm = serializers.ReadOnlyField(source="sq_km")
     slugged_name = serializers.ReadOnlyField(source="slug_name")
+    title = serializers.ReadOnlyField(source="name")
 
     class Meta:
         model = TempSpatial
@@ -54,6 +55,7 @@ class TempSpatialSerializer(LinkedPastsSerializer, serializers.HyperlinkedModelS
     spatial_extent_sqm = serializers.ReadOnlyField(source="sq_km")
     parents = serializers.ListField("parents")
     slugged_name = serializers.ReadOnlyField(source="slug_name")
+    title = serializers.ReadOnlyField(source="name")
 
     class Meta:
         model = TempSpatial
@@ -61,6 +63,7 @@ class TempSpatialSerializer(LinkedPastsSerializer, serializers.HyperlinkedModelS
         fields = (
             'id',
             'wikidata_id',
+            'title',
             'name',
             'alt_name',
             'source',

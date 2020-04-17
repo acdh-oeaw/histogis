@@ -58,7 +58,7 @@ class LinkedPastsSerializer(GeoFeatureModelSerializer):
             links = [
                 {
                     "type": "skos:closeMatch",
-                    "identifier": instance.wikidata_id
+                    "identifier": f"http://www.wikidata.org/entity/{instance.wikidata_id}"
                 }
             ]
             feature["links"] = links
