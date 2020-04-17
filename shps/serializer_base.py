@@ -29,8 +29,9 @@ class LinkedPastsSerializer(GeoFeatureModelSerializer):
         names = [
             {"toponym": instance.name}
         ]
-        if len(instance.alt_name_list()) > 1:
-            all_names = [names.append({"toponym": x} for x in instance.alt_name_list())]
+        if len(instance.alt_name_list()) > 0:
+            all_names = [{"toponym": x} for x in instance.alt_name_list()]
+            all_names = names + all_names
         else:
             all_names = names
         types = [
