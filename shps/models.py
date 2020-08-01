@@ -137,6 +137,20 @@ class Source(models.Model):
         except Exception as e:
             return None
 
+    @property
+    def end_date(self):
+        try:
+            return f"{self.source_of.all().order_by('end_date').last().end_date}"
+        except AttributeError:
+            return None
+
+    @property
+    def start_date(self):
+        try:
+            return f"{self.source_of.all().order_by('start_date').last().start_date}"
+        except AttributeError:
+            return None
+
 
 class TempSpatial(IdProvider):
     """A class for temporalized spatial objects"""
@@ -269,7 +283,7 @@ class TempSpatial(IdProvider):
 
     def get_arche_url(self):
         return reverse(
-            'shapes:shape_arche', kwargs={'pk': self.id}
+            'shapes:arche_md', kwargs={'pk': self.id}
         )
 
     def get_json_url(self):
@@ -372,58 +386,6 @@ class TempSpatial(IdProvider):
         return "{}__{}_{}".format(
             slugify(self.name), self.start_date, self.end_date
         )
-
-    def as_arche_res(self):
-        quote = self.source.quote
-        pandorfer = URIRef("https://d-nb.info/gnd/1043833846")
-        mschloegl = URIRef("https://d-nb.info/gnd/1154715620")
-        apiechl = URIRef("https://orcid.org/0000-0002-9239-5577")
-        adueck = URIRef("https://orcid.org/0000-0003-3392-2610")
-        pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
-        veccol = "https://id.acdh.oeaw.ac.at/histogis/vectordata"
-        res_uri = URIRef("{}/{}.geojson".format(veccol, self.slug_name()))
-
-        g = rdflib.Graph()
-        g.add((res_uri, RDF.type, ARCHE.Resource))
-        g.add((res_uri, ARCHE.hasMetadataCreator, pandorfer))
-        g.add(
-            (
-                res_uri,
-                ARCHE.hasRelatedDiscipline,
-                URIRef('https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601')
-            )
-        )
-        g.add((res_uri, ARCHE.hasDepositor, pandorfer))
-        g.add((res_uri, ARCHE.hasContact, pandorfer))
-        g.add((res_uri, ARCHE.hasOwner, URIRef('https://d-nb.info/gnd/1123037736')))
-        g.add((res_uri, ARCHE.hasRightsHolder, URIRef('https://d-nb.info/gnd/1123037736')))
-        g.add((res_uri, ARCHE.hasLicensor, URIRef('https://d-nb.info/gnd/1123037736')))
-        g.add((res_uri, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
-        g.add((res_uri, ARCHE.isPartOf, URIRef(veccol)))
-        g.add((res_uri, ARCHE.hasTitle, Literal(
-            "{} ({} - {})".format(self.name, self.start_date, self.end_date), lang="de"
-        )))
-        g.add((res_uri, ARCHE.hasCoverageStartDate, Literal(self.start_date, datatype=XSD.date)))
-        g.add((res_uri, ARCHE.hasCoverageEndDate, Literal(self.end_date, datatype=XSD.date)))
-        g.add((res_uri, ARCHE.hasContributor, pandorfer))
-        g.add((res_uri, ARCHE.hasContributor, mschloegl))
-        if 'Marckhgott' in quote:
-            g.add((res_uri, ARCHE.hasCreator, pmarck))
-        if 'Piechl' in quote:
-            g.add((res_uri, ARCHE.hasCreator, apiechl))
-        if 'Dückelmann' in quote:
-            g.add((res_uri, ARCHE.hasCreator, adueck))
-        g.add((res_uri, ARCHE.hasDescription, Literal(f"{self.source.description}", lang="en")))
-        g.add((res_uri, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
-        g.add((res_uri, ARCHE.hasFormat, Literal("application/vnd.geo+json", lang="en")))
-        g.add(
-            (
-                res_uri,
-                ARCHE.hasCategory,
-                URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/dataset/geojson")
-            )
-        )
-        return g
 
     def sanitize_wikidataid(self):
         if self.wikidata_id is not None:

@@ -2,15 +2,32 @@ from django.conf.urls import url
 from django.urls import path
 from . import views
 
+from archeutils import views as arche_views
+
 app_name = 'shps'
 
 urlpatterns = [
+    url(
+        r'^ids$',
+        arche_views.get_ids,
+        name='get_ids'
+    ),
+    url(
+        r'^arche$',
+        arche_views.project_as_arche_graph,
+        name='project_as_arche'
+    ),
     url(r'^where-was/$', views.WhereWas.as_view(), name='where_was'),
     url(r'^shapes/$', views.TempSpatialListView.as_view(), name='browse_shapes'),
     url(
         r'^arche$',
         views.project_as_arche_graph,
         name='project_as_arche'
+    ),
+    url(
+        r'^shape/arche/(?P<pk>[0-9]+)$',
+        arche_views.res_as_arche_graph,
+        name='arche_md'
     ),
     url(
         r'^ids$',

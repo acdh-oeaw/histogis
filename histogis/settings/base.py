@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'rest_framework',
     'rest_framework_gis',
+    'django_extensions',
     'leaflet',
     'idprovider',
     'webpage',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'browsing',
     'news',
     'analyze',
+    'archeutils',
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -175,3 +177,23 @@ LEAFLET_CONFIG = {
         ),
     ]
 }
+
+ARCHE_PROJECT_NAME = "HistoGIS"
+ARCHE_BASE_URL = "https://id.acdh.oeaw.ac.at/histogis"
+ARCHE_LANG = 'en'
+ARCHE_PAYLOAD_MIMETYPE = 'application/geo+json'
+
+ARCHE_CONST_MAPPINGS = [
+    ('hasOwner', "https://d-nb.info/gnd/1123037736",),  # ACDHCH
+    ('hasContact', "https://d-nb.info/gnd/1123037736",),
+    ('hasRightsHolder', "https://d-nb.info/gnd/1123037736",),
+    ('hasPrincipalInvestigator', "https://d-nb.info/gnd/1154715620",),
+    ('hasPrincipalInvestigator', "https://d-nb.info/gnd/1043833846",),
+    ('hasLicensor', 'https://d-nb.info/gnd/1123037736',),
+    ('hasLicense', 'https://creativecommons.org/licenses/by/4.0/',),
+    ('hasRelatedDiscipline', 'https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601',),
+    ('hasSubject', 'GIS',),
+    ('hasSubject', 'Historic administrative units',),
+    ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
+    ('hasDepositor', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
+]
