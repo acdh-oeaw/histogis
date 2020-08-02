@@ -52,6 +52,52 @@ ARCHE_PROPS_LOOKUP = get_prop_types()
 def serialize_project():
     g = Graph()
     sub = URIRef(f"{ARCHE_BASE_URL}")
+    proj_sub = URIRef(f"{ARCHE_BASE_URL}/project")
+    # HistoGIS Project
+    proj_g = Graph()
+    proj_g.add(
+        (proj_sub, RDF.type, acdh_ns.Project)
+    )
+    proj_g.add(
+        (proj_sub, acdh_ns.hasTitle, Literal(f"HistoGIS (Project)", lang=ARCHE_LANG))
+    )
+    proj_g.add(
+        (proj_sub, acdh_ns.hasStartDate, Literal(f"2018-03-01", datatype=XSD.date))
+    )
+    proj_g.add(
+        (proj_sub, acdh_ns.hasEndDate, Literal(f"2020-11-30", datatype=XSD.date))
+    )
+    proj_g.add(
+        (proj_sub, acdh_ns.hasFunder, URIRef("https://id.acdh.oeaw.ac.at/oeaw"))
+    )
+    for x in [adueck, apiechl, pmarck]:
+        proj_g.add(
+            (proj_sub, acdh_ns.hasContributor, x)
+        )
+    proj_g.add(
+        (proj_sub, acdh_ns.hasPrincipalInvestigator, pandorfer)
+    )
+    proj_g.add(
+        (proj_sub, acdh_ns.hasPrincipalInvestigator, mschloegl)
+    )
+    proj_g.add(
+        (proj_sub, acdh_ns.hasRelatedCollection, sub)
+    )
+    proj_g.add(
+        (
+            proj_sub,
+            acdh_ns.hasDescription,
+            Literal(f"{PROJECT_METADATA['description']}", lang=ARCHE_LANG))
+    )
+    for const in ARCHE_CONST_MAPPINGS:
+        arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
+        if arche_prop_domain == 'date':
+            proj_g.add((proj_sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
+        if arche_prop_domain == 'string':
+            proj_g.add((proj_sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
+        else:
+            proj_g.add((proj_sub, acdh_ns[const[0]], URIRef(const[1])))
+    # HistoGIS Root Collection
     g.add((sub, RDF.type, acdh_ns.Collection))
     g.add(
         (sub, acdh_ns.hasCoverageStartDate, Literal('1890-01-01', datatype=XSD.date))
@@ -62,36 +108,33 @@ def serialize_project():
     g.add(
         (sub, acdh_ns.hasTitle, Literal(f"{PROJECT_METADATA['title']}", lang=ARCHE_LANG))
     )
+    g.add(
+        (sub, acdh_ns.hasRelatedProject, proj_sub)
+    )
+    g = g + proj_g
     # define persons
-    pandorfer = URIRef("https://d-nb.info/gnd/1043833846")
     g.add((pandorfer, RDF.type, acdh_ns.Person))
     g.add((pandorfer, acdh_ns.hasTitle, Literal('Peter Andorfer', lang="de")))
-    g.add((sub, acdh_ns.hasPrincipalInvestigator, pandorfer))
     g.add((sub, acdh_ns.hasContact, pandorfer))
 
-    mschloegl = URIRef("https://d-nb.info/gnd/1154715620")
     g.add((mschloegl, RDF.type, acdh_ns.Person))
-    g.add((mschloegl, acdh_ns.hasFirstName, Literal('Matthias Schlögl', lang="de")))
+    g.add((mschloegl, acdh_ns.hasTitle, Literal('Matthias Schlögl', lang="de")))
     g.add((mschloegl, acdh_ns.hasFirstName, Literal('Matthias', lang="de")))
     g.add((mschloegl, acdh_ns.hasLastName, Literal('Schlögl', lang="de")))
-    g.add((sub, acdh_ns.hasPrincipalInvestigator, mschloegl))
     g.add((sub, acdh_ns.hasContact, mschloegl))
 
-    apiechl = URIRef("https://orcid.org/0000-0002-9239-5577")
     g.add((apiechl, RDF.type, acdh_ns.Person))
     g.add((apiechl, acdh_ns.hasTitle, Literal('Anna Piechl', lang="de")))
     g.add((apiechl, acdh_ns.hasFirstName, Literal('Piechl', lang="de")))
     g.add((apiechl, acdh_ns.hasLastName, Literal('Anna', lang="de")))
     g.add((sub, acdh_ns.hasCreator, apiechl))
 
-    adueck = URIRef("https://orcid.org/0000-0003-3392-2610")
     g.add((adueck, RDF.type, acdh_ns.Person))
     g.add((adueck, acdh_ns.hasTitle, Literal('Antonia Dückelmann', lang="de")))
     g.add((adueck, acdh_ns.hasFirstName, Literal('Dückelmann', lang="de")))
     g.add((adueck, acdh_ns.hasLastName, Literal('Antonia', lang="de")))
     g.add((sub, acdh_ns.hasCreator, adueck))
 
-    pmarck = URIRef("https://orcid.org/0000-0003-1816-4823")
     g.add((pmarck, acdh_ns.type, acdh_ns.Person))
     g.add((pmarck, acdh_ns.hasTitle, Literal('Peter Paul Marckhgott-Sanabria', lang="de")))
     g.add((pmarck, acdh_ns.hasFirstName, Literal('Marckhgott-Sanabria', lang="de")))
