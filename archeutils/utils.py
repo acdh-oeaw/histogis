@@ -100,6 +100,15 @@ def serialize_project():
     # HistoGIS Root Collection
     g.add((sub, RDF.type, acdh_ns.Collection))
     g.add(
+        (
+            sub,
+            acdh_ns.hasPid,
+            Literal(
+                'http://hdl.handle.net/21.11115/0000-000C-E12A-7', datatype=XSD.anyURI
+            )
+        )
+    )
+    g.add(
         (sub, acdh_ns.hasCoverageStartDate, Literal('1890-01-01', datatype=XSD.date))
     )
     g.add(
@@ -115,13 +124,11 @@ def serialize_project():
     # define persons
     g.add((pandorfer, RDF.type, acdh_ns.Person))
     g.add((pandorfer, acdh_ns.hasTitle, Literal('Peter Andorfer', lang="de")))
-    g.add((sub, acdh_ns.hasContact, pandorfer))
 
     g.add((mschloegl, RDF.type, acdh_ns.Person))
     g.add((mschloegl, acdh_ns.hasTitle, Literal('Matthias Schlögl', lang="de")))
     g.add((mschloegl, acdh_ns.hasFirstName, Literal('Matthias', lang="de")))
     g.add((mschloegl, acdh_ns.hasLastName, Literal('Schlögl', lang="de")))
-    g.add((sub, acdh_ns.hasContact, mschloegl))
 
     g.add((apiechl, RDF.type, acdh_ns.Person))
     g.add((apiechl, acdh_ns.hasTitle, Literal('Anna Piechl', lang="de")))
@@ -177,7 +184,7 @@ def get_arche_id(res, id_prop="pk", arche_uri=ARCHE_BASE_URL):
 
 def as_arche_graph(res):
     g = Graph()
-    sub = URIRef(f"{ARCHE_BASE_URL}/vectordata/{res.slug_name()}")
+    sub = URIRef(f"{ARCHE_BASE_URL}/{res.source.slug_name()}/{res.slug_name()}")
     g.add(
         (
             sub, acdh_ns.hasTitle,
@@ -193,6 +200,16 @@ def as_arche_graph(res):
     #         )
     #     )
     # )
+    quote = res.source.quote
+    g.add(
+        (
+            sub, acdh_ns.hasDescription,
+            Literal(
+                f"{res} in: {quote}",
+                lang=ARCHE_LANG,
+            )
+        )
+    )
     g.add(
         (
             sub, acdh_ns.hasDescription,
@@ -202,7 +219,6 @@ def as_arche_graph(res):
             )
         )
     )
-    quote = res.source.quote
     if 'Marckhgott' in quote:
         g.add((sub, acdh_ns.hasCreator, pmarck))
     if 'Piechl' in quote:
@@ -224,12 +240,11 @@ def as_arche_graph(res):
             sub,
             acdh_ns.hasNonLinkedIdentifier,
             Literal(
-                f"Wikidata ID {res.wikidata_id}",
-                lang=ARCHE_LANG)
+                f"Wikidata ID: {res.wikidata_id}")
             )
     )
     col = Graph()
-    col_sub = URIRef(f"{ARCHE_BASE_URL}/{res.source.id}")
+    col_sub = URIRef(f"{ARCHE_BASE_URL}/{res.source.slug_name()}")
     g.add((col_sub, RDF.type, acdh_ns.Collection))
     g.add((col_sub, acdh_ns.hasDescription, Literal("", lang=ARCHE_LANG)))
     # g.add((col_sub, acdh_ns.hasDescription, Literal(res.source.description, lang=ARCHE_LANG)))
@@ -249,7 +264,7 @@ def as_arche_graph(res):
         (sub, acdh_ns.isPartOf, col_sub)
     )
     g.add(
-        (sub, SKOS.narrowMatch, Literal(res.sanitize_wikidataid()))
+        (sub, SKOS.narrowMatch, Literal(res.sanitize_wikidataid(), datatype=XSD.anyURI))
     )
     if res.start_date is not None:
         g.add(

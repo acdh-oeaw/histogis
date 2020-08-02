@@ -52,8 +52,8 @@ def get_ids(request):
         "id_prefix": f"{ARCHE_BASE_URL}",
         "ids": [
             {
-                "id": f"{ARCHE_BASE_URL}/vectordata/{x.slug_name()}",
-                "filename": f"{slugify(x)}.{ARCHE_DEFAULT_EXTENSION}",
+                "id": f"{ARCHE_BASE_URL}/{x.source.slug_name()}/{x.slug_name()}",
+                "filename": f"{x.slug_name()}.{ARCHE_DEFAULT_EXTENSION}",
                 "md": f"{base_uri}{x.get_arche_url()}",
                 "html": f"{base_uri}{x.get_absolute_url()}",
                 "payload": f"{base_uri}{x.get_json_url()}?format=json",

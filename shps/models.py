@@ -151,6 +151,11 @@ class Source(models.Model):
         except AttributeError:
             return None
 
+    def slug_name(self):
+        return "{}__{}_{}".format(
+            slugify(self.name), self.start_date, self.end_date
+        )
+
 
 class TempSpatial(IdProvider):
     """A class for temporalized spatial objects"""
