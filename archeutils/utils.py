@@ -118,6 +118,9 @@ def serialize_project():
         (sub, acdh_ns.hasTitle, Literal(f"{PROJECT_METADATA['title']}", lang=ARCHE_LANG))
     )
     g.add(
+        (sub, acdh_ns.hasOaiSet, Literal(f"kulturpool"))
+    )
+    g.add(
         (sub, acdh_ns.hasRelatedProject, proj_sub)
     )
     g = g + proj_g
@@ -191,6 +194,9 @@ def as_arche_graph(res):
             Literal(f"{res}", lang=ARCHE_LANG)
         )
     )
+    g.add(
+        (sub, acdh_ns.hasOaiSet, Literal(f"kulturpool"))
+    )
     # g.add(
     #     (
     #         sub, acdh_ns.hasDescription,
@@ -250,6 +256,9 @@ def as_arche_graph(res):
     # g.add((col_sub, acdh_ns.hasDescription, Literal(res.source.description, lang=ARCHE_LANG)))
     col.add(
         (col_sub, acdh_ns.isPartOf, URIRef(f"{ARCHE_BASE_URL}"))
+    )
+    col.add(
+        (col_sub, acdh_ns.hasOaiSet, Literal(f"kulturpool"))
     )
     col.add(
         (
