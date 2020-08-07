@@ -199,25 +199,27 @@ def as_arche_graph(res):
     )
     alt_names = res.alt_name.replace(',', ';')
     for x in alt_names.split(';'):
+        if x is not "":
+            g.add(
+                (
+                    sub, acdh_ns.hasAlternativeTitle,
+                    Literal(
+                        f"{x.strip()}",
+                        lang=ARCHE_LANG
+                    )
+                )
+            )
+    if res.administrative_unit.pref_label is not None or '':
         g.add(
             (
-                sub, acdh_ns.hasAlternativeTitle,
+                sub,
+                acdh_ns.hasSubject,
                 Literal(
-                    f"{x}",
-                    lang=ARCHE_LANG
+                    f"{res.administrative_unit.pref_label}",
+                    lang=f"{res.administrative_unit.pref_label_lang[:1]}"
                 )
             )
         )
-    g.add(
-        (
-            sub,
-            acdh_ns.hasSubject,
-            Literal(
-                f"{res.administrative_unit.pref_label}",
-                lang=f"{res.administrative_unit.pref_label_lang[:1]}"
-            )
-        )
-    )
     # g.add(
     #     (
     #         sub, acdh_ns.hasDescription,
