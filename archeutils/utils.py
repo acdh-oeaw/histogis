@@ -208,6 +208,16 @@ def as_arche_graph(res):
                 )
             )
         )
+    g.add(
+        (
+            sub,
+            acdh_ns.hasSubject,
+            Literal(
+                f"{res.administrative_unit.pref_label}",
+                lang=f"{res.administrative_unit.pref_label_lang[:1]}"
+            )
+        )
+    )
     # g.add(
     #     (
     #         sub, acdh_ns.hasDescription,
