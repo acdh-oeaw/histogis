@@ -197,6 +197,17 @@ def as_arche_graph(res):
     g.add(
         (sub, acdh_ns.hasOaiSet, Literal(f"kulturpool"))
     )
+    alt_names = res.alt_name.replace(',', ';')
+    for x in alt_names.split(';'):
+        g.add(
+            (
+                sub, acdh_ns.hasAlternativeTitle,
+                Literal(
+                    f"{x}",
+                    lang=ARCHE_LANG
+                )
+            )
+        )
     # g.add(
     #     (
     #         sub, acdh_ns.hasDescription,
