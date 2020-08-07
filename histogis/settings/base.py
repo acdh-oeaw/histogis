@@ -190,7 +190,7 @@ ARCHE_CONST_MAPPINGS = [
     ('hasPrincipalInvestigator', "https://d-nb.info/gnd/1154715620",),
     ('hasPrincipalInvestigator', "https://d-nb.info/gnd/1043833846",),
     ('hasLicensor', 'https://d-nb.info/gnd/1123037736',),
-    ('hasLicense', 'https://creativecommons.org/licenses/by/4.0/',),
+    ('hasLicense', 'https://creativecommons.org/licenses/by/4.0',),
     ('hasRelatedDiscipline', 'https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601',),
     ('hasSubject', 'GIS',),
     ('hasSubject', 'Historic administrative units',),
