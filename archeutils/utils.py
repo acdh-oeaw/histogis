@@ -334,3 +334,45 @@ def as_arche_graph(res):
             col.add((col_sub, acdh_ns[const[0]], URIRef(const[1])))
     g = g + col
     return g
+
+
+def title_img():
+    g = Graph()
+    sub = URIRef(f"{ARCHE_BASE_URL}/histogis_projektlogo_black.png")
+    g.add(
+        (
+            sub, RDF.type, acdh_ns.Image
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.hasTitle,
+            Literal(f"HistoGIS Title Logo", lang=ARCHE_LANG)
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.isPartOf, URIRef(f"{ARCHE_BASE_URL}")
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.hasCategory, acdh_ns.Image
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.isTitleImageOf, URIRef(f"{ARCHE_BASE_URL}")
+        )
+    )
+    for const in ARCHE_CONST_MAPPINGS:
+        arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
+        if arche_prop_domain == 'date':
+            col.add()
+            g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
+        if arche_prop_domain == 'string':
+            g.add((sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
+        else:
+            g.add((sub, acdh_ns[const[0]], URIRef(const[1])))
+
+    return g

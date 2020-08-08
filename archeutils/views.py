@@ -9,6 +9,7 @@ from .utils import (
     serialize_project,
     ARCHE_BASE_URL,
     get_arche_id,
+    title_img,
     ARCHE_DEFAULT_EXTENSION,
     ARCHE_PAYLOAD_MIMETYPE
 )
@@ -58,6 +59,27 @@ def get_ids(request):
                 "html": f"{base_uri}{x.get_absolute_url()}",
                 "payload": f"{base_uri}{x.get_json_url()}?format=json",
                 "mimetype": f"{ARCHE_PAYLOAD_MIMETYPE}"
-            } for x in TempSpatial.objects.all()],
+            } for x in TempSpatial.objects.all()[:2]],
     }
+    data['ids'].append(
+        {
+            "id": f"{ARCHE_BASE_URL}/histogis_projektlogo_black.png",
+            "filename": f"histogis_projektlogo_black.png",
+            "md": f"{base_uri}{reverse('shps:arche_title_img')}",
+            "payload": "https://histogis.acdh.oeaw.ac.at/static/webpage/img/histogis_projektlogo_black.png",
+            "mimetype": "image/png"
+        }
+    )
     return JsonResponse(data)
+
+
+def get_title_img(request):
+    g = title_img()
+    if format == 'turtle':
+        return HttpResponse(
+            g.serialize(encoding='utf-8', format='turtle'), content_type='text/turtle'
+        )
+    else:
+        return HttpResponse(
+            g.serialize(encoding='utf-8'), content_type='application/xml'
+        )

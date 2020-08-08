@@ -17,6 +17,11 @@ urlpatterns = [
         arche_views.project_as_arche_graph,
         name='project_as_arche'
     ),
+    url(
+        r'^arche-title-img$',
+        arche_views.get_title_img,
+        name='arche_title_img'
+    ),
     url(r'^where-was/$', views.WhereWas.as_view(), name='where_was'),
     url(r'^shapes/$', views.TempSpatialListView.as_view(), name='browse_shapes'),
     url(
