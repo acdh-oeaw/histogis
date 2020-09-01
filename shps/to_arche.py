@@ -121,7 +121,7 @@ def serialize_project():
         )
     )
     g.add((topcol, ARCHE.hasRelatedProject, project))
-    g.add((topcol, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
+    g.add((topcol, ARCHE.hasLicense, URIRef("https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0")))
     g.add((topcol, ARCHE.hasContact, mschloegl))
     g.add((topcol, ARCHE.hasContact, pandorfer))
     g.add((topcol, ARCHE.hasMetadataCreator, pandorfer))
@@ -164,7 +164,13 @@ def serialize_project():
     g.add((vecol, ARCHE.hasAvailableDate, Literal(curent_date, datatype=XSD.date)))
     g.add((vecol, ARCHE.hasTitle, Literal('HistoGIS Vector Data', lang="en")))
     g.add((vecol, ARCHE.isPartOf, topcol))
-    g.add((vecol, ARCHE.hasLicense, URIRef("https://creativecommons.org/licenses/by/4.0/")))
+    g.add(
+        (
+            vecol,
+            ARCHE.hasLicense,
+            URIRef("https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0")
+        )
+    )
     g.add((vecol, ARCHE.hasContributor, pandorfer))
     g.add((vecol, ARCHE.hasContributor, mschloegl))
     g.add((vecol, ARCHE.hasCreator, pmarck))

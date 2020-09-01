@@ -186,11 +186,11 @@ ARCHE_PAYLOAD_MIMETYPE = 'application/geo+json'
 ARCHE_CONST_MAPPINGS = [
     ('hasOwner', "https://d-nb.info/gnd/1123037736",),  # ACDHCH
     ('hasContact', "https://d-nb.info/gnd/1123037736",),
-    ('hasRightsHolder', "https://d-nb.info/gnd/1123037736",),
+    ('hasRightsHolder', "https://d-nb.info/gnd/1001454-8",),
     ('hasPrincipalInvestigator', "https://d-nb.info/gnd/1154715620",),
     ('hasPrincipalInvestigator', "https://d-nb.info/gnd/1043833846",),
     ('hasLicensor', 'https://d-nb.info/gnd/1123037736',),
-    ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),
+    ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
     ('hasRelatedDiscipline', 'https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601',),
     ('hasSubject', 'GIS',),
     ('hasSubject', 'Historic administrative units',),
