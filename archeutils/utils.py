@@ -339,9 +339,39 @@ def as_arche_graph(res):
 def title_img():
     g = Graph()
     sub = URIRef(f"{ARCHE_BASE_URL}/histogis_projektlogo_black.png")
+    sandra = URIRef("https://id.acdh.oeaw.ac.at/slehecka")
+    sandra_g = Graph()
+    sandra_g.add(
+        (
+            sandra, RDF.type, acdh_ns.Person
+        )
+    )
+    sandra_g.add(
+        (
+            sandra, acdh_ns.hasTitle,
+            Literal("Sandra Lehecka", lang="de")
+        )
+    )
+    sandra_g.add(
+        (
+            sandra, acdh_ns.hasFirstName,
+            Literal("Sandra", lang="de")
+        )
+    )
+    sandra_g.add(
+        (
+            sandra, acdh_ns.hasLastName, Literal("Lehecka", lang="de")
+        )
+    )
     g.add(
         (
             sub, RDF.type, acdh_ns.Image
+        )
+    )
+    g = g + sandra_g
+    g.add(
+        (
+            sub, acdh_ns.hasCreator, sandra
         )
     )
     g.add(
