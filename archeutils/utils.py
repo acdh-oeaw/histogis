@@ -21,6 +21,19 @@ ARCHE_BASE_URL = getattr(settings, 'ARCHE_BASE_URL', 'https://id.acdh.oeaw.ac.at
 ARCHE_DEFAULT_EXTENSION = getattr(settings, 'ARCHE_DEFAULT_EXTENSION', 'geojson')
 ARCHE_PAYLOAD_MIMETYPE = getattr(settings, 'ARCHE_PAYLOAD_MIMETYPE', 'application/geo+json')
 
+TOP_COL_DESC = """
+A geodata collection on historical political/administrative units created and collected for the HistoGIS Project.
+The region covered is Europe with a special focus on Central Europe / Austria(-Hungary) and German States,  the temporal extent is from c. 1815 to c. 1919. National borders are available for the whole temporal extent and all of Europe, while lower level administrative borders (provinces, counties, etc.) are available for the focus areas.
+Data is provided in GeoJSON format following the “The Linked Places format (LPF)” recommendations. The files contain geometries, timespans as well as additional attribute data. The data is structured along three axes: Geographical / political region, contemporary administrative level and time.
+"""
+
+PROJECT_DESC = """
+The HistoGIS project creates and publishes machine readable data about historical administrative units. Maps, either historic ones or maps displaying past (political) border lines, has been georeferenced and the actual information about the former borderlines was captured as GeoJSON together with necessary metadata like the name of the temporal spatial entity, its start and end dates, alternative names as well as potential matching Wikidata IDs.
+The project was funded by the Austrian Academy of Sciences (Innovationsfonds), run from March 2018 until October 2020 and was led by Peter Andorfer and Matthias Schlögl. The actual work on the data was done by Antonia Dückelmann, Anna Piechl and Peter Paul Marckhgott-Sanabria with support from the interns Laura Elmer and Liam Downs-Tepper.
+Besides the data the project HistoGIS comprises a web service to query the data (https://histogis.acdh.oeaw.ac.at)
+
+"""
+
 
 repo_schema = "https://raw.githubusercontent.com/acdh-oeaw/repo-schema/master/acdh-schema.owl"
 acdh_ns = Namespace("https://vocabs.acdh.oeaw.ac.at/schema#")
@@ -87,7 +100,7 @@ def serialize_project():
         (
             proj_sub,
             acdh_ns.hasDescription,
-            Literal(f"{PROJECT_METADATA['description']}", lang=ARCHE_LANG))
+            Literal(f"{PROJECT_DESC}", lang=ARCHE_LANG))
     )
     for const in ARCHE_CONST_MAPPINGS:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
@@ -118,7 +131,7 @@ def serialize_project():
         (sub, acdh_ns.hasTitle, Literal(f"{PROJECT_METADATA['title']}", lang=ARCHE_LANG))
     )
     g.add(
-        (sub, acdh_ns.hasOaiSet, Literal(f"kulturpool"))
+        (sub, acdh_ns.hasOaiSet, URIRef("https://vocabs.acdh.oeaw.ac.at/archeoaisets/kulturpool"))
     )
     g.add(
         (sub, acdh_ns.hasRelatedProject, proj_sub)
@@ -154,7 +167,7 @@ def serialize_project():
         (
             sub,
             acdh_ns.hasDescription,
-            Literal(f"{PROJECT_METADATA['description']}", lang=ARCHE_LANG))
+            Literal(f"{TOP_COL_DESC}", lang=ARCHE_LANG))
     )
     for const in ARCHE_CONST_MAPPINGS:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
@@ -189,13 +202,7 @@ def as_arche_graph(res):
     g = Graph()
     sub = URIRef(f"{ARCHE_BASE_URL}/{res.source.slug_name()}/{res.slug_name()}")
     g.add(
-        (
-            sub, acdh_ns.hasTitle,
-            Literal(f"{res}", lang=ARCHE_LANG)
-        )
-    )
-    g.add(
-        (sub, acdh_ns.hasOaiSet, Literal(f"kulturpool"))
+        (sub, acdh_ns.hasOaiSet, URIRef("https://vocabs.acdh.oeaw.ac.at/archeoaisets/kulturpool"))
     )
     alt_names = res.alt_name.replace(',', ';')
     for x in alt_names.split(';'):
@@ -281,7 +288,7 @@ def as_arche_graph(res):
         (col_sub, acdh_ns.isPartOf, URIRef(f"{ARCHE_BASE_URL}"))
     )
     col.add(
-        (col_sub, acdh_ns.hasOaiSet, Literal(f"kulturpool"))
+        (col_sub, acdh_ns.hasOaiSet, URIRef("https://vocabs.acdh.oeaw.ac.at/archeoaisets/kulturpool"))
     )
     col.add(
         (
