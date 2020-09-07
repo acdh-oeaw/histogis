@@ -158,6 +158,18 @@ def serialize_project():
     g.add((adueck, acdh_ns.hasLastName, Literal('Antonia', lang="de")))
     g.add((sub, acdh_ns.hasCreator, adueck))
 
+    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), RDF.type, acdh_ns.Person))
+    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasTitle, Literal('Laura Elmer', lang="de")))
+    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasFirstName, Literal('Elmner', lang="de")))
+    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasLastName, Literal('Laura', lang="de")))
+    g.add((sub, acdh_ns.hasContributor, URIRef('https://orcid.org/0000-0003-4135-713X')))
+
+    g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), RDF.type, acdh_ns.Person))
+    g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), acdh_ns.hasTitle, Literal('Liam Downs-Tepper', lang="en")))
+    g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), acdh_ns.hasFirstName, Literal('Liam', lang="en")))
+    g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), acdh_ns.hasLastName, Literal('Downs-Tepper', lang="en")))
+    g.add((sub, acdh_ns.hasContributor, URIRef('https://orcid.org/0000-0003-2271-8948')))
+
     g.add((pmarck, acdh_ns.type, acdh_ns.Person))
     g.add((pmarck, acdh_ns.hasTitle, Literal('Peter Paul Marckhgott-Sanabria', lang="de")))
     g.add((pmarck, acdh_ns.hasFirstName, Literal('Marckhgott-Sanabria', lang="de")))
