@@ -216,6 +216,9 @@ def as_arche_graph(res):
     g.add(
         (sub, acdh_ns.hasOaiSet, URIRef("https://vocabs.acdh.oeaw.ac.at/archeoaisets/kulturpool"))
     )
+    g.add(
+        (sub, acdh_ns.hasTitle, Literal(f"{res}", lang="und"))
+    )
     alt_names = res.alt_name.replace(',', ';')
     for x in alt_names.split(';'):
         if x is not "":
