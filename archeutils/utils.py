@@ -221,7 +221,7 @@ def as_arche_graph(res):
     )
     alt_names = res.alt_name.replace(',', ';')
     for x in alt_names.split(';'):
-        if x is not "":
+        if x != "":
             g.add(
                 (
                     sub, acdh_ns.hasAlternativeTitle,
