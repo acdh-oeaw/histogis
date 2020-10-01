@@ -59,7 +59,7 @@ def get_ids(request):
                 "html": f"{base_uri}{x.get_absolute_url()}",
                 "payload": f"{base_uri}{x.get_json_url()}?format=json",
                 "mimetype": f"{ARCHE_PAYLOAD_MIMETYPE}"
-            } for x in TempSpatial.objects.all()[:2]],
+            } for x in TempSpatial.objects.all()],
     }
     data['ids'].append(
         {
