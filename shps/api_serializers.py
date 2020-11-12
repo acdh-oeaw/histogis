@@ -19,7 +19,7 @@ class SimpleSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'url',
             'wikidata_id',
-            'name',
+            'title',
             'alt_name',
             'source',
             'source_name',
