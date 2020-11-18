@@ -242,15 +242,15 @@ def as_arche_graph(res):
                 )
             )
         )
-    # g.add(
-    #     (
-    #         sub, acdh_ns.hasDescription,
-    #         Literal(
-    #             f"{res} is part of {res.source}: {res.source.description}",
-    #             lang=ARCHE_LANG
-    #         )
-    #     )
-    # )
+    g.add(
+        (
+            sub, acdh_ns.hasDescription,
+            Literal(
+                f"{res} is part of {res.source}: {res.source.description}",
+                lang=ARCHE_LANG
+            )
+        )
+    )
     quote = res.source.quote
     g.add(
         (
@@ -261,15 +261,15 @@ def as_arche_graph(res):
             )
         )
     )
-    g.add(
-        (
-            sub, acdh_ns.hasDescription,
-            Literal(
-                f"",
-                lang=ARCHE_LANG
-            )
-        )
-    )
+    # g.add(
+    #     (
+    #         sub, acdh_ns.hasDescription,
+    #         Literal(
+    #             f"",
+    #             lang=ARCHE_LANG
+    #         )
+    #     )
+    # )
     if 'Marckhgott' in quote:
         g.add((sub, acdh_ns.hasCreator, pmarck))
     if 'Piechl' in quote:
@@ -298,7 +298,7 @@ def as_arche_graph(res):
     col_sub = URIRef(f"{ARCHE_BASE_URL}/{res.source.slug_name()}")
     g.add((col_sub, RDF.type, acdh_ns.Collection))
     g.add((col_sub, acdh_ns.hasDescription, Literal("", lang=ARCHE_LANG)))
-    # g.add((col_sub, acdh_ns.hasDescription, Literal(res.source.description, lang=ARCHE_LANG)))
+    g.add((col_sub, acdh_ns.hasDescription, Literal(res.source.description, lang=ARCHE_LANG)))
     col.add(
         (col_sub, acdh_ns.isPartOf, URIRef(f"{ARCHE_BASE_URL}"))
     )

@@ -47,7 +47,17 @@ def project_as_arche_graph(request):
 
 
 def get_ids(request):
+    start = request.GET.get('start', 0)
+    limit = request.GET.get('limit', False)
+    print(limit)
     base_uri = request.build_absolute_uri().split('/shapes')[0]
+    if limit:
+        try:
+            final_limit = int(limit)
+        except ValueError:
+            final_limit = 10
+    else:
+        final_limit = TempSpatial.objects.all().count()
     data = {
         "arche_constants": f"{base_uri}{reverse('shapes:project_as_arche')}",
         "id_prefix": f"{ARCHE_BASE_URL}",
@@ -59,7 +69,7 @@ def get_ids(request):
                 "html": f"{base_uri}{x.get_absolute_url()}",
                 "payload": f"{base_uri}{x.get_json_url()}?format=json",
                 "mimetype": f"{ARCHE_PAYLOAD_MIMETYPE}"
-            } for x in TempSpatial.objects.all()],
+            } for x in TempSpatial.objects.all()[0:final_limit]],
     }
     data['ids'].append(
         {
