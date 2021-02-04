@@ -242,15 +242,6 @@ def as_arche_graph(res):
                 )
             )
         )
-    g.add(
-        (
-            sub, acdh_ns.hasDescription,
-            Literal(
-                f"{res} is part of {res.source}: {res.source.description}",
-                lang=ARCHE_LANG
-            )
-        )
-    )
     quote = res.source.quote
     g.add(
         (
@@ -297,7 +288,6 @@ def as_arche_graph(res):
     col = Graph()
     col_sub = URIRef(f"{ARCHE_BASE_URL}/{res.source.slug_name()}")
     g.add((col_sub, RDF.type, acdh_ns.Collection))
-    g.add((col_sub, acdh_ns.hasDescription, Literal("", lang=ARCHE_LANG)))
     g.add((col_sub, acdh_ns.hasDescription, Literal(res.source.description, lang=ARCHE_LANG)))
     col.add(
         (col_sub, acdh_ns.isPartOf, URIRef(f"{ARCHE_BASE_URL}"))
@@ -305,6 +295,22 @@ def as_arche_graph(res):
     col.add(
         (col_sub, acdh_ns.hasOaiSet, URIRef("https://vocabs.acdh.oeaw.ac.at/archeoaisets/kulturpool"))
     )
+    if res.source.end_date is not None:
+        col.add(
+            (
+                col_sub,
+                acdh_ns.hasCoverageEndDate,
+                Literal(res.source.end_date, datatype=XSD.date)
+            )
+        )
+    if res.source.start_date is not None:
+        col.add(
+            (
+                col_sub,
+                acdh_ns.hasCoverageStartDate,
+                Literal(res.source.start_date, datatype=XSD.date)
+            )
+        )
     col.add(
         (
             col_sub,
