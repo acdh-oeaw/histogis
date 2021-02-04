@@ -393,7 +393,7 @@ def title_img():
     )
     g.add(
         (
-            sub, RDF.type, acdh_ns.Image
+            sub, RDF.type, acdh_ns.Resource
         )
     )
     g = g + sandra_g
