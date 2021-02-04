@@ -257,7 +257,7 @@ def as_arche_graph(res):
             (
                 sub,
                 OWL.sameAs,
-                URIRef(f"https://www.wikidata.org/entity/{res.wikidata_id}")
+                Literal(f"https://www.wikidata.org/entity/{res.wikidata_id}")
             )
         )
     # g.add(
