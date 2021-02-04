@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist, FieldDoesNotExist
 from django.db.models.query import QuerySet
 
 from rdflib import Graph, Namespace, URIRef, Literal, XSD
-from rdflib.namespace import RDF, SKOS
+from rdflib.namespace import RDF, SKOS, OWL
 
 from browsing.browsing_utils import model_to_dict
 from webpage.metadata import PROJECT_METADATA
@@ -252,6 +252,14 @@ def as_arche_graph(res):
             )
         )
     )
+    if res.wikidata_id:
+        g.add(
+            (
+                sub,
+                OWL.sameAs,
+                URIRef(f"https://www.wikidata.org/entity/{res.wikidata_id}")
+            )
+        )
     # g.add(
     #     (
     #         sub, acdh_ns.hasDescription,
