@@ -111,7 +111,7 @@ def serialize_project():
         else:
             proj_g.add((proj_sub, acdh_ns[const[0]], URIRef(const[1])))
     # HistoGIS Root Collection
-    g.add((sub, RDF.type, acdh_ns.Collection))
+    g.add((sub, RDF.type, acdh_ns.TopCollection))
     g.add(
         (
             sub,
