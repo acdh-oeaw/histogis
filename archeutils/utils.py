@@ -21,18 +21,13 @@ ARCHE_BASE_URL = getattr(settings, 'ARCHE_BASE_URL', 'https://id.acdh.oeaw.ac.at
 ARCHE_DEFAULT_EXTENSION = getattr(settings, 'ARCHE_DEFAULT_EXTENSION', 'geojson')
 ARCHE_PAYLOAD_MIMETYPE = getattr(settings, 'ARCHE_PAYLOAD_MIMETYPE', 'application/geo+json')
 
-TOP_COL_DESC = """
-A geodata collection on historical political/administrative units created and collected for the HistoGIS Project.
+TOP_COL_DESC = """A geodata collection on historical political/administrative units created and collected for the HistoGIS Project.
 The region covered is Europe with a special focus on Central Europe / Austria(-Hungary) and German States,  the temporal extent is from c. 1815 to c. 1919. National borders are available for the whole temporal extent and all of Europe, while lower level administrative borders (provinces, counties, etc.) are available for the focus areas.
-Data is provided in GeoJSON format following the “The Linked Places format (LPF)” recommendations. The files contain geometries, timespans as well as additional attribute data. The data is structured along three axes: Geographical / political region, contemporary administrative level and time.
-"""
+Data is provided in GeoJSON format following the “The Linked Places format (LPF)” recommendations. The files contain geometries, timespans as well as additional attribute data. The data is structured along three axes: Geographical / political region, contemporary administrative level and time."""
 
-PROJECT_DESC = """
-The HistoGIS project creates and publishes machine readable data about historical administrative units. Maps, either historic ones or maps displaying past (political) border lines, has been georeferenced and the actual information about the former borderlines was captured as GeoJSON together with necessary metadata like the name of the temporal spatial entity, its start and end dates, alternative names as well as potential matching Wikidata IDs.
+PROJECT_DESC = """The HistoGIS project creates and publishes machine readable data about historical administrative units. Maps, either historic ones or maps displaying past (political) border lines, has been georeferenced and the actual information about the former borderlines was captured as GeoJSON together with necessary metadata like the name of the temporal spatial entity, its start and end dates, alternative names as well as potential matching Wikidata IDs.
 The project was funded by the Austrian Academy of Sciences (Innovationsfonds), run from March 2018 until October 2020 and was led by Peter Andorfer and Matthias Schlögl. The actual work on the data was done by Antonia Dückelmann, Anna Piechl and Peter Paul Marckhgott-Sanabria with support from the interns Laura Elmer and Liam Downs-Tepper.
-Besides the data the project HistoGIS comprises a web service to query the data (https://histogis.acdh.oeaw.ac.at)
-
-"""
+Besides the data the project HistoGIS comprises a web service to query the data (https://histogis.acdh.oeaw.ac.at)"""
 
 
 repo_schema = "https://raw.githubusercontent.com/acdh-oeaw/repo-schema/master/acdh-schema.owl"

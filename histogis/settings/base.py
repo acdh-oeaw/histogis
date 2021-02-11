@@ -193,7 +193,7 @@ ARCHE_CONST_MAPPINGS = [
     ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
     ('hasRelatedDiscipline', 'https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601',),
     ('hasSubject', 'GIS',),
-    ('hasSubject', 'Historic administrative units',),
+    ('hasSubject', 'historic administrative units',),
     ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
     ('hasDepositor', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
 ]
