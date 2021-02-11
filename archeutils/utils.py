@@ -173,7 +173,7 @@ def serialize_project():
     g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), acdh_ns.hasLastName, Literal('Downs-Tepper', lang="und")))
     g.add((sub, acdh_ns.hasContributor, URIRef('https://orcid.org/0000-0003-2271-8948')))
 
-    g.add((pmarck, acdh_ns.type, acdh_ns.Person))
+    g.add((pmarck, RDF.type, acdh_ns.Person))
     g.add((pmarck, acdh_ns.hasTitle, Literal('Peter Paul Marckhgott-Sanabria', lang="und")))
     g.add((pmarck, acdh_ns.hasLastName, Literal('Marckhgott-Sanabria', lang="und")))
     g.add((pmarck, acdh_ns.hasFirstName, Literal('Peter Paul', lang="und")))
