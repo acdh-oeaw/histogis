@@ -151,7 +151,6 @@ def serialize_project():
     g.add((apiechl, acdh_ns.hasFirstName, Literal('Anna', lang="und")))
     g.add((sub, acdh_ns.hasCreator, apiechl))
     g.add((sub, acdh_ns.hasCurator, pandorfer))
-    g.add((sub, acdh_ns.hasCurator, URIRef('https://id.acdh.oeaw.ac.at/uczeitschner')))
 
     g.add((adueck, RDF.type, acdh_ns.Person))
     g.add((adueck, acdh_ns.hasIdentifier, URIRef('https://id.acdh.oeaw.ac.at/adueckelmann')))
