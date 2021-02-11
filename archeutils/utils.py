@@ -142,38 +142,44 @@ def serialize_project():
     g.add((pandorfer, acdh_ns.hasTitle, Literal('Peter Andorfer', lang="de")))
 
     g.add((mschloegl, RDF.type, acdh_ns.Person))
+    g.add((mschloegl, acdh_ns.hasIdentifier, URIRef('https://id.acdh.oeaw.ac.at/mschloegl')))
+    g.add((mschloegl, acdh_ns.isMemberOf, URIRef('https://id.acdh.oeaw.ac.at/acdh')))
     g.add((mschloegl, acdh_ns.hasTitle, Literal('Matthias Schlögl', lang="und")))
     g.add((mschloegl, acdh_ns.hasFirstName, Literal('Matthias', lang="und")))
     g.add((mschloegl, acdh_ns.hasLastName, Literal('Schlögl', lang="und")))
 
     g.add((apiechl, RDF.type, acdh_ns.Person))
+    g.add((apiechl, acdh_ns.hasIdentifier, URIRef('https://id.acdh.oeaw.ac.at/apiechl')))
     g.add((apiechl, acdh_ns.hasTitle, Literal('Anna Piechl', lang="und")))
-    g.add((apiechl, acdh_ns.hasFirstName, Literal('Piechl', lang="und")))
-    g.add((apiechl, acdh_ns.hasLastName, Literal('Anna', lang="und")))
+    g.add((apiechl, acdh_ns.hasLastName, Literal('Piechl', lang="und")))
+    g.add((apiechl, acdh_ns.hasFirstName, Literal('Anna', lang="und")))
     g.add((sub, acdh_ns.hasCreator, apiechl))
 
     g.add((adueck, RDF.type, acdh_ns.Person))
+    g.add((adueck, acdh_ns.hasIdentifier, URIRef('https://id.acdh.oeaw.ac.at/adueckelmann')))
     g.add((adueck, acdh_ns.hasTitle, Literal('Antonia Dückelmann', lang="und")))
-    g.add((adueck, acdh_ns.hasFirstName, Literal('Dückelmann', lang="und")))
-    g.add((adueck, acdh_ns.hasLastName, Literal('Antonia', lang="und")))
+    g.add((adueck, acdh_ns.hasLastName, Literal('Dückelmann', lang="und")))
+    g.add((adueck, acdh_ns.hasFirstName, Literal('Antonia', lang="und")))
     g.add((sub, acdh_ns.hasCreator, adueck))
 
     g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), RDF.type, acdh_ns.Person))
+    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasIdentifier, URIRef('https://id.acdh.oeaw.ac.at/lelmer')))
     g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasTitle, Literal('Laura Elmer', lang="und")))
-    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasFirstName, Literal('Elmner', lang="und")))
-    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasLastName, Literal('Laura', lang="und")))
+    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasLastName, Literal('Elmer', lang="und")))
+    g.add((URIRef('https://orcid.org/0000-0003-4135-713X'), acdh_ns.hasFirstName, Literal('Laura', lang="und")))
     g.add((sub, acdh_ns.hasContributor, URIRef('https://orcid.org/0000-0003-4135-713X')))
 
     g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), RDF.type, acdh_ns.Person))
+    g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), acdh_ns.hasIdentifier, URIRef('https://id.acdh.oeaw.ac.at/ldownstepper')))
     g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), acdh_ns.hasTitle, Literal('Liam Downs-Tepper', lang="und")))
     g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), acdh_ns.hasFirstName, Literal('Liam', lang="und")))
     g.add((URIRef('https://orcid.org/0000-0003-2271-8948'), acdh_ns.hasLastName, Literal('Downs-Tepper', lang="und")))
     g.add((sub, acdh_ns.hasContributor, URIRef('https://orcid.org/0000-0003-2271-8948')))
 
     g.add((pmarck, acdh_ns.type, acdh_ns.Person))
-    g.add((pmarck, acdh_ns.hasTitle, Literal('Peter Paul Marckhgott-Sanabria', lang="de")))
-    g.add((pmarck, acdh_ns.hasFirstName, Literal('Marckhgott-Sanabria', lang="de")))
-    g.add((pmarck, acdh_ns.hasLastName, Literal('Peter Paul', lang="de")))
+    g.add((pmarck, acdh_ns.hasTitle, Literal('Peter Paul Marckhgott-Sanabria', lang="und")))
+    g.add((pmarck, acdh_ns.hasLastName, Literal('Marckhgott-Sanabria', lang="und")))
+    g.add((pmarck, acdh_ns.hasFirstName, Literal('Peter Paul', lang="und")))
     g.add((sub, acdh_ns.hasCreator, pmarck))
     g.add(
         (
@@ -385,18 +391,20 @@ def title_img():
     sandra_g.add(
         (
             sandra, acdh_ns.hasTitle,
-            Literal("Sandra Lehecka", lang="de")
+            Literal("Sandra Lehecka", lang="und")
         )
     )
     sandra_g.add(
         (
             sandra, acdh_ns.hasFirstName,
-            Literal("Sandra", lang="de")
+            Literal("Sandra", lang="und")
         )
     )
+    sandra_g.add((sandra, acdh_ns.isMemberOf, URIRef('https://id.acdh.oeaw.ac.at/acdh')))
+
     sandra_g.add(
         (
-            sandra, acdh_ns.hasLastName, Literal("Lehecka", lang="de")
+            sandra, acdh_ns.hasLastName, Literal("Lehecka", lang="und")
         )
     )
     g.add(
