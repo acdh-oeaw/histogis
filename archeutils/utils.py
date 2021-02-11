@@ -14,6 +14,7 @@ from browsing.browsing_utils import model_to_dict
 from webpage.metadata import PROJECT_METADATA
 
 ARCHE_CONST_MAPPINGS = getattr(settings, 'ARCHE_CONST_MAPPINGS', False)
+ARCHE_CONST_MAPPINGS_SIMPLE = getattr(settings, 'ARCHE_CONST_MAPPINGS_SIMPLE', False)
 
 ARCHE_LANG = getattr(settings, 'ARCHE_LANG', 'en')
 ARCHE_BASE_URL = getattr(settings, 'ARCHE_BASE_URL', 'https://id.acdh.oeaw.ac.at/MYPROJECT')
@@ -428,7 +429,7 @@ def title_img():
     )
     g.add(
         (
-            sub, acdh_ns.hasCategory, acdh_ns.Image
+            sub, acdh_ns.hasCategory, URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/image")
         )
     )
     g.add(
@@ -436,7 +437,7 @@ def title_img():
             sub, acdh_ns.isTitleImageOf, URIRef(f"{ARCHE_BASE_URL}")
         )
     )
-    for const in ARCHE_CONST_MAPPINGS:
+    for const in ARCHE_CONST_MAPPINGS_SIMPLE:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
         if arche_prop_domain == 'date':
             col.add()

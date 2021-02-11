@@ -197,3 +197,14 @@ ARCHE_CONST_MAPPINGS = [
     ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
     ('hasDepositor', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
 ]
+
+ARCHE_CONST_MAPPINGS_SIMPLE = [
+    ('hasOwner', "https://d-nb.info/gnd/1123037736",),  # ACDHCH
+    ('hasContact', "https://d-nb.info/gnd/1123037736",),
+    ('hasRightsHolder', "https://d-nb.info/gnd/1001454-8",),
+    ('hasLicensor', 'https://d-nb.info/gnd/1123037736',),
+    ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
+    ('hasSubject', 'historic administrative units',),
+    ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
+    ('hasDepositor', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
+]
