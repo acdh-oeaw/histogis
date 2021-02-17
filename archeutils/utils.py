@@ -259,7 +259,7 @@ def as_arche_graph(res):
         g.add(
             (
                 sub,
-                OWL.sameAs,
+                SKOS.broadMatch,
                 Literal(f"https://www.wikidata.org/entity/{res.wikidata_id}")
             )
         )
