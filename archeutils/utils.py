@@ -334,9 +334,6 @@ def as_arche_graph(res):
     g.add(
         (sub, acdh_ns.isPartOf, col_sub)
     )
-    g.add(
-        (sub, SKOS.narrowMatch, Literal(res.sanitize_wikidataid(), datatype=XSD.anyURI))
-    )
     if res.start_date is not None:
         g.add(
             (
