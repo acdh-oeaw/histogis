@@ -24,7 +24,7 @@ idna==2.8
 isodate==0.6.0
 itypes==1.1.0
 Jinja2==2.11.1
-lxml==4.6.2
+lxml==4.6.3
 MarkupSafe==1.1.1
 munch==2.5.0
 numpy==1.18.1
