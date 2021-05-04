@@ -132,6 +132,9 @@ def serialize_project():
     g.add(
         (sub, acdh_ns.hasRelatedProject, proj_sub)
     )
+    g.add(
+        (sub, acdh_ns.hasOwner, URIRef('https://id.acdh.oeaw.ac.at/acdh'))
+    )
     g = g + proj_g
     # define persons
     g.add((pandorfer, RDF.type, acdh_ns.Person))
@@ -184,7 +187,7 @@ def serialize_project():
             acdh_ns.hasDescription,
             Literal(f"{TOP_COL_DESC}", lang=ARCHE_LANG))
     )
-    for const in ARCHE_CONST_MAPPINGS:
+    for const in ARCHE_CONST_MAPPINGS_SIMPLE:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
         if arche_prop_domain == 'date':
             col.add()
@@ -356,7 +359,7 @@ def as_arche_graph(res):
             acdh_ns.hasCategory,
             URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/dataset/geojson"))
     )
-    for const in ARCHE_CONST_MAPPINGS:
+    for const in ARCHE_CONST_MAPPINGS_SIMPLE:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
         if arche_prop_domain == 'date':
             col.add()

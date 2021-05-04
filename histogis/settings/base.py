@@ -184,23 +184,21 @@ ARCHE_LANG = 'en'
 ARCHE_PAYLOAD_MIMETYPE = 'application/geo+json'
 
 ARCHE_CONST_MAPPINGS = [
-    ('hasOwner', "https://id.acdh.oeaw.ac.at/acdh",),  # ACDHCH
     ('hasContact', "https://id.acdh.oeaw.ac.at/acdh",),
-    ('hasRightsHolder', "https://d-nb.info/gnd/1001454-8",),
     ('hasPrincipalInvestigator', "https://d-nb.info/gnd/1154715620",),
     ('hasPrincipalInvestigator', "https://d-nb.info/gnd/1043833846",),
-    ('hasLicensor', 'https://id.acdh.oeaw.ac.at/acdh',),
-    ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
+    # ('hasLicensor', 'https://id.acdh.oeaw.ac.at/acdh',),
+    # ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
     ('hasRelatedDiscipline', 'https://vocabs.acdh.oeaw.ac.at/oefosdisciplines/601',),
     ('hasSubject', 'GIS',),
     ('hasSubject', 'historic administrative units',),
     ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
-    ('hasDepositor', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
+    # ('hasRightsHolder', "https://d-nb.info/gnd/1001454-8",),
 ]
 
 ARCHE_CONST_MAPPINGS_SIMPLE = [
-    ('hasOwner', "https://id.acdh.oeaw.ac.at/acdh",),  # ACDHCH
     ('hasContact', "https://id.acdh.oeaw.ac.at/acdh",),
+    ('hasOwner', "https://id.acdh.oeaw.ac.at/acdh",),
     ('hasRightsHolder', "https://d-nb.info/gnd/1001454-8",),
     ('hasLicensor', 'https://id.acdh.oeaw.ac.at/acdh',),
     ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
