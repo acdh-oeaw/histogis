@@ -258,14 +258,14 @@ def as_arche_graph(res):
             )
         )
     )
-    if res.wikidata_id:
-        g.add(
-            (
-                sub,
-                SKOS.broadMatch,
-                Literal(f"https://www.wikidata.org/entity/{res.wikidata_id}")
-            )
-        )
+    # if res.wikidata_id:
+    #     g.add(
+    #         (
+    #             sub,
+    #             SKOS.broadMatch,
+    #             Literal(f"https://www.wikidata.org/entity/{res.wikidata_id}")
+    #         )
+    #     )
     # g.add(
     #     (
     #         sub, acdh_ns.hasDescription,
