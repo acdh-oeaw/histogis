@@ -258,6 +258,20 @@ def as_arche_graph(res):
             )
         )
     )
+    # create place
+    pl = Graph()
+    sub_pl = URIRef(f"{ARCHE_BASE_URL}/{res.source.slug_name()}/{res.slug_name()}/place")
+    pl.add((sub_pl, RDF.type, acdh_ns.Place))
+    pl.add(
+        (sub_pl, acdh_ns.hasTitle, Literal(f"Place for {res}", lang="und"))
+    )
+    pl.add((
+        sub_pl, acdh_ns.hasWkt, Literal(f"{res.geom.wkt}"))
+    )
+    g.add(
+        (sub, acdh_ns.hasSpatialCoverage, sub_pl)
+    )
+    g = g + pl
     # if res.wikidata_id:
     #     g.add(
     #         (
@@ -357,7 +371,7 @@ def as_arche_graph(res):
         (
             sub,
             acdh_ns.hasCategory,
-            URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/dataset/geojson"))
+            URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/dataset"))
     )
     for const in ARCHE_CONST_MAPPINGS_SIMPLE:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
