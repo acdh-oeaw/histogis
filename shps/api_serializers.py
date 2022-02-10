@@ -53,7 +53,6 @@ class TempSpatialSerializer(LinkedPastsSerializer, serializers.HyperlinkedModelS
     source_name = serializers.CharField(source='source.name')
     adm_name = serializers.CharField(source='administrative_unit.pref_label')
     spatial_extent_sqm = serializers.ReadOnlyField(source="sq_km")
-    parents = serializers.ListField("parents")
     slugged_name = serializers.ReadOnlyField(source="slug_name")
     title = serializers.ReadOnlyField(source="name")
 

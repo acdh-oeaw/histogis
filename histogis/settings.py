@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'django_tables2',
     'rest_framework',
     'rest_framework_gis',
-    'django_extensions',
     'leaflet',
     'idprovider',
     'webpage',
@@ -143,6 +142,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 TEMP_DIR = os.path.join(BASE_DIR, 'temp/')
+BASE_URL = "https://histogis.acdh.oeaw.ac.at"
 
 ARCHE_SETTINGS = {
     'project_name': ROOT_URLCONF.split('.')[0],
