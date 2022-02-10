@@ -19,19 +19,6 @@
 <div class="col-md-6">
     <div class="card">
         <div class="card-header">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active">
-                        <a href="{{ object.get_listview_url }}">all</a>
-                    </li>
-                    {% for x in object.fetch_parents %}
-                        <li class="breadcrumb-item active">
-                            <a href="{{x.get_absolute_url }}">{{ x }}</a>
-                        </li>
-                    {% endfor %}
-                    <li class="breadcrumb-item active" aria-current="page">{{ object }}</li>
-              </ol>
-            </nav>
             <div class="row">
                 <div class="col-md-2">
                     {% if object.get_prev %}
@@ -227,73 +214,6 @@
                     </td>
                 </tr>
             </table>
-            {% if object.fetch_parents %}
-                <legend>
-                    <abbr title="Lists all TempSpatial objects covering spatially the current object and with overlapping time spans">part of</abbr>
-                    <span class="badge badge-secondary">
-                        {{ object.fetch_parents|length  }}
-                    </span>
-                </legend>
-                <table class="table table-bordered table-hover">
-                    {% for x in object.fetch_parents %}
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <td>
-                                <a href="{{ x.get_absolute_url }}">
-                                    {{ x }}
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
-            {% if object.fetch_close_by %}
-                <legend>
-                    <abbr title="Lists all TempSpatial object's which centroids are in a 10 km radius of the current object">close by</abbr>
-                    <span class="badge badge-secondary">
-                        {{ object.fetch_close_by|length  }}
-                    </span>
-                </legend>
-                <table class="table table-bordered table-hover">
-                    {% for x in object.fetch_close_by %}
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <td>
-                                <a href="{{ x.get_absolute_url }}">
-                                    {{ x }}
-                                </a>
-                                <small>source: <a href="{{ x.source.get_absolute_url }}">{{ x.source }}</a></small>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
-            {% if object.fetch_children %}
-                <legend>
-                    <abbr title="Lists all TempSpatial objects covered spatially by the current object and with overlapping time spans">superunit of</abbr>
-                    <span class="badge badge-secondary">
-                        {{ object.fetch_children|length  }}
-                    </span>
-                </legend>
-                <table class="table table-bordered table-hover">
-                    {% for x in object.fetch_children %}
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <td>
-                                <a href="{{ x.get_absolute_url }}">
-                                    {{ x }}
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
         </div>
     </div>
 </div>
