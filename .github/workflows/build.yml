@@ -1,0 +1,26 @@
+name: Build and push to DockerHub
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker build
+        run: docker build -t acdhch/histogis --label "buildUrl=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" .
+      - name: docker push
+        run: |
+          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}" 
+          docker push acdhch/histogis
+  # rancher:
+  #   needs: push_to_registry
+  #   name: Deploy to rancher
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Rancher Deploy Action
+  #       run: |
+  #         curl  --request POST 'https://rancher.acdh-dev.oeaw.ac.at/v3/project/c-zdbh8:p-qdg5b/workloads/deployment:ghabcd:abcd?action=redeploy' --header 'Accept: application/json' --header 'Authorization: Bearer ${{ secrets.RANCHER_BARER_TOKEN }}'
