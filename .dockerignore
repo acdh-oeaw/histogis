@@ -1,0 +1,6 @@
+myenv
+env
+db.sqlite3
+.env
+env.default
+env.secret

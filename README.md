@@ -12,26 +12,21 @@ HistoGIS is based upon django, geodjango and [djangobaseproject](https://github.
 2. Adapt the information in `webpage/metadata.py` according to your needs.
 3. Create and activate a virtual environment and run `pip install -r requirements.txt`.
 
-## First steps
 
-This project uses modularized settings (to keep sensitive information out of version control or to be able to use the same code for development and production). Therefore you'll have to append a `--settings` parameter pointing to the settings file you'd like to run the code with to all `manage.py` commands.
 
-For development just append `--settings={nameOfYouProject}.settings.dev` to the following commands, e.g. `python manage.py makemigrations --settings=histogis.settings.dev`.
 
-6. Run `makemigrations`, `migrate`, and `runserver` and check [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+### building the image
 
-### Jupyter notebook
+`docker build -t histogis:latest .`
+`docker build -t histogis:latest --no-cache .`
 
-In case you want to use [Jupyter Notebook and Django-Extensions](https://andrewbrookins.com/python/using-ipython-notebook-with-django/) use the `requirements_dev.txt` for your virtual environment.
+### running the image
 
-## Tests
+To run the image you should provide an `env.default` file to pass in needed environment variables; see example `env.default` in this repo:
 
-Install required packages
 
-    pip install -r requirements_test.txt
+`docker run -it -p 8020:8020 --rm --env-file env.default histogis:latest`
 
-Run tests
+### or use published image:
 
-    python manage.py test --settings=histogis.settings.test
-
-After running the test a HTML coverage report will be available at cover/index.html
+`docker run -it -p 8020:8020 --rm --env-file env.default acdhch/histogis:latest`
