@@ -2,16 +2,11 @@ import os
 import hashlib
 from datetime import datetime
 
-import rdflib
-from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef, RDFS, ConjunctiveGraph
-from rdflib.namespace import DC, FOAF, RDFS, XSD
-from rdflib.namespace import SKOS
-
+from rdflib import Namespace
 from django.conf import settings
 from django.contrib.gis.db import models
-from django.contrib.gis.db.models.functions import Centroid, GeoHash
 from django.contrib.gis.measure import Distance
-from django.contrib.postgres.fields import JSONField, DateRangeField
+from django.contrib.postgres.fields import DateRangeField
 from django.core.files.storage import FileSystemStorage
 from django.core.serializers import serialize
 from django.urls import reverse
@@ -214,7 +209,7 @@ class TempSpatial(IdProvider):
         help_text="An estimation of the HistoGis Team upon the quality of this dataset",
         max_length=25, null=True, choices=QUALITY, default=QUALITY[1][1]
     )
-    additional_data = JSONField(
+    additional_data = models.JSONField(
         verbose_name="Additional data",
         help_text="Additional data provided from the object's source.",
         blank=True, null=True
