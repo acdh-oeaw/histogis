@@ -23,4 +23,4 @@ jobs:
   #   steps:
   #     - name: Rancher Deploy Action
   #       run: |
-  #         curl  --request POST 'https://rancher.acdh-dev.oeaw.ac.at/v3/project/c-zdbh8:p-qdg5b/workloads/deployment:ghabcd:abcd?action=redeploy' --header 'Accept: application/json' --header 'Authorization: Bearer ${{ secrets.RANCHER_BARER_TOKEN }}'
+  #         curl  --request POST 'https://rancher.acdh-dev.oeaw.ac.at/v3/project/c-m-6hwgqq2g:p-2qxzj/workloads/deployment:histogis:histogis?action=redeploy' --header 'Accept: application/json' --header 'Authorization: Bearer ${{ secrets.RANCHER_BARER_TOKEN }}'
