@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.urls import path, include
 from django.contrib import admin
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
@@ -18,15 +18,15 @@ router.register(
 
 
 urlpatterns = [
-    url(r"^api/", include(router.urls)),
-    url(r"^api/where-was/", shps_api_views.TemporalizedSpatialQuery.as_view()),
-    url("api-docs/", include_docs_urls(title="HistoGIS-API")),
-    url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-    url(r"^admin/", admin.site.urls),
-    url(r"^charts/", include("charts.urls", namespace="charts")),
-    url(r"^vocabs/", include("vocabs.urls", namespace="vocabs")),
-    url(r"^vocabs-ac/", include("vocabs.dal_urls", namespace="vocabs-ac")),
-    url(r"^", include("webpage.urls", namespace="webpage")),
-    url(r"^shapes/", include("shps.urls", namespace="shapes")),
-    url(r"^analyze/", include("analyze.urls", namespace="analyze")),
+    path("api/", include(router.urls)),
+    path("api/where-was/", shps_api_views.TemporalizedSpatialQuery.as_view()),
+    path("api-docs/", include_docs_urls(title="HistoGIS-API")),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path("admin/", admin.site.urls),
+    # path("charts/", include("charts.urls", namespace="charts")),
+    path("vocabs/", include("vocabs.urls", namespace="vocabs")),
+    path("vocabs-ac/", include("vocabs.dal_urls", namespace="vocabs-ac")),
+    path("", include("webpage.urls", namespace="webpage")),
+    path("shapes/", include("shps.urls", namespace="shapes")),
+    path("analyze/", include("analyze.urls", namespace="analyze")),
 ]
