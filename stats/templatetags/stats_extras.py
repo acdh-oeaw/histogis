@@ -23,7 +23,7 @@ def create_object_count(app=None):
                     "name": modelname.title(),
                     "count": fetched_model.objects.count(),
                 }
-            except:
+            except:  # noqa: E722
                 item = {"name": x, "count": "Some error occured"}
             try:
                 item["link"] = fetched_model.get_listview_url()

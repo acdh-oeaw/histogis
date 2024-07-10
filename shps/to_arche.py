@@ -1,11 +1,7 @@
 import rdflib
 from datetime import datetime
-from django.conf import settings
-from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef, RDFS, ConjunctiveGraph
-from rdflib.namespace import DC, FOAF, RDFS, XSD
-from rdflib.namespace import SKOS
-from django.core.validators import URLValidator
-from django.core.exceptions import ValidationError
+from rdflib import Literal, Namespace, RDF, URIRef
+from rdflib.namespace import XSD
 
 from .models import TempSpatial
 

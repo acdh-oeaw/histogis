@@ -1,12 +1,10 @@
 import django_filters
-from django_filters.rest_framework import DjangoFilterBackend, FilterSet
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 from .serializers import NewsFeedSerializer, UserSerializer
 from .models import NewsFeed
 from django.contrib.auth.models import User
-from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import permission_classes
 
 
 class UserViewSet(viewsets.ModelViewSet):

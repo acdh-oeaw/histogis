@@ -1,12 +1,8 @@
-import csv
-from io import TextIOWrapper, BytesIO, StringIO
+from io import TextIOWrapper
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .forms import UploadFileForm
 from .skos import SkosImporter, Csv2SkosImporter
-from .models import *
-
-# http://stackoverflow.com/questions/16243023/how-to-resolve-iterator-should-return-strings-not-bytes
 
 
 @login_required

@@ -1,11 +1,8 @@
-import os
 from django.db import models
 from django.conf import settings
-from django.db import models
 from django.urls import reverse
 
 from django.utils.text import slugify
-from django.utils.functional import cached_property
 
 
 try:
@@ -216,16 +213,6 @@ class SkosConcept(models.Model):
         else:
             pass
         super(SkosConcept, self).save(*args, **kwargs)
-
-    @cached_property
-    def label(self):
-        # 'borrowed from https://github.com/sennierer'
-        d = self
-        res = self.pref_label
-        while d.broader_concept:
-            res = d.broader_concept.pref_label + " >> " + res
-            d = d.broader_concept
-        return res
 
     @classmethod
     def get_listview_url(self):

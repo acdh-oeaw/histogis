@@ -1,14 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404
-from django.utils.text import slugify
+from django.http import HttpResponse, JsonResponse, Http404
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 
 from .utils import (
     as_arche_graph,
     serialize_project,
     ARCHE_BASE_URL,
-    get_arche_id,
     title_img,
     ARCHE_DEFAULT_EXTENSION,
     ARCHE_PAYLOAD_MIMETYPE,
@@ -47,9 +44,7 @@ def project_as_arche_graph(request):
 
 
 def get_ids(request):
-    start = request.GET.get("start", 0)
     limit = request.GET.get("limit", False)
-    print(limit)
     base_uri = request.build_absolute_uri().split("/shapes")[0]
     if limit:
         try:
@@ -76,7 +71,7 @@ def get_ids(request):
     data["ids"].append(
         {
             "id": f"{ARCHE_BASE_URL}/histogis_projektlogo_black.png",
-            "filename": f"histogis_projektlogo_black.png",
+            "filename": "histogis_projektlogo_black.png",
             "md": f"{base_uri}{reverse('shps:arche_title_img')}",
             "payload": "https://histogis.acdh.oeaw.ac.at/static/webpage/img/histogis_projektlogo_black.png",
             "mimetype": "image/png",

@@ -1,11 +1,9 @@
-import re
 import coreapi
 import coreschema
-from dateutil.parser import *
+from dateutil.parser import parse
 import rest_framework
 from django.contrib.gis.geos import Point
 from rest_framework.schemas import AutoSchema
-from rest_framework.settings import api_settings
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
