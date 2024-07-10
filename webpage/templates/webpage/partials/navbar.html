@@ -1,0 +1,52 @@
+{% load static %}
+{% load webpage_extras %}
+{% load browsing_extras %}
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">{% projects_metadata 'title' %}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Info
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">About </a></li>
+                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='team' %}">Team </a></li>
+                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='shp-samples' %}">Shape File Samples </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'webpage:staticpage' template='imprint' %}">Imprint</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% nav_menu app='shps' as links %}
+                            {% for x in links %}
+                            <li><a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                {% if user.is_authenticated %}
+                <a href="{% url 'webpage:user_logout' %}"><i class="bi bi-person-check"></i></a>
+                {% else %}
+                <a href="{% url 'webpage:user_login' %}"><i class="bi bi-box-arrow-in-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
