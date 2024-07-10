@@ -3,6 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 
 from django.utils.text import slugify
+from django.utils.functional import cached_property
 
 
 try:
@@ -136,7 +137,6 @@ class SkosConcept(models.Model):
     )
     definition = models.TextField(blank=True)
     definition_lang = models.CharField(max_length=3, blank=True, default=DEFAULT_LANG)
-    label = models.ManyToManyField(SkosLabel, blank=True)
     notation = models.CharField(max_length=300, blank=True)
     namespace = models.ForeignKey(
         SkosNamespace, blank=True, null=True, on_delete=models.SET_NULL
@@ -213,6 +213,16 @@ class SkosConcept(models.Model):
         else:
             pass
         super(SkosConcept, self).save(*args, **kwargs)
+
+    @cached_property
+    def label(self):
+        # 'borrowed from https://github.com/sennierer'
+        d = self
+        res = self.pref_label
+        while d.broader_concept:
+            res = d.broader_concept.pref_label + ' >> ' + res
+            d = d.broader_concept
+        return res
 
     @classmethod
     def get_listview_url(self):
