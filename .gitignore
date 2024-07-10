@@ -43,3 +43,5 @@ dev_secret.py
 /dump.sql
 arche.xml
 myenv
+venv
+*.secret
