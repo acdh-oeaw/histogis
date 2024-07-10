@@ -3,7 +3,6 @@ from django.test import Client, TestCase
 
 
 class VocabsTest(TestCase):
-
     def setUp(self):
         self.client = Client()
         User.objects.create_user("temporary", "temp@gmail.com", "temporary")
@@ -12,7 +11,7 @@ class VocabsTest(TestCase):
 
     def test_vocabs(self):
         rv = self.client.get("/vocabs/scheme/")
-        self.assertContains(rv, "Concept Schemes")
+        self.assertContains(rv, "Browse SkosConceptSchemes")
         rv = self.client.get("/vocabs/scheme/create/", follow=True)
         self.assertContains(rv, "Namespace")
 
@@ -20,5 +19,5 @@ class VocabsTest(TestCase):
         rv = self.client.get("/vocabs/create/")
         self.assertContains(rv, "Pref label")
         form_data = {"pref_label": "test concept"}
-        self.client.post("/vocabs/create/", form_data, follow=True)
-        self.assertContains(rv, "Skos broadmatch")
+        rv = self.client.post("/vocabs/create/", form_data, follow=True)
+        self.assertTrue("test concept" in str(rv.content))
