@@ -1,16 +1,7 @@
-import pickle
-import os
-import re
-
-
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist, FieldDoesNotExist
-from django.db.models.query import QuerySet
-
 from rdflib import Graph, Namespace, URIRef, Literal, XSD
-from rdflib.namespace import RDF, SKOS, OWL
+from rdflib.namespace import RDF
 
-from browsing.browsing_utils import model_to_dict
 from webpage.metadata import PROJECT_METADATA
 
 ARCHE_CONST_MAPPINGS = getattr(settings, "ARCHE_CONST_MAPPINGS", False)
@@ -72,13 +63,13 @@ def serialize_project():
     proj_g = Graph()
     proj_g.add((proj_sub, RDF.type, acdh_ns.Project))
     proj_g.add(
-        (proj_sub, acdh_ns.hasTitle, Literal(f"HistoGIS (Project)", lang=ARCHE_LANG))
+        (proj_sub, acdh_ns.hasTitle, Literal("HistoGIS (Project)", lang=ARCHE_LANG))
     )
     proj_g.add(
-        (proj_sub, acdh_ns.hasStartDate, Literal(f"2018-03-01", datatype=XSD.date))
+        (proj_sub, acdh_ns.hasStartDate, Literal("2018-03-01", datatype=XSD.date))
     )
     proj_g.add(
-        (proj_sub, acdh_ns.hasEndDate, Literal(f"2020-11-30", datatype=XSD.date))
+        (proj_sub, acdh_ns.hasEndDate, Literal("2020-11-30", datatype=XSD.date))
     )
     proj_g.add((proj_sub, acdh_ns.hasFunder, URIRef("https://id.acdh.oeaw.ac.at/oeaw")))
     for x in [adueck, apiechl, pmarck]:
@@ -252,7 +243,6 @@ def serialize_project():
     for const in ARCHE_CONST_MAPPINGS_SIMPLE:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], "No Match")
         if arche_prop_domain == "date":
-            col.add()
             g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
         if arche_prop_domain == "string":
             g.add((sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
@@ -454,7 +444,7 @@ def title_img():
     g.add((sub, RDF.type, acdh_ns.Resource))
     g = g + sandra_g
     g.add((sub, acdh_ns.hasCreator, sandra))
-    g.add((sub, acdh_ns.hasTitle, Literal(f"HistoGIS Title Logo", lang=ARCHE_LANG)))
+    g.add((sub, acdh_ns.hasTitle, Literal("HistoGIS Title Logo", lang=ARCHE_LANG)))
     g.add((sub, acdh_ns.isPartOf, URIRef(f"{ARCHE_BASE_URL}")))
     g.add(
         (
@@ -467,7 +457,6 @@ def title_img():
     for const in ARCHE_CONST_MAPPINGS_SIMPLE:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], "No Match")
         if arche_prop_domain == "date":
-            col.add()
             g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
         if arche_prop_domain == "string":
             g.add((sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))

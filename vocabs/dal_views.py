@@ -36,7 +36,7 @@ class SKOSConstraintACNoHierarchy(autocomplete.Select2QuerySetView):
         try:
             selected_scheme = SkosConceptScheme.objects.get(dc_title=scheme)
             qs = SkosConcept.objects.filter(scheme=selected_scheme)
-        except:
+        except:  # noqa: E722
             qs = SkosConcept.objects.all()
 
         if self.q:
@@ -57,7 +57,7 @@ class SKOSConstraintAC(autocomplete.Select2QuerySetView):
         try:
             selected_scheme = SkosConceptScheme.objects.get(dc_title=scheme)
             qs = SkosConcept.objects.filter(scheme=selected_scheme)
-        except:
+        except:  # noqa: E722
             qs = SkosConcept.objects.all()
 
         if self.q:

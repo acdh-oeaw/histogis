@@ -125,7 +125,7 @@ class Source(models.Model):
     def get_file_size(self):
         try:
             return "{}".format(self.upload.size)
-        except Exception as e:
+        except:  # noqa: E722
             return None
 
     @property
@@ -321,11 +321,6 @@ class TempSpatial(IdProvider):
         """ returns all TempSpatial objects covered spatially by the current object and with\
         overlapping time spans """
         try:
-            # lat = self.Lat
-            # coef = cos(lat)
-            #
-            # buffer_width = 360 * distance / (40000.0 * coef)
-            # bufferd_poly = self.geom.buffer(buffer_width)
             bigger = (
                 TempSpatial.objects.filter(centroid__within=self.geom)
                 .filter(spatial_extent__lte=self.spatial_extent)
@@ -344,7 +339,7 @@ class TempSpatial(IdProvider):
         overlapping time spans """
         try:
             buffer_width = distance / 40000000.0 * 360.0
-            bufferd_poly = self.geom.buffer(buffer_width)
+            self.geom.buffer(buffer_width)
             bigger = (
                 TempSpatial.objects.filter(geom__covers=self.centroid)
                 .filter(spatial_extent__gte=self.spatial_extent)

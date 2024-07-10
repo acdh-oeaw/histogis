@@ -14,9 +14,6 @@ from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView
 
 from shapely import wkt
-
-from django_tables2 import RequestConfig
-
 from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateView
 
 from .models import TempSpatial, Source

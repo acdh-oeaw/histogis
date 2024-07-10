@@ -1,12 +1,18 @@
 from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from django_tables2 import SingleTableView, RequestConfig
+from django_tables2 import RequestConfig
 from .models import SkosConcept, SkosConceptScheme, SkosLabel
-from .forms import *
+from .forms import (
+    SkosConceptForm,
+    SkosConceptFormHelper,
+    SkosConceptSchemeForm,
+    SkosConceptSchemeFormHelper,
+    SkosLabelForm,
+    SkosLabelFormHelper,
+)
 from .tables import SkosConceptTable, SkosConceptSchemeTable, SkosLabelTable
 from .filters import (
     SkosConceptListFilter,
@@ -54,13 +60,11 @@ class SkosConceptListView(GenericListView):
 
 
 class SkosConceptDetailView(DetailView):
-
     model = SkosConcept
     template_name = "vocabs/skosconcept_detail.html"
 
 
 class SkosConceptCreate(BaseCreateView):
-
     model = SkosConcept
     form_class = SkosConceptForm
 
@@ -70,7 +74,6 @@ class SkosConceptCreate(BaseCreateView):
 
 
 class SkosConceptUpdate(BaseUpdateView):
-
     model = SkosConcept
     form_class = SkosConceptForm
 
@@ -131,7 +134,6 @@ class SkosConceptSchemeListView(GenericListView):
 
 
 class SkosConceptSchemeDetailView(DetailView):
-
     model = SkosConceptScheme
     template_name = "vocabs/skosconceptscheme_detail.html"
 
@@ -142,7 +144,6 @@ class SkosConceptSchemeDetailView(DetailView):
 
 
 class SkosConceptSchemeCreate(BaseCreateView):
-
     model = SkosConceptScheme
     form_class = SkosConceptSchemeForm
 
@@ -152,7 +153,6 @@ class SkosConceptSchemeCreate(BaseCreateView):
 
 
 class SkosConceptSchemeUpdate(BaseUpdateView):
-
     model = SkosConceptScheme
     form_class = SkosConceptSchemeForm
 
@@ -213,13 +213,11 @@ class SkosLabelListView(GenericListView):
 
 
 class SkosLabelDetailView(DetailView):
-
     model = SkosLabel
     template_name = "vocabs/skoslabel_detail.html"
 
 
 class SkosLabelCreate(BaseCreateView):
-
     model = SkosLabel
     form_class = SkosLabelForm
 
@@ -229,7 +227,6 @@ class SkosLabelCreate(BaseCreateView):
 
 
 class SkosLabelUpdate(BaseUpdateView):
-
     model = SkosLabel
     form_class = SkosLabelForm
 

@@ -1,19 +1,15 @@
 import json
 import os
 import glob
-import shutil
 import zipfile
-import pandas as pd
 import geopandas as gp
 
-from django.core.files import File
 from django.contrib.gis import geos
 from django.contrib.gis.geos import fromstr
 from django.db import IntegrityError
-from django.conf import settings
 
 from vocabs.models import SkosConcept, SkosConceptScheme
-from .models import TempSpatial, Source
+from .models import TempSpatial
 
 mandatory_keys = [
     "id",
@@ -29,7 +25,7 @@ mandatory_keys = [
 
 def unzip_shapes(path_to_zipfile, shape_temp_dir):
     zf = zipfile.ZipFile(path_to_zipfile, "r")
-    extracted = zf.extractall(shape_temp_dir)
+    zf.extractall(shape_temp_dir)
     shape_temp_dir = os.path.join(shape_temp_dir, "*.shp")
     shapefiles = [x for x in glob.iglob(shape_temp_dir, recursive=False)]
     return shapefiles

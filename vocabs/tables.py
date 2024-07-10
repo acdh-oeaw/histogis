@@ -1,6 +1,6 @@
 import django_tables2 as tables
 from django_tables2.utils import A
-from vocabs.models import *
+from vocabs.models import SkosConceptScheme, SkosConcept, SkosLabel
 
 
 class SkosLabelTable(tables.Table):
