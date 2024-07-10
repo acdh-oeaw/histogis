@@ -11,5 +11,5 @@ requests>=2.25
 tablib==3.0.0
 psycopg2-binary
 coreapi>=2.3.3
-lxml==4.7.1
+lxml==4.9.1
 rdflib==6.1.1
