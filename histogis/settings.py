@@ -1,12 +1,13 @@
 import os
+from pathlib import Path
+
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.abspath(os.path.join(__file__, "../")))
-)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 ACDH_IMPRINT_URL = (
     "https://shared.acdh.oeaw.ac.at/acdh-common-assets/api/imprint.php?serviceID="
@@ -14,13 +15,13 @@ ACDH_IMPRINT_URL = (
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "TZRHHwasdfsadfdsafkljlxö7639827249324GV")
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "my_cache_table",
-        "TIMEOUT": None,
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+#         "LOCATION": "my_cache_table",
+#         "TIMEOUT": None,
+#     }
+# }
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", True)
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.gis",
     "crispy_forms",
+    "crispy_bootstrap5",
     "django_filters",
     "django_tables2",
     "rest_framework",
@@ -62,7 +64,8 @@ INSTALLED_APPS = [
     "archeutils",
 ]
 
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (

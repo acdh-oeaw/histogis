@@ -1,70 +1,66 @@
-from django.conf.urls import url
+from django.urls import path
 from . import views
 from . import import_views
-from . import dal_views
-from .models import SkosLabel, SkosConcept, SkosConceptScheme
 
 app_name = "vocabs"
 
 
 urlpatterns = [
-    url(r"^$", views.SkosConceptListView.as_view(), name="skosconcept_list"),
-    url(
-        r"^concepts/browse/$", views.SkosConceptListView.as_view(), name="browse_vocabs"
-    ),
-    url(r"^import/$", import_views.import_skos, name="skos_import"),
-    url(r"^import-from-csv/$", import_views.import_csv, name="skos_csv_import"),
-    url(
-        r"^(?P<pk>[0-9]+)$",
+    path("", views.SkosConceptListView.as_view(), name="skosconcept_list"),
+    path("concepts/browse/", views.SkosConceptListView.as_view(), name="browse_vocabs"),
+    path("import/", import_views.import_skos, name="skos_import"),
+    path("import-from-csv/", import_views.import_csv, name="skos_csv_import"),
+    path(
+        "<int:pk>",
         views.SkosConceptDetailView.as_view(),
         name="skosconcept_detail",
     ),
-    url(r"^create/$", views.SkosConceptCreate.as_view(), name="skosconcept_create"),
-    url(
-        r"^update/(?P<pk>[0-9]+)$",
+    path("create/", views.SkosConceptCreate.as_view(), name="skosconcept_create"),
+    path(
+        "update/<int:pk>",
         views.SkosConceptUpdate.as_view(),
         name="skosconcept_update",
     ),
-    url(
-        r"^delete/(?P<pk>[0-9]+)$",
+    path(
+        "delete/<int:pk>",
         views.SkosConceptDelete.as_view(),
         name="skosconcept_delete",
     ),
-    url(r"^scheme/$", views.SkosConceptSchemeListView.as_view(), name="browse_schemes"),
-    url(
-        r"^scheme/(?P<pk>[0-9]+)$",
+    path("scheme/", views.SkosConceptSchemeListView.as_view(), name="browse_schemes"),
+    path(
+        "scheme/<int:pk>",
         views.SkosConceptSchemeDetailView.as_view(),
         name="skosconceptscheme_detail",
     ),
-    url(
-        r"^scheme/create/$",
+    path(
+        "scheme/create/",
         views.SkosConceptSchemeCreate.as_view(),
         name="skosconceptscheme_create",
     ),
-    url(
-        r"^scheme/update/(?P<pk>[0-9]+)$",
+    path(
+        "scheme/update/<int:pk>",
         views.SkosConceptSchemeUpdate.as_view(),
         name="skosconceptscheme_update",
     ),
-    url(
-        r"^scheme/delete/(?P<pk>[0-9]+)$",
+    path(
+        "scheme/delete/<int:pk>",
         views.SkosConceptSchemeDelete.as_view(),
         name="skosconceptscheme_delete",
     ),
-    url(r"^label/$", views.SkosLabelListView.as_view(), name="browse_skoslabels"),
-    url(
-        r"^label/(?P<pk>[0-9]+)$",
+    path("label/", views.SkosLabelListView.as_view(), name="browse_skoslabels"),
+    path(
+        "label/<int:pk>",
         views.SkosLabelDetailView.as_view(),
         name="skoslabel_detail",
     ),
-    url(r"^label/create/$", views.SkosLabelCreate.as_view(), name="skoslabel_create"),
-    url(
-        r"^label/update/(?P<pk>[0-9]+)$",
+    path("label/create/", views.SkosLabelCreate.as_view(), name="skoslabel_create"),
+    path(
+        "label/update/<int:pk>",
         views.SkosLabelUpdate.as_view(),
         name="skoslabel_update",
     ),
-    url(
-        r"^skoslabel/delete/(?P<pk>[0-9]+)$",
+    path(
+        "skoslabel/delete/<int:pk>",
         views.SkosLabelDelete.as_view(),
         name="skoslabel_delete",
     ),

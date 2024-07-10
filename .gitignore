@@ -45,3 +45,4 @@ arche.xml
 myenv
 venv
 *.secret
+staticfiles/

@@ -4,35 +4,8 @@
 {% load webpage_extras %}
 {% load news_extras %}
 {% block content %}
-
-        <div class="jumbotron" style="background-image: url({% static 'webpage/img/histogis-background-nussbraun.jpg' %}) ">
-            <div class="container" style="font-color: #000;">
-                <h1 style="text-align:center">{% projects_metadata 'title' %}</h1>
-                <h3>{% projects_metadata 'subtitle' %}</h3>
-            </div>
-        </div>
-
     <div class="container">
-        {% newsfeed_bootstrap_panel %}<br>
-        <div class="row">
-            <div class="col-md-12">
-                <h5 class="row-heading pb-2 mb-3 border-bottom"><i class="fas fa-paste"></i> Data-Count</h3>
-            </div>
-
-            {% create_object_count app='shps' as models %}
-            {% for x in models %}
-                <div class="col-md-4  text-center">
-                    <div class="card flex-md-row mb-4 box-shadow">
-                        <div class="card-body">
-                            <h4 class="mb-0">{{x.name}}</h4>
-                            <h4 class="count">{{ x.count }}</h4>
-                            {% if x.link %}
-                                <a class="btn btn-main btn-outline-primary btn-sm" href="{{ x.link }}" role="button">View Details</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        <h1>{% projects_metadata 'title' %}</h1>
+        <h2>{% projects_metadata 'subtitle' %}</h2>
     </div>
 {% endblock %}

@@ -1,8 +1,7 @@
-myenv
-venv
-.git
-env
+.git/
+env/
+venv/
+staticfiles/
 db.sqlite3
-.env
-env.default
-env.secret
+env.*
+secret.*

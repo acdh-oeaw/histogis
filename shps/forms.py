@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
+from crispy_forms.layout import Submit, Layout, Fieldset
 from crispy_forms.bootstrap import Accordion, AccordionGroup
 
 from leaflet.forms.widgets import LeafletWidget
@@ -84,7 +84,7 @@ class SourceFilterFormHelper(FormHelper):
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
-        self.helper.form_tag = False
+        self.form_tag = False
         self.add_input(Submit("Filter", "Search"))
         self.layout = Layout(
             Fieldset("Basic search options", "name", css_id="basic_search_fields"),
@@ -120,7 +120,7 @@ class TempSpatialFilterFormHelper(FormHelper):
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
-        self.helper.form_tag = False
+        self.form_tag = False
         self.add_input(Submit("Filter", "Search"))
         self.layout = Layout(
             Fieldset(
