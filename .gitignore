@@ -13,13 +13,6 @@ cover/
 # IDE
 .idea
 
-# migrations
-vocabs/migrations/*
-bib/migrations/*
-webpage/migrations/*
-places/migrations/*
-
-
 # Ipython Notebook checkpoints
 .ipynb_checkpoints
 
