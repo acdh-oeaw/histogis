@@ -46,3 +46,4 @@ myenv
 venv
 *.secret
 staticfiles/
+histogis_dump.sql
