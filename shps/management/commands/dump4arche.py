@@ -8,6 +8,6 @@ class Command(BaseCommand):
     help = """Creates ARCHE metadata RDF"""
 
     def handle(self, *args, **options):
-        dump = project_to_arche().serialize('arche.xml', format='application/rdf+xml')
+        dump = project_to_arche().serialize("arche.xml", format="application/rdf+xml")
 
         return dump

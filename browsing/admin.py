@@ -4,9 +4,9 @@ from browsing.models import BrowsConf
 
 class BrowsConfAdmin(admin.ModelAdmin):
     list_display = [
-        'model_name',
-        'label',
-        'field_path',
+        "model_name",
+        "label",
+        "field_path",
     ]
 
 

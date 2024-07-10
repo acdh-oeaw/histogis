@@ -13,79 +13,79 @@ from django.db import IntegrityError
 from django.conf import settings
 
 from vocabs.models import SkosConcept, SkosConceptScheme
-from . models import TempSpatial, Source
+from .models import TempSpatial, Source
 
 mandatory_keys = [
-    'id',
-    'name',
-    'name_alt',
-    'start_date',
-    'end_date',
-    'date_acc',
-    'adm_type',
-    'geometry',
+    "id",
+    "name",
+    "name_alt",
+    "start_date",
+    "end_date",
+    "date_acc",
+    "adm_type",
+    "geometry",
 ]
 
 
 def unzip_shapes(path_to_zipfile, shape_temp_dir):
-    zf = zipfile.ZipFile(path_to_zipfile, 'r')
+    zf = zipfile.ZipFile(path_to_zipfile, "r")
     extracted = zf.extractall(shape_temp_dir)
-    shape_temp_dir = os.path.join(shape_temp_dir, '*.shp')
+    shape_temp_dir = os.path.join(shape_temp_dir, "*.shp")
     shapefiles = [x for x in glob.iglob(shape_temp_dir, recursive=False)]
     return shapefiles
 
 
 def import_shapes(shapefiles, source):
-    adm_scheme, _ = SkosConceptScheme.objects.get_or_create(dc_title="administrative_unit")
+    adm_scheme, _ = SkosConceptScheme.objects.get_or_create(
+        dc_title="administrative_unit"
+    )
     temp_spatial_ids = []
     for x in shapefiles:
-        df = gp.read_file(x).to_crs({'proj': 'longlat', 'ellps': 'WGS84', 'datum': 'WGS84'})
+        df = gp.read_file(x).to_crs(
+            {"proj": "longlat", "ellps": "WGS84", "datum": "WGS84"}
+        )
         for i, row in df.iterrows():
             add_data = {}
-            if row['geometry'].geom_type == 'MultiPolygon':
-                mp = row['geometry'].wkt
+            if row["geometry"].geom_type == "MultiPolygon":
+                mp = row["geometry"].wkt
             else:
-                mp = geos.MultiPolygon(fromstr(row['geometry'].wkt))
+                mp = geos.MultiPolygon(fromstr(row["geometry"].wkt))
             spat, _ = TempSpatial.objects.get_or_create(
-                        start_date=row['start_date'],
-                        end_date=row['end_date'],
-                        date_accuracy=row['date_acc'],
-                        geom=mp
-                    )
+                start_date=row["start_date"],
+                end_date=row["end_date"],
+                date_accuracy=row["date_acc"],
+                geom=mp,
+            )
             try:
                 try:
                     adm, _ = SkosConcept.objects.get_or_create(
-                        pref_label=row['adm_type']
+                        pref_label=row["adm_type"]
                     )
                 except IntegrityError:
-                    adm, _ = SkosConcept.objects.get_or_create(
-                        pref_label="unknown adm"
-                    )
+                    adm, _ = SkosConcept.objects.get_or_create(pref_label="unknown adm")
             except KeyError:
-                adm, _ = SkosConcept.objects.get_or_create(
-                    pref_label="unknown adm"
-                )
+                adm, _ = SkosConcept.objects.get_or_create(pref_label="unknown adm")
             if adm is not None:
                 adm.scheme.add(adm_scheme)
                 spat.administrative_unit = adm
             try:
-                if row['name']:
-                    spat.name = row['name']
+                if row["name"]:
+                    spat.name = row["name"]
             except KeyError:
                 pass
             try:
-                if row['name_alt']:
-                    spat.alt_name = row['name_alt']
+                if row["name_alt"]:
+                    spat.alt_name = row["name_alt"]
             except KeyError:
                 pass
             try:
-                if row['id']:
-                    spat.orig_id = row['id']
+                if row["id"]:
+                    spat.orig_id = row["id"]
             except KeyError:
                 pass
             try:
-                if row['wiki_id']:
-                    spat.wikidata_id = row['wiki_id']
+                if row["wiki_id"]:
+                    spat.wikidata_id = row["wiki_id"]
             except KeyError:
                 pass
             for x in list(df.keys()):

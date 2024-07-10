@@ -2,11 +2,11 @@
 # (by default) in the base.html and index.html
 
 PROJECT_METADATA = {
-    'title': 'HistoGIS',
-    'author': 'Peter Andorfer, Matthias Schlögl',
-    'subtitle': 'A Geographical Information System, workbench and repository to retrieve,\
-    collect, create, enrich and preserve historical temporalized spatial data sets',
-    'description': """
+    "title": "HistoGIS",
+    "author": "Peter Andorfer, Matthias Schlögl",
+    "subtitle": "A Geographical Information System, workbench and repository to retrieve,\
+    collect, create, enrich and preserve historical temporalized spatial data sets",
+    "description": """
     Information about historical political/administrative units is usually communicated through\
     maps. Our human perception allows us to extract diverse information by just looking at a map;\
     we can, for instance, at a glance identify border lines, streets and cities and answer\
@@ -30,12 +30,12 @@ PROJECT_METADATA = {
     and curation or be it as a publishing platform and stable repository for data,\
     crafted in their own projects.
     """,
-    'github': 'https://github.com/acdh-oeaw/histogis',
-    'purpose_de': 'Ziel von HistoGIS ist die Publikation von Forschungsdaten.',
-    'purpose_en': 'The purpose of HistoGIS is the publication of research data.',
-    'version': '0.1.0',
-    'matomo_id': '87',
-    'matomo_url': '//matomo.acdh.oeaw.ac.at/',
-    'imprint': '/imprint',
-    'app_type': 'service',
+    "github": "https://github.com/acdh-oeaw/histogis",
+    "purpose_de": "Ziel von HistoGIS ist die Publikation von Forschungsdaten.",
+    "purpose_en": "The purpose of HistoGIS is the publication of research data.",
+    "version": "0.1.0",
+    "matomo_id": "87",
+    "matomo_url": "//matomo.acdh.oeaw.ac.at/",
+    "imprint": "/imprint",
+    "app_type": "service",
 }

@@ -8,11 +8,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'url']
+        fields = ["username", "url"]
 
 
 class NewsFeedSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        fields = '__all__'
+        fields = "__all__"
         model = NewsFeed

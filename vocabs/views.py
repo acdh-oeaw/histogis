@@ -8,7 +8,11 @@ from django_tables2 import SingleTableView, RequestConfig
 from .models import SkosConcept, SkosConceptScheme, SkosLabel
 from .forms import *
 from .tables import SkosConceptTable, SkosConceptSchemeTable, SkosLabelTable
-from .filters import SkosConceptListFilter, SkosConceptSchemeListFilter, SkosLabelListFilter
+from .filters import (
+    SkosConceptListFilter,
+    SkosConceptSchemeListFilter,
+    SkosLabelListFilter,
+)
 from webpage.utils import GenericListView, BaseCreateView, BaseUpdateView
 
 
@@ -18,9 +22,9 @@ class SkosConceptListView(GenericListView):
     filter_class = SkosConceptListFilter
     formhelper_class = SkosConceptFormHelper
     init_columns = [
-        'id',
-        'pref_label',
-        'broader_concept',
+        "id",
+        "pref_label",
+        "broader_concept",
     ]
 
     def get_all_cols(self):
@@ -30,15 +34,17 @@ class SkosConceptListView(GenericListView):
     def get_context_data(self, **kwargs):
         context = super(SkosConceptListView, self).get_context_data()
         context[self.context_filter_name] = self.filter
-        togglable_colums = [x for x in self.get_all_cols() if x not in self.init_columns]
-        context['togglable_colums'] = togglable_colums
+        togglable_colums = [
+            x for x in self.get_all_cols() if x not in self.init_columns
+        ]
+        context["togglable_colums"] = togglable_colums
         return context
 
     def get_table(self, **kwargs):
         table = super(GenericListView, self).get_table()
-        RequestConfig(self.request, paginate={
-            'page': 1, 'per_page': self.paginate_by
-        }).configure(table)
+        RequestConfig(
+            self.request, paginate={"page": 1, "per_page": self.paginate_by}
+        ).configure(table)
         default_cols = self.init_columns
         all_cols = self.get_all_cols()
         selected_cols = self.request.GET.getlist("columns") + default_cols
@@ -50,7 +56,7 @@ class SkosConceptListView(GenericListView):
 class SkosConceptDetailView(DetailView):
 
     model = SkosConcept
-    template_name = 'vocabs/skosconcept_detail.html'
+    template_name = "vocabs/skosconcept_detail.html"
 
 
 class SkosConceptCreate(BaseCreateView):
@@ -75,8 +81,8 @@ class SkosConceptUpdate(BaseUpdateView):
 
 class SkosConceptDelete(DeleteView):
     model = SkosConcept
-    template_name = 'vocabs/confirm_delete.html'
-    success_url = reverse_lazy('vocabs:browse_vocabs')
+    template_name = "vocabs/confirm_delete.html"
+    success_url = reverse_lazy("vocabs:browse_vocabs")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -94,8 +100,8 @@ class SkosConceptSchemeListView(GenericListView):
     filter_class = SkosConceptSchemeListFilter
     formhelper_class = SkosConceptSchemeFormHelper
     init_columns = [
-        'id',
-        'dc_title',
+        "id",
+        "dc_title",
     ]
 
     def get_all_cols(self):
@@ -105,15 +111,17 @@ class SkosConceptSchemeListView(GenericListView):
     def get_context_data(self, **kwargs):
         context = super(SkosConceptSchemeListView, self).get_context_data()
         context[self.context_filter_name] = self.filter
-        togglable_colums = [x for x in self.get_all_cols() if x not in self.init_columns]
-        context['togglable_colums'] = togglable_colums
+        togglable_colums = [
+            x for x in self.get_all_cols() if x not in self.init_columns
+        ]
+        context["togglable_colums"] = togglable_colums
         return context
 
     def get_table(self, **kwargs):
         table = super(GenericListView, self).get_table()
-        RequestConfig(self.request, paginate={
-            'page': 1, 'per_page': self.paginate_by
-        }).configure(table)
+        RequestConfig(
+            self.request, paginate={"page": 1, "per_page": self.paginate_by}
+        ).configure(table)
         default_cols = self.init_columns
         all_cols = self.get_all_cols()
         selected_cols = self.request.GET.getlist("columns") + default_cols
@@ -125,11 +133,11 @@ class SkosConceptSchemeListView(GenericListView):
 class SkosConceptSchemeDetailView(DetailView):
 
     model = SkosConceptScheme
-    template_name = 'vocabs/skosconceptscheme_detail.html'
+    template_name = "vocabs/skosconceptscheme_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super(SkosConceptSchemeDetailView, self).get_context_data(**kwargs)
-        context["concepts"] = SkosConcept.objects.filter(scheme=self.kwargs.get('pk'))
+        context["concepts"] = SkosConcept.objects.filter(scheme=self.kwargs.get("pk"))
         return context
 
 
@@ -155,8 +163,8 @@ class SkosConceptSchemeUpdate(BaseUpdateView):
 
 class SkosConceptSchemeDelete(DeleteView):
     model = SkosConceptScheme
-    template_name = 'vocabs/confirm_delete.html'
-    success_url = reverse_lazy('vocabs:browse_schemes')
+    template_name = "vocabs/confirm_delete.html"
+    success_url = reverse_lazy("vocabs:browse_schemes")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -174,8 +182,8 @@ class SkosLabelListView(GenericListView):
     filter_class = SkosLabelListFilter
     formhelper_class = SkosLabelFormHelper
     init_columns = [
-        'id',
-        'label',
+        "id",
+        "label",
     ]
 
     def get_all_cols(self):
@@ -185,15 +193,17 @@ class SkosLabelListView(GenericListView):
     def get_context_data(self, **kwargs):
         context = super(SkosLabelListView, self).get_context_data()
         context[self.context_filter_name] = self.filter
-        togglable_colums = [x for x in self.get_all_cols() if x not in self.init_columns]
-        context['togglable_colums'] = togglable_colums
+        togglable_colums = [
+            x for x in self.get_all_cols() if x not in self.init_columns
+        ]
+        context["togglable_colums"] = togglable_colums
         return context
 
     def get_table(self, **kwargs):
         table = super(GenericListView, self).get_table()
-        RequestConfig(self.request, paginate={
-            'page': 1, 'per_page': self.paginate_by
-        }).configure(table)
+        RequestConfig(
+            self.request, paginate={"page": 1, "per_page": self.paginate_by}
+        ).configure(table)
         default_cols = self.init_columns
         all_cols = self.get_all_cols()
         selected_cols = self.request.GET.getlist("columns") + default_cols
@@ -205,7 +215,7 @@ class SkosLabelListView(GenericListView):
 class SkosLabelDetailView(DetailView):
 
     model = SkosLabel
-    template_name = 'vocabs/skoslabel_detail.html'
+    template_name = "vocabs/skoslabel_detail.html"
 
 
 class SkosLabelCreate(BaseCreateView):
@@ -230,8 +240,8 @@ class SkosLabelUpdate(BaseUpdateView):
 
 class SkosLabelDelete(DeleteView):
     model = SkosLabel
-    template_name = 'vocabs/confirm_delete.html'
-    success_url = reverse_lazy('vocabs:browse_skoslabels')
+    template_name = "vocabs/confirm_delete.html"
+    success_url = reverse_lazy("vocabs:browse_skoslabels")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

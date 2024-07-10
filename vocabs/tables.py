@@ -4,29 +4,29 @@ from vocabs.models import *
 
 
 class SkosLabelTable(tables.Table):
-    label = tables.LinkColumn('vocabs:skoslabel_detail', args=[A('pk')])
+    label = tables.LinkColumn("vocabs:skoslabel_detail", args=[A("pk")])
 
     class Meta:
         model = SkosLabel
-        sequence = ['id', 'label']
+        sequence = ["id", "label"]
         attrs = {"class": "table table-hover table-striped table-condensed"}
 
 
 class SkosConceptSchemeTable(tables.Table):
-    dc_title = tables.LinkColumn('vocabs:skosconceptscheme_detail', args=[A('pk')])
+    dc_title = tables.LinkColumn("vocabs:skosconceptscheme_detail", args=[A("pk")])
 
     class Meta:
         model = SkosConceptScheme
-        sequence = ['id', 'dc_title']
+        sequence = ["id", "dc_title"]
         attrs = {"class": "table table-hover table-striped table-condensed"}
 
 
 class SkosConceptTable(tables.Table):
-    broader_concept = tables.Column(verbose_name='Broader Term')
-    pref_label = tables.LinkColumn('vocabs:skosconcept_detail', args=[A('pk')])
-    all_schemes = tables.Column(verbose_name='in SkosScheme', orderable=False)
+    broader_concept = tables.Column(verbose_name="Broader Term")
+    pref_label = tables.LinkColumn("vocabs:skosconcept_detail", args=[A("pk")])
+    all_schemes = tables.Column(verbose_name="in SkosScheme", orderable=False)
 
     class Meta:
         model = SkosConcept
-        sequence = ['broader_concept', 'pref_label', 'all_schemes', 'namespace']
+        sequence = ["broader_concept", "pref_label", "all_schemes", "namespace"]
         attrs = {"class": "table table-hover table-striped table-condensed"}

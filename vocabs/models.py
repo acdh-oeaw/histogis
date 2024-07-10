@@ -9,25 +9,25 @@ from django.utils.functional import cached_property
 
 
 try:
-    DEFAULT_NAMESPACE = settings.VOCABS_SETTINGS['default_nsgg']
+    DEFAULT_NAMESPACE = settings.VOCABS_SETTINGS["default_nsgg"]
 except KeyError:
     DEFAULT_NAMESPACE = "http://www.vocabs/provide-some-namespace/"
 
 try:
-    DEFAULT_PREFIX = settings.VOCABS_SETTINGS['default_prefix']
+    DEFAULT_PREFIX = settings.VOCABS_SETTINGS["default_prefix"]
 except KeyError:
     DEFAULT_PREFIX = "provideSome"
 
 try:
-    DEFAULT_LANG = settings.VOCABS_SETTINGS['default_lang']
+    DEFAULT_LANG = settings.VOCABS_SETTINGS["default_lang"]
 except KeyError:
     DEFAULT_LANG = "eng"
 
 
 LABEL_TYPES = (
-    ('prefLabel', 'prefLabel'),
-    ('altLabel', 'altLabel'),
-    ('hiddenLabel', 'hiddenLabel'),
+    ("prefLabel", "prefLabel"),
+    ("altLabel", "altLabel"),
+    ("hiddenLabel", "hiddenLabel"),
 )
 
 
@@ -50,7 +50,8 @@ class SkosConceptScheme(models.Model):
     def save(self, *args, **kwargs):
         if self.namespace is None:
             temp_namespace, _ = SkosNamespace.objects.get_or_create(
-                namespace=DEFAULT_NAMESPACE, prefix=DEFAULT_PREFIX)
+                namespace=DEFAULT_NAMESPACE, prefix=DEFAULT_PREFIX
+            )
             temp_namespace.save()
             self.namespace = temp_namespace
         else:
@@ -59,14 +60,14 @@ class SkosConceptScheme(models.Model):
 
     @classmethod
     def get_listview_url(self):
-        return reverse('vocabs:browse_schemes')
+        return reverse("vocabs:browse_schemes")
 
     @classmethod
     def get_createview_url(self):
-        return reverse('vocabs:skosconceptscheme_create')
+        return reverse("vocabs:skosconceptscheme_create")
 
     def get_absolute_url(self):
-        return reverse('vocabs:skosconceptscheme_detail', kwargs={'pk': self.id})
+        return reverse("vocabs:skosconceptscheme_detail", kwargs={"pk": self.id})
 
     def get_next(self):
         next = SkosConceptScheme.objects.filter(id__gt=self.id)
@@ -75,7 +76,7 @@ class SkosConceptScheme(models.Model):
         return False
 
     def get_prev(self):
-        prev = SkosConceptScheme.objects.filter(id__lt=self.id).order_by('-id')
+        prev = SkosConceptScheme.objects.filter(id__lt=self.id).order_by("-id")
         if prev:
             return prev.first().id
         return False
@@ -85,22 +86,31 @@ class SkosConceptScheme(models.Model):
 
 
 class SkosLabel(models.Model):
-    label = models.CharField(max_length=100, blank=True, help_text="The entities label or name.")
+    label = models.CharField(
+        max_length=100, blank=True, help_text="The entities label or name."
+    )
     label_type = models.CharField(
-        max_length=30, blank=True, choices=LABEL_TYPES, help_text="The type of the label.")
+        max_length=30,
+        blank=True,
+        choices=LABEL_TYPES,
+        help_text="The type of the label.",
+    )
     isoCode = models.CharField(
-        max_length=3, blank=True, help_text="The ISO 639-3 code for the label's language.")
+        max_length=3,
+        blank=True,
+        help_text="The ISO 639-3 code for the label's language.",
+    )
 
     @classmethod
     def get_listview_url(self):
-        return reverse('vocabs:browse_skoslabels')
+        return reverse("vocabs:browse_skoslabels")
 
     @classmethod
     def get_createview_url(self):
-        return reverse('vocabs:skoslabel_create')
+        return reverse("vocabs:skoslabel_create")
 
     def get_absolute_url(self):
-        return reverse('vocabs:skoslabel_detail', kwargs={'pk': self.id})
+        return reverse("vocabs:skoslabel_detail", kwargs={"pk": self.id})
 
     def get_next(self):
         next = SkosLabel.objects.filter(id__gt=self.id)
@@ -109,7 +119,7 @@ class SkosLabel(models.Model):
         return False
 
     def get_prev(self):
-        prev = SkosLabel.objects.filter(id__lt=self.id).order_by('-id')
+        prev = SkosLabel.objects.filter(id__lt=self.id).order_by("-id")
         if prev:
             return prev.first().id
         return False
@@ -135,53 +145,56 @@ class SkosConcept(models.Model):
         SkosNamespace, blank=True, null=True, on_delete=models.SET_NULL
     )
     broader_concept = models.ForeignKey(
-        'SkosConcept', help_text="Broader Term.",
+        "SkosConcept",
+        help_text="Broader Term.",
         verbose_name="Broader Term",
-        blank=True, null=True, on_delete=models.SET_NULL,
-        related_name="narrower_concepts"
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="narrower_concepts",
     )
     skos_broader = models.ManyToManyField(
-        'SkosConcept', blank=True, related_name="narrower"
+        "SkosConcept", blank=True, related_name="narrower"
     )
     skos_narrower = models.ManyToManyField(
-        'SkosConcept', blank=True, related_name="broader"
+        "SkosConcept", blank=True, related_name="broader"
     )
     skos_related = models.ManyToManyField(
-        'SkosConcept', blank=True, related_name="related"
+        "SkosConcept", blank=True, related_name="related"
     )
     skos_broadmatch = models.ManyToManyField(
-        'SkosConcept', blank=True, related_name="broadmatch"
+        "SkosConcept", blank=True, related_name="broadmatch"
     )
     skos_exactmatch = models.ManyToManyField(
-        'SkosConcept', blank=True, related_name="exactmatch"
+        "SkosConcept", blank=True, related_name="exactmatch"
     )
     skos_closematch = models.ManyToManyField(
-        'SkosConcept', blank=True, related_name="closematch"
+        "SkosConcept", blank=True, related_name="closematch"
     )
     legacy_id = models.CharField(max_length=200, blank=True)
     name_reverse = models.CharField(
         max_length=255,
-        verbose_name='Name reverse',
+        verbose_name="Name reverse",
         help_text='Inverse relation like: \
         "is sub-class of" vs. "is super-class of".',
-        blank=True
+        blank=True,
     )
 
     def get_broader(self):
         broader = self.skos_broader.all()
         broader_reverse = SkosConcept.objects.filter(skos_narrower=self)
-        all_broader = set(list(broader)+list(broader_reverse))
+        all_broader = set(list(broader) + list(broader_reverse))
         return all_broader
 
     def get_narrower(self):
         narrower = self.skos_narrower.all()
         narrower_reverse = SkosConcept.objects.filter(skos_broader=self)
-        all_narrower = set(list(narrower)+list(narrower_reverse))
+        all_narrower = set(list(narrower) + list(narrower_reverse))
         return all_narrower
 
     @property
     def all_schemes(self):
-        return ', '.join([x.dc_title for x in self.scheme.all()])
+        return ", ".join([x.dc_title for x in self.scheme.all()])
 
     def save(self, *args, **kwargs):
         if self.notation == "":
@@ -196,7 +209,8 @@ class SkosConcept(models.Model):
 
         if self.namespace is None:
             temp_namespace, _ = SkosNamespace.objects.get_or_create(
-                namespace=DEFAULT_NAMESPACE, prefix=DEFAULT_PREFIX)
+                namespace=DEFAULT_NAMESPACE, prefix=DEFAULT_PREFIX
+            )
             temp_namespace.save()
             self.namespace = temp_namespace
         else:
@@ -209,20 +223,20 @@ class SkosConcept(models.Model):
         d = self
         res = self.pref_label
         while d.broader_concept:
-            res = d.broader_concept.pref_label + ' >> ' + res
+            res = d.broader_concept.pref_label + " >> " + res
             d = d.broader_concept
         return res
 
     @classmethod
     def get_listview_url(self):
-        return reverse('vocabs:browse_vocabs')
+        return reverse("vocabs:browse_vocabs")
 
     @classmethod
     def get_createview_url(self):
-        return reverse('vocabs:skosconcept_create')
+        return reverse("vocabs:skosconcept_create")
 
     def get_absolute_url(self):
-        return reverse('vocabs:skosconcept_detail', kwargs={'pk': self.id})
+        return reverse("vocabs:skosconcept_detail", kwargs={"pk": self.id})
 
     def get_next(self):
         next = SkosConcept.objects.filter(id__gt=self.id)
@@ -231,7 +245,7 @@ class SkosConcept(models.Model):
         return False
 
     def get_prev(self):
-        prev = SkosConcept.objects.filter(id__lt=self.id).order_by('-id')
+        prev = SkosConcept.objects.filter(id__lt=self.id).order_by("-id")
         if prev:
             return prev.first().id
         return False
