@@ -1,17 +1,12 @@
 from django.http import JsonResponse
-from collections import Counter
 import pandas as pd
-import json
-from datetime import date, timedelta
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from datetime import timedelta
+
 from django.urls import reverse
-from django.db.models import Avg, Sum, Count
 from django.db.models.functions import TruncYear
-from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from shps.models import *
+from shps.models import TempSpatial
 
 
 def make_href(row, entity="work", id="id", label=None):
