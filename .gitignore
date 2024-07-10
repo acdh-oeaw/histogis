@@ -39,7 +39,6 @@ dev_secret.py
 /histogis/settings/pg_local.py
 /histogis/settings/dev_schloegl.py
 /auth.json
-/idprovider/migrations/0001_initial.py
 /dump.sql
 arche.xml
 myenv
