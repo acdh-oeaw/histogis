@@ -36,6 +36,9 @@ class SkosNamespace(models.Model):
     def __str__(self):
         return "{}".format(self.prefix)
 
+    class Meta:
+        ordering = ["id"]
+
 
 class SkosConceptScheme(models.Model):
     dc_title = models.CharField(max_length=300, blank=True)
@@ -82,6 +85,9 @@ class SkosConceptScheme(models.Model):
     def __str__(self):
         return "{}:{}".format(self.namespace, self.dc_title)
 
+    class Meta:
+        ordering = ["id"]
+
 
 class SkosLabel(models.Model):
     label = models.CharField(
@@ -127,6 +133,9 @@ class SkosLabel(models.Model):
             return "{} @{} ({})".format(self.label, self.isoCode, self.label_type)
         else:
             return "{} @{}".format(self.label, self.isoCode)
+
+    class Meta:
+        ordering = ["id"]
 
 
 class SkosConcept(models.Model):
@@ -220,7 +229,7 @@ class SkosConcept(models.Model):
         d = self
         res = self.pref_label
         while d.broader_concept:
-            res = d.broader_concept.pref_label + ' >> ' + res
+            res = d.broader_concept.pref_label + " >> " + res
             d = d.broader_concept
         return res
 
@@ -249,6 +258,9 @@ class SkosConcept(models.Model):
 
     def __str__(self):
         return self.pref_label
+
+    class Meta:
+        ordering = ["id"]
 
 
 def get_all_children(self, include_self=True):

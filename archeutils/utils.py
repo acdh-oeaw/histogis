@@ -68,9 +68,7 @@ def serialize_project():
     proj_g.add(
         (proj_sub, acdh_ns.hasStartDate, Literal("2018-03-01", datatype=XSD.date))
     )
-    proj_g.add(
-        (proj_sub, acdh_ns.hasEndDate, Literal("2020-11-30", datatype=XSD.date))
-    )
+    proj_g.add((proj_sub, acdh_ns.hasEndDate, Literal("2020-11-30", datatype=XSD.date)))
     proj_g.add((proj_sub, acdh_ns.hasFunder, URIRef("https://id.acdh.oeaw.ac.at/oeaw")))
     for x in [adueck, apiechl, pmarck]:
         proj_g.add((proj_sub, acdh_ns.hasContributor, x))

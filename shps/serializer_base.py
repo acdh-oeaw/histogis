@@ -11,7 +11,6 @@ except AttributeError:
 
 
 class LinkedPastsSerializer(GeoFeatureModelSerializer):
-
     def to_representation(self, instance):
         feature = super(LinkedPastsSerializer, self).to_representation(instance)
         when = {

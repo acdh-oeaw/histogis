@@ -3,7 +3,6 @@ from django.test import Client, TestCase
 
 
 class WebpageTest(TestCase):
-
     def setUp(self):
         self.client = Client()
         User.objects.create_user("temporary", "temp@gmail.com", "temporary")
