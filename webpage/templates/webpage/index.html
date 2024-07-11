@@ -5,7 +5,11 @@
 {% load news_extras %}
 {% block content %}
     <div class="container">
-        <h1>{% projects_metadata 'title' %}</h1>
-        <h2>{% projects_metadata 'subtitle' %}</h2>
+        <h1 class="display-1 text-center p-2">{% projects_metadata 'title' %}</h1>
+        <h2 class="display-4 text-center p-2">{% projects_metadata 'subtitle' %}</h2>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Explore it</button>
+            <button type="button" class="btn btn-primary btn-lg px-4">Use id (API)</button>
+          </div>
     </div>
 {% endblock %}
