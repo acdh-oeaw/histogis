@@ -12,7 +12,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class NewsFeedSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         fields = "__all__"
         model = NewsFeed

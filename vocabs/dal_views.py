@@ -4,7 +4,6 @@ from django.db.models import Q
 
 
 class SpecificConcepts(autocomplete.Select2QuerySetView):
-
     def get_result_label(self, item):
         return "{}".format(item.label)
 
@@ -30,7 +29,6 @@ class SpecificConcepts(autocomplete.Select2QuerySetView):
 
 
 class SKOSConstraintACNoHierarchy(autocomplete.Select2QuerySetView):
-
     def get_queryset(self):
         scheme = self.request.GET.get("scheme")
         try:
@@ -78,7 +76,6 @@ class SkosLabelAC(autocomplete.Select2QuerySetView):
 
 
 class SkosConceptAC(autocomplete.Select2QuerySetView):
-
     def get_result_label(self, item):
         return "{}".format(item.label)
 
@@ -93,7 +90,6 @@ class SkosConceptAC(autocomplete.Select2QuerySetView):
 
 
 class SkosConceptPrefLabalAC(autocomplete.Select2ListView):
-
     def get_list(self):
         concepts = SkosConcept.objects.filter(pref_label__icontains=self.q)
         pref_labels = set([x.pref_label for x in concepts])
