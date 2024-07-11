@@ -8,8 +8,8 @@
         <h1 class="display-1 text-center p-2">{% projects_metadata 'title' %}</h1>
         <h2 class="display-4 text-center p-2">{% projects_metadata 'subtitle' %}</h2>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Explore it</button>
-            <button type="button" class="btn btn-primary btn-lg px-4">Use id (API)</button>
+            <a href="{% url 'shapes:browse_shapes' %}" type="button" class="btn btn-primary btn-lg px-4 gap-3">Explore it</a>
+            <a href="api-docs/" type="button" class="btn btn-primary btn-lg px-4">Use it (API)</a>
           </div>
     </div>
 {% endblock %}
