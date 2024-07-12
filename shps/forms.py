@@ -7,7 +7,8 @@ from django.core.exceptions import ValidationError
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset
-from crispy_forms.bootstrap import Accordion, AccordionGroup
+from crispy_bootstrap5.bootstrap5 import BS5Accordion
+from crispy_forms.bootstrap import AccordionGroup
 
 from leaflet.forms.widgets import LeafletWidget
 
@@ -85,11 +86,15 @@ class SourceFilterFormHelper(FormHelper):
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
         self.form_tag = False
-        self.add_input(Submit("Filter", "Search"))
         self.layout = Layout(
-            Fieldset("Basic search options", "name", css_id="basic_search_fields"),
-            Accordion(
-                AccordionGroup("Advanced search", "description", css_id="more"),
+            BS5Accordion(
+                AccordionGroup("Basic Search", "name", css_id="basic_search_fields"),
+                AccordionGroup(
+                    "Advanced search",
+                    "description",
+                    css_id="extended",
+                ),
+                always_open=True,
             ),
         )
 
@@ -121,23 +126,23 @@ class TempSpatialFilterFormHelper(FormHelper):
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
         self.form_tag = False
-        self.add_input(Submit("Filter", "Search"))
         self.layout = Layout(
-            Fieldset(
-                "Basic search options",
-                "all_name",
-                "name",
-                "alt_name",
-                css_id="basic_search_fields",
-            ),
-            Accordion(
+            BS5Accordion(
+                AccordionGroup(
+                    "Basic Search",
+                    "all_name",
+                    "name",
+                    "alt_name",
+                    css_id="basic_search_fields",
+                ),
                 AccordionGroup(
                     "Advanced search",
                     "start_date",
                     "end_date",
                     "administrative_unit",
                     "source",
-                    css_id="more",
+                    css_id="extended",
                 ),
-            ),
+                always_open=True,
+            )
         )

@@ -33,6 +33,5 @@ a:hover {
 }
 
 .collapsed {
-    background-color: var(--histogis-main);
-    color: #fff;
+    border-color: var(--histogis-main);
 }
