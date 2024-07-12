@@ -5,3 +5,4 @@ staticfiles/
 db.sqlite3
 env.*
 secret.*
+histogis_dump.sql

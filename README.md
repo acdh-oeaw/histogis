@@ -19,11 +19,11 @@ HistoGIS is based upon django, geodjango and [djangobaseproject](https://github.
 
 ### running the image
 
-To run the image you should provide an `env.default` file to pass in needed environment variables; see example `env.default` in this repo:
+To run the image you should provide an `docker.env` file to pass in needed environment variables; see example `docker.env` in this repo:
 
 
-`docker run -it -p 8020:8020 --rm --env-file env.default histogis:latest`
+`docker run -it -p 8020:8020 --rm --env-file docker.env --name histogis histogis:latest`
 
 ### or use published image:
 
-`docker run -it -p 8020:8020 --rm --env-file env.default acdhch/histogis:latest`
+`docker run -it -p 8020:8020 --rm --env-file docker.env acdhch/histogis:latest`
