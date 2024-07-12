@@ -393,22 +393,22 @@ class TempSpatial(IdProvider):
         return sq_km
 
     def slug_name(self):
-        return "{}__{}_{}".format(slugify(self.name), self.start_date, self.end_date)
+        return f"{slugify(self.name)}__{self.start_date}_{self.end_date}"
 
     def sanitize_wikidataid(self):
         if self.wikidata_id is not None:
             if self.wikidata_id.startswith("http"):
                 return self.wikidata_id
             else:
-                return "https://www.wikidata.org/wiki/{}".format(self.wikidata_id)
+                return f"https://www.wikidata.org/wiki/{self.wikidata_id}"
         else:
             return None
 
     def __str__(self):
         if self.name:
-            return "{} ({} - {})".format(self.name, self.start_date, self.end_date)
+            return f"{self.name} ({self.start_date}–{self.end_date})"
         else:
-            return "TempStatial ID: {}".format(self.id)
+            return f"TempStatial ID: {self.id}"
 
 
 class TempStatialRel(IdProvider):

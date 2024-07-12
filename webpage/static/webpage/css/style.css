@@ -11,6 +11,11 @@ a {
 a:hover {
     color: var(--histogis-hover)
 }
+
+dd {
+    margin-left: 25px;
+}
+
 .card {
     overflow: visible;
 }
