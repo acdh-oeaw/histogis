@@ -66,6 +66,7 @@ class TempSpatialListView(GenericListView):
     table_class = TempSpatialTable
     filter_class = TempSpatialListFilter
     formhelper_class = TempSpatialFilterFormHelper
+    paginate_by = 25
     init_columns = [
         "id",
         "name",
@@ -147,6 +148,7 @@ class SourceListView(GenericListView):
     table_class = SourceTable
     filter_class = SourceListFilter
     formhelper_class = SourceFilterFormHelper
+    paginate_by = 25
     init_columns = [
         "id",
         "name",
