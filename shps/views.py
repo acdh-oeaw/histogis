@@ -66,6 +66,7 @@ class TempSpatialListView(GenericListView):
     table_class = TempSpatialTable
     filter_class = TempSpatialListFilter
     formhelper_class = TempSpatialFilterFormHelper
+    paginate_by = 25
     init_columns = [
         "id",
         "name",
@@ -73,6 +74,9 @@ class TempSpatialListView(GenericListView):
         "start_date",
         "end_date",
     ]
+    exclude_columns = ["geom",]
+
+    template_name = "shps/generic_list.html"
 
     def get_context_data(self, **kwargs):
         context = super(TempSpatialListView, self).get_context_data()
@@ -144,11 +148,12 @@ class SourceListView(GenericListView):
     table_class = SourceTable
     filter_class = SourceListFilter
     formhelper_class = SourceFilterFormHelper
+    paginate_by = 25
     init_columns = [
         "id",
         "name",
-        "part_of",
     ]
+    template_name = "shps/generic_list.html"
 
 
 class SourceDetailView(DetailView):

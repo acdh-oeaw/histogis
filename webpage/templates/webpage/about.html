@@ -4,37 +4,40 @@
 {% block title %} About {% endblock %}
 {% block content %}
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">{% projects_metadata 'title' %}</h1>
-        </div>
-        <div class="card-body">
-            <div>
-                <p>Information about historical political/administrative units is usually communicated through
+
+    <h1 class="display-5 text-center p-4">{% projects_metadata 'title' %}</h1>
+
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <p>Information about historical political/administrative units is usually communicated through
                 maps. Our human perception allows us to extract diverse information by just looking at a map;
                 we can, for instance, at a glance identify border lines, streets and cities and answer
                 questions such as: 'Was city A part of country B in the year C or which countries shared a
                 border line between Year D and E'. A machine on the contrary is hardly capable of doing something similar.
-                </p>
-                <p>The starting point to make a map machine readable is to have it digitized and georeferenced in
+            </p>
+            <p>The starting point to make a map machine readable is to have it digitized and georeferenced in
                 form of a so called raster image (geotiff), which is usually the standard outcome of projects
                 such as the 'Woldan goes digital Project' or 'Mapire'. To capture any further information
                 transported in historical (political) maps, those raster images need to be vectorized,
                 i.e. transformed into so called vector- or shapefiles, which can spatially describe points,
                 lines, and polygons, thus making it possible to represent border lines, rivers, or the location
                 and outline of cities.</p>
-                <p>This is where 'HistoGIS' starts: HistoGIS is a platform to collect, create, curate and share
+            <p>This is where 'HistoGIS' starts: HistoGIS is a platform to collect, create, curate and share
                 temporalized shapefiles and thereby make implicit information stored in maps explicit and
                 machine readable.</p>
-                <p>HistoGIS wants to collect existing data, enrich it and give it back to the community.
+            <p>HistoGIS wants to collect existing data, enrich it and give it back to the community.
                 But HistoGIS also wants to invite researchers from various disciplines in the humanities and
                 social sciences to embed HistoGIS into their research projects and workflows, be it as an
                 analytical tool, be it as an enrichment service, be it as a workbench for data creation
                 and curation or be it as a publishing platform and stable repository for data,
                 crafted in their own projects.</p>
-                <p>The project is funded by <a href="https://www.oeaw.ac.at/en/fellowship-funding/promotional-programmes/innovation-fund-research-science-and-society/">Innovation Fund "Research, Science and Society"</a> by the <a href="https://www.oeaw.ac.at/">Austrian Academy of Sciences</a></p>
-            </div>
+            <p>The project is funded by Innovation Fund "Research, Science and Society" by the
+                <a href="https://www.oeaw.ac.at/">Austrian Academy of Sciences.</a>
+            </p>
         </div>
+        <div class="col-lg-2"></div>
     </div>
+
 </div>
 {% endblock %}

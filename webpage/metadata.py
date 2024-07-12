@@ -4,8 +4,7 @@
 PROJECT_METADATA = {
     "title": "HistoGIS",
     "author": "Peter Andorfer, Matthias Schlögl",
-    "subtitle": "A Geographical Information System, workbench and repository to retrieve,\
-    collect, create, enrich and preserve historical temporalized spatial data sets",
+    "subtitle": "A platform to collect, create, curate and share temporalized shapefiles",
     "description": """
     Information about historical political/administrative units is usually communicated through\
     maps. Our human perception allows us to extract diverse information by just looking at a map;\

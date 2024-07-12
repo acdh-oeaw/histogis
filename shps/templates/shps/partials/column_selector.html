@@ -1,0 +1,33 @@
+<div class="accordion" id="columnTogglerAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#columnTogglerAccordionOne" aria-expanded="false"
+                aria-controls="columnTogglerAccordionOne">
+                Display additional columns
+            </button>
+        </h2>
+        <div id="columnTogglerAccordionOne" class="accordion-collapse collapse"
+            data-bs-parent="#columnTogglerAccordion">
+            <div class="accordion-body">
+                {% if togglable_colums %}
+                <select class="form-control mb-3" size="12" multiple name="columns" id="column_selector">
+                    {% for key, value in togglable_colums.items %}
+                    {% if key == 'merge' and user.is_authenticated and enable_merge %}
+                    <option value="{{ key }}">
+                        {{ value }}
+                    </option>
+                    {% elif key == 'merge' and not user.is_authenticated %}
+                    {% elif key != 'merge' %}
+                    <option value="{{ key }}">
+                        {{ value }}
+                    </option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

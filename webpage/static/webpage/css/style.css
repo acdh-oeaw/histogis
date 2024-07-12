@@ -1,7 +1,37 @@
+:root {
+    --histogis-main: #c30;
+    --histogis-hover: #812404;
+
+}
+
+a {
+    color: var(--histogis-main)
+}
+
+a:hover {
+    color: var(--histogis-hover)
+}
 .card {
     overflow: visible;
 }
 
-a {
-    color: #c30;
+.navbar {
+    border-bottom-style: solid;
+    border-bottom-color: var(--histogis-main);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--histogis-main);
+    --bs-btn-hover-bg: var(--histogis-hover);
+    --bs-btn-border-color: var(--histogis-main);
+    --bs-btn-hover-border-color: var(--histogis-hover);
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--histogis-main);
+    color: #fff;
+}
+
+.collapsed {
+    border-color: var(--histogis-main);
 }
