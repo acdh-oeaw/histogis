@@ -4,255 +4,195 @@
 {% load webpage_extras %}
 {% block title %}{{ object.name }}{% endblock %}
 {% block scriptHeader %}
-    {% leaflet_js %}
-    {% leaflet_css %}
+{% leaflet_js %}
+{% leaflet_css %}
 {% endblock %}
 {% block content %}
 <style>
-    .leaflet-container {  /* all maps */
-        width:  100%;
+    .leaflet-container {
+        /* all maps */
+        width: 100%;
         height: 600px;
     }
 </style>
+
 <div class="container-fluid">
-<div class="row">
-<div class="col-md-6">
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-2">
-                    {% if object.get_prev %}
-                        <h2>
-                            <a href="{% url 'shapes:shape_detail' pk=object.get_prev %}">
-                                <i class="fas fa-chevron-left" title="previous"></i>
-                            </a>
-                        </h2>
-                    {% endif %}
-                </div>
-                <div class="col-md-8">
-                    <h2 style="text-align: center;">
-                        {{ object }}
-                        <small>
-                            <a href="{% url 'tempspatial-detail' pk=object.id %}?format=json" title="GeoJSON">
-                                <i class="fas fa-download"></i>
-                            </a>
-                        </small>
-                        <small>
-                            <a href="{% url 'shapes:arche_md' pk=object.id %}" title="ARCHE-RDF (XML); add ?format=turtle to get a .ttl">
-                                <i class="fas fa-download"></i>
-                            </a>
-                        </small>
-                        {% if user.is_authenticated %}
-                            |
-                            <small>
-                                <a href="{% url 'shapes:shape_edit' pk=object.id %}">
-                                    <i class="far fa-edit" title="edit"></i>
-                                </a>
-                            </small>
-                            |
-                            <small>
-                                <a href="{% url 'shapes:shape_delete' pk=object.id %}">
-                                    <i class="far fa-trash-alt" title="delete"></i>
-                                </a>
-                            </small>
-                        {% endif %}
-                    </h2>
-                    <small>{{project_url}}{{ object.get_permalink_url }}</small>
-                </div>
-            <div class="col-md-2">
-                <h2>
-                    {% if object.get_next %}
-                    <a href="{% url 'shapes:shape_detail' pk=object.get_next %}" style="float:right">
-                        <i class="fas fa-chevron-right" title="next"></i>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb pt-2">
+            <li class="breadcrumb-item"><a href="{% url 'webpage:start' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ object.source.get_absolute_url }}">{{ object.source }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ object.name }}</li>
+        </ol>
+    </nav>
+    <div class="row p-4">
+        <div class="col-md-2">
+            {% if object.get_prev %}
+            <h2 class="text-start">
+                <a href="{% url 'shapes:shape_detail' pk=object.get_prev %}">
+                    <i class="bi bi-chevron-left" title="previous"></i>
+                </a>
+            </h2>
+            {% endif %}
+        </div>
+        <div class="col-md-8 ">
+            <h1 class="display-5 text-center">
+                {{ object }}
+
+                <br />
+
+                <a href="{% url 'tempspatial-detail' pk=object.id %}?format=json" title="Download as GeoJSON"
+                    class="text-decoration-none">
+                    <i class="bi bi-download"></i>
+                </a>
+                <button class="btn">
+                    <i class="bi bi-chat-left-quote modalpointer fs-1" title="How to quote this page"
+                            data-bs-toggle="modal" data-bs-target="#howToQuoteModal">
+                    </i>
+                </a>
+                {% if user.is_authenticated %}
+                <small>
+                    <a href="{% url 'shapes:shape_edit' pk=object.id %}">
+                        <i class="bi bi-pencil-square" title="Edit {{ object }}"></i>
                     </a>
-                </h2>
+                </small>
                 {% endif %}
-            </div>
+            </h1>
+
+        </div>
+        <div class="col-md-2 text-end">
+            <h2>
+                {% if object.get_next %}
+                <a href="{% url 'shapes:shape_detail' pk=object.get_next %}" style="float:right">
+                    <i class="bi bi-chevron-right" title="next"></i>
+                </a>
+            </h2>
+            {% endif %}
         </div>
     </div>
-    <div class="card-body">
-        <legend>Basic Information</legend>
-            <table class="table table-bordered table-hover">
-                <tr>
-                    <th>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <dl>
+                    <dt>
                         <abbr title="{% get_help_text tempspatial 'name' %}">
                             {% get_verbose_name tempspatial "name" %}
                         </abbr>
-                    </th>
-                    <td>
+                    </dt>
+                    <dd>
                         {{ object.name }}
-                    </td>
-                </tr>
-                {% if object.wikidata_id %}
-                <tr>
-                    <th>
+                    </dd>
+                    {% if object.wikidata_id %}
+                    <dt>
                         <abbr title="{% get_help_text tempspatial 'wikidata_id' %}">
                             {% get_verbose_name tempspatial "wikidata_id" %}
                         </abbr>
-                    </th>
-                    <td>
+                    </dt>
+                    <dd>
                         <a href="{{ object.sanitize_wikidataid }}">{{ object.wikidata_id }}</a>
-                    </td>
-                </tr>
-                {% endif %}
-                <tr>
-                    <th>
+                    </dd>
+                    {% endif %}
+                    <dt>
                         <abbr title="{% get_help_text tempspatial 'administrative_unit' %}">
                             {% get_verbose_name tempspatial "administrative_unit" %}
                         </abbr>
-                    </th>
-                    <td>
+                    </dt>
+                    <dd>
                         {{ object.administrative_unit }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
+                    </dd>
+                    <dt>
                         <abbr title="{% get_help_text tempspatial 'temp_extent' %}">
                             {% get_verbose_name tempspatial "temp_extent" %}
                         </abbr>
-                    </th>
-                    <td>
-                        {{ object.start_date }} - {{ object.end_date }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <abbr title="{% get_help_text tempspatial 'spatial_extent' %}">
-                            {% get_verbose_name tempspatial "spatial_extent" %}
-                        </abbr>
-                    </th>
-                    <td>
-                        <abbr title="about {{ object.sq_km }} km2">{{ object.spatial_extent }}</abbr>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
+                    </dt>
+                    <dd>
+                        {{ object.start_date|date:"Y-m-d" }}–{{ object.end_date|date:"Y-m-d" }}
+                    </dd>
+                    <dt>
                         <abbr title="{% get_help_text tempspatial 'date_accuracy' %}">
                             {% get_verbose_name tempspatial "date_accuracy" %}
                         </abbr>
-                    </th>
-                    <td>
+                    </dt>
+                    <dd>
                         {{ object.date_accuracy }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
+                    </dd>
+                    <dt>
                         <abbr title="{% get_help_text tempspatial 'source' %}">
                             {% get_verbose_name tempspatial "source" %}
                         </abbr>
-                    </th>
-                    <td>
+                    </dt>
+                    <dd>
                         <a href="{{ object.source.get_absolute_url }}">
                             {{ object.source }}
                         </a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
+                    </dd>
+                    <dt>
                         <abbr title="{% get_help_text tempspatial 'quality' %}">
                             {% get_verbose_name tempspatial "quality" %}
                         </abbr>
-                    </th>
-                    <td>
+                    </dt>
+                    <dd>
                         {{ object.quality }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <abbr title="{% get_help_text tempspatial 'centroid' %}">
-                            {% get_verbose_name tempspatial "centroid" %}
+                    </dd>
+                    {% if object.additional_data %}
+                    <dt>
+                        <abbr title="{% get_help_text tempspatial 'additional_data' %}">
+                            {% get_verbose_name tempspatial "additional_data" %}
                         </abbr>
-                    </th>
-                    <td>
-                        {{ object.centroid }}
-                    </td>
-                </tr>
-                {% if object.additional_data %}
-                    <tr>
-                        <th>
-                            <abbr title="{% get_help_text tempspatial 'additional_data' %}">
-                                {% get_verbose_name tempspatial "additional_data" %}
-                            </abbr>
-                        </th>
-                        <td>
-                            {% for key, value in more.items %}
-                                <li>
-                                    {{ key }}: {{ value}}
-                                </li>
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <th>
-                        <abbr title="Suggestion on how to quote this data set">
-                            Quote
-                        </abbr>
-                    </th>
-                    <td>
-                        <i><a href="{{ object.get_permalink_url}}">{{ object}}</a>, {{ object.source.quote }}</i>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <abbr title="Permalink to this dataset.">
-                            Permalink
-                        </abbr>
-                    </th>
-                    <td>
-                        <a href="{{ object.get_permalink_url}}">{{project_url}}{{ object.get_permalink_url }}</a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        License
-                    </th>
-                    <td>
-                        <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International license">
-                            Creative Commons Attribution 4.0 International license
-                        </a>
-                    </td>
-                </tr>
-            </table>
+                    </dt>
+                    {% for key, value in more.items %}
+                    <dd>
+                        {{ key }}: {{ value}}
+                    </dd>
+                    {% endfor %}
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+    <small class="ps-2">
+        <a href="{% url 'shapes:shape_delete' pk=object.id %}">
+            <i class="bi bi-trash3" title="delete"></i>
+        </a>
+    </small>
+    {% endif %}
+</div>
+</div>
+<div class="modal fade" id="howToQuoteModal" tabindex="-1" aria-labelledby="howToQuoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="howToQuoteModalLabel">How to quote</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <i><a href="{{ object.get_permalink_url}}">{{ object}}</a>, {{ object.source.quote }}</i>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
-<div class="col-md-6">
-    {% leaflet_map "yourmap" callback="window.map_init_basic" %}
-</div>
-</div>
-</div>
+
 <script type="text/javascript">
 
-    function createTableRows(propertyObject){
-        var returnTable = "<table class='table table-hover table-striped table-condensed'>";
-        var linkToObject = "#";
-        returnTable += "<tr><td>linkToObject</td><td><a href='"+linkToObject+"'>follow link</a></td></tr>";
-        for (var [key, value] of Object.entries(propertyObject)) {
-            returnTable += "<tr><td>"+key+"</td><td>"+value+"</td></tr>";
-        };
-        return returnTable += "</table>";
-    };
-
-    function onEachFeature(feature, layer) {
-        if (feature.properties) {
-            var popupContent = createTableRows(feature.properties);
-            layer.bindPopup(popupContent);
-        }
-    };
-
-    function map_init_basic (map, options) {
+    function map_init_basic(map, options) {
         $.ajax({
             dataType: "json",
             url: "{% url 'tempspatial-detail' pk=object.id %}?format=json",
-            success: function(data) {
+            success: function (data) {
                 var geojsonFeature = data;
-                var geojsonLayer = L.geoJson(geojsonFeature, {
-                    onEachFeature: onEachFeature
-                }).addTo(map);
+                var geojsonLayer = L.geoJson(geojsonFeature, {}).addTo(map);
                 map.fitBounds(geojsonLayer.getBounds());
-            }
-            }).error(function() {});
+            },
+            error: console.log("something went wrong")
+        });
     }
 </script>
 {% endblock %}
