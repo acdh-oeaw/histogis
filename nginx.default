@@ -4,11 +4,11 @@ server {
 
     location /static/ {
         autoindex on;
-        alias /opt/staticfiles/;
+        alias /opt/app/staticfiles/;
     }
     location /media/ {
         autoindex on;
-        alias /opt/media/;
+        alias /opt/app/media/;
     }
 
     location / {
