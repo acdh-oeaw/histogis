@@ -15,16 +15,21 @@ ACDH_IMPRINT_URL = (
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "TZRHHwasdfsadfdsafkljlxö7639827249324GV")
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-#         "LOCATION": "my_cache_table",
-#         "TIMEOUT": None,
-#     }
-# }
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", True)
+if DEBUG:
+    CACHE_TIMEOUT = 0
+else:
+    CACHE_TIMEOUT = None
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "my_cache_table",
+        "TIMEOUT": CACHE_TIMEOUT,
+    }
+}
+
 ADD_ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
 
 ALLOWED_HOSTS = [

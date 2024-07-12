@@ -23,7 +23,6 @@ urlpatterns = [
     path("api-docs/", include_docs_urls(title="HistoGIS-API")),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("admin/", admin.site.urls),
-    # path("charts/", include("charts.urls", namespace="charts")),
     path("vocabs/", include("vocabs.urls", namespace="vocabs")),
     path("vocabs-ac/", include("vocabs.dal_urls", namespace="vocabs-ac")),
     path("", include("webpage.urls", namespace="webpage")),
