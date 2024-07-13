@@ -48,7 +48,7 @@
                     <i class="bi bi-chat-left-quote modalpointer fs-1" title="How to quote this page"
                             data-bs-toggle="modal" data-bs-target="#howToQuoteModal">
                     </i>
-                </a>
+                </button>
                 {% if user.is_authenticated %}
                 <small>
                     <a href="{% url 'shapes:shape_edit' pk=object.id %}">
