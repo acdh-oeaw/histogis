@@ -5,7 +5,6 @@ from datetime import datetime
 from rdflib import Namespace
 from django.conf import settings
 from django.contrib.gis.db import models
-from django.contrib.gis.measure import Distance
 from django.contrib.postgres.fields import DateRangeField
 from django.core.files.storage import FileSystemStorage
 from django.core.serializers import serialize
@@ -315,76 +314,6 @@ class TempSpatial(IdProvider):
         if prev:
             return prev.first().id
         return False
-
-    def fetch_children(self, distance=0):
-        """ returns all TempSpatial objects covered spatially by the current object and with\
-        overlapping time spans """
-        try:
-            bigger = (
-                TempSpatial.objects.filter(centroid__within=self.geom)
-                .filter(spatial_extent__lte=self.spatial_extent)
-                .filter(temp_extent__overlap=self.temp_extent)
-                .exclude(id=self.id)
-                .exclude(name=self.name)
-                .distinct()
-                .order_by("spatial_extent")
-            )
-            return bigger
-        except Exception as e:
-            return ["Looks like there is some error in a child shape", "{}".format(e)]
-
-    def fetch_parents(self, distance=-0):
-        """ returns all TempSpatial objects covering spatially the current object and with\
-        overlapping time spans """
-        try:
-            buffer_width = distance / 40000000.0 * 360.0
-            self.geom.buffer(buffer_width)
-            bigger = (
-                TempSpatial.objects.filter(geom__covers=self.centroid)
-                .filter(spatial_extent__gte=self.spatial_extent)
-                .filter(temp_extent__overlap=self.temp_extent)
-                .exclude(id=self.id)
-                .exclude(name=self.name)
-                .distinct()
-                .order_by("spatial_extent")
-            )
-            return bigger
-        except Exception as e:
-            return ["Looks like there is some error in a parent shape", "{}".format(e)]
-
-    def parents(self, distance=-0):
-        return [
-            {
-                "id": x.id,
-                "start_date": x.start_date,
-                "end_date": x.end_date,
-                "name": x.name,
-                "permalink": x.get_permalink_url(),
-            }
-            for x in self.fetch_parents(distance=distance)
-        ]
-
-    def fetch_close_by(self, radius=10):
-        point = self.centroid
-        close_by = (
-            TempSpatial.objects.filter(
-                centroid__distance_lt=(point, Distance(km=radius))
-            )
-            .exclude(id=self.id)
-            .distinct()
-        )
-        return close_by
-
-    def print_parents(self):
-        hierarchy_string = ""
-        hierarchy = self.fetch_parents()
-        if hierarchy:
-            separator = " >> "
-            for x in hierarchy:
-                hierarchy_string = hierarchy_string + separator + x.name
-            return hierarchy_string[4:]
-        else:
-            return []
 
     def sq_km(self, ct=3035):
         """returns the size of the spatial extent in square km"""
