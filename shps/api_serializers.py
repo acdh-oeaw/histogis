@@ -74,7 +74,6 @@ class TempSpatialSerializer(
             "date_accuracy",
             "spatial_extent",
             "spatial_extent_sqm",
-            "parents",
             "slugged_name",
         )
         auto_bbox = True
