@@ -10,6 +10,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.serializers import serialize
 from django.urls import reverse
 from django.utils.text import slugify
+from next_prev import next_in_order, prev_in_order
 
 from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
@@ -109,15 +110,15 @@ class Source(models.Model):
         return reverse("shapes:source_create")
 
     def get_next(self):
-        next = Source.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return next.first().id
+            return next.id
         return False
 
     def get_prev(self):
-        prev = Source.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return prev.first().id
+            return prev.id
         return False
 
     def get_file_size(self):
@@ -304,15 +305,15 @@ class TempSpatial(IdProvider):
         return reverse("shapes:shape_create")
 
     def get_next(self):
-        next = TempSpatial.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return next.first().id
+            return next.id
         return False
 
     def get_prev(self):
-        prev = TempSpatial.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return prev.first().id
+            return prev.id
         return False
 
     def sq_km(self, ct=3035):
