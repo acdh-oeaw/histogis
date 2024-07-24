@@ -21,7 +21,7 @@
         <div class="col-md-2">
             {% if object.get_prev %}
             <h2 class="text-start">
-                <a href="{% url 'shapes:shape_detail' pk=object.get_prev %}">
+                <a href="{% url 'shapes:source_detail' pk=object.get_prev %}">
                     <i class="bi bi-chevron-left" title="previous"></i>
                 </a>
             </h2>
@@ -32,7 +32,7 @@
                 {{ object }}
                 {% if user.is_audtenticated %}
                 <small>
-                    <a href="{% url 'shapes:shape_edit' pk=object.id %}">
+                    <a href="{% url 'shapes:source_edit' pk=object.id %}">
                         <i class="bi bi-pencil-square" title="Edit {{ object }}"></i>
                     </a>
                 </small>
@@ -43,7 +43,7 @@
         <div class="col-md-2 text-end">
             <h2>
                 {% if object.get_next %}
-                <a href="{% url 'shapes:shape_detail' pk=object.get_next %}" style="float:right">
+                <a href="{% url 'shapes:source_detail' pk=object.get_next %}" style="float:right">
                     <i class="bi bi-chevron-right" title="next"></i>
                 </a>
             </h2>

@@ -1,6 +1,7 @@
 acdh-django-browsing>=2.0,<3
 django-autocomplete-light>=3.9,<4
 django-leaflet>=0.30.1,<1
+django-next-prev==1.1.0
 Django>=5.0.6,<6
 djangorestframework-gis>=1.0,<2
 geopandas>=1.0.1,<2
