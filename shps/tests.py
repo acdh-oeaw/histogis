@@ -1,7 +1,7 @@
 from django.apps import apps
 from django.contrib.auth.models import User
-from django.test import Client
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.urls import reverse
 
 
 MODELS = list(apps.all_models["shps"].values())
@@ -81,3 +81,20 @@ class ArchivTestCase(TestCase):
             if url:
                 response = client.get(url, {"pk": item.id})
                 self.assertEqual(response.status_code, 200)
+
+    def test_007_where_was(self):
+        url = reverse("where_was_api")
+        r = client.get(url)
+        self.assertFalse(r.json()["features"])
+
+        params = {"lat": "48.36", "lng": "14.3"}
+        r = client.get(url, params)
+        self.assertTrue(r.json()["features"])
+
+        params = {"lat": "48.36", "lng": "14.3", "when": "1870-01-01"}
+        r = client.get(url, params)
+        self.assertTrue(r.json()["features"])
+
+        params = {"lat": "48.36", "lng": "14.3", "when": "187110-01-01"}
+        r = client.get(url, params)
+        self.assertTrue(r.json()["features"])

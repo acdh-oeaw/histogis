@@ -114,7 +114,11 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
     def get_queryset(self):
         lat = self.request.query_params.get("lat", None)
         lng = self.request.query_params.get("lng", None)
-        pnt = Point(float(lng), float(lat))
+        try:
+            pnt = Point(float(lng), float(lat))
+            print("good")
+        except TypeError:
+            return []
         qs = TempSpatial.objects.filter(geom__contains=pnt)
         when = self.request.query_params.get("when", None)
         if when is not None:
@@ -123,5 +127,5 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
             except ValueError:
                 when = None
             if when:
-                qs = qs.filter(temp_extent__contains=when).order_by("spatial_extent")
-        return qs
+                qs = qs.filter(temp_extent__contains=when)
+        return qs.order_by("spatial_extent")
