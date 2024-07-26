@@ -74,7 +74,9 @@ class TempSpatialListView(GenericListView):
         "start_date",
         "end_date",
     ]
-    exclude_columns = ["geom",]
+    exclude_columns = [
+        "geom",
+    ]
 
     template_name = "shps/generic_list.html"
 

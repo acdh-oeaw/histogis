@@ -19,7 +19,11 @@ router.register(
 
 urlpatterns = [
     path("api/", include(router.urls)),
-    path("api/where-was/", shps_api_views.TemporalizedSpatialQuery.as_view()),
+    path(
+        "api/where-was/",
+        shps_api_views.TemporalizedSpatialQuery.as_view(),
+        name="where_was_api",
+    ),
     path("api-docs/", include_docs_urls(title="HistoGIS-API")),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("admin/", admin.site.urls),
