@@ -52,9 +52,6 @@ def get_prop_types(repo_schema_url=repo_schema):
     return prop_types
 
 
-ARCHE_PROPS_LOOKUP = get_prop_types()
-
-
 def serialize_project():
     g = Graph()
     sub = URIRef(f"{ARCHE_BASE_URL}")
@@ -79,7 +76,7 @@ def serialize_project():
         (proj_sub, acdh_ns.hasDescription, Literal(f"{PROJECT_DESC}", lang=ARCHE_LANG))
     )
     for const in ARCHE_CONST_MAPPINGS:
-        arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], "No Match")
+        arche_prop_domain = get_prop_types().get(const[0], "No Match")
         if arche_prop_domain == "date":
             proj_g.add(
                 (proj_sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date))
@@ -239,7 +236,7 @@ def serialize_project():
     g.add((sub, acdh_ns.hasCreator, pmarck))
     g.add((sub, acdh_ns.hasDescription, Literal(f"{TOP_COL_DESC}", lang=ARCHE_LANG)))
     for const in ARCHE_CONST_MAPPINGS_SIMPLE:
-        arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], "No Match")
+        arche_prop_domain = get_prop_types().get(const[0], "No Match")
         if arche_prop_domain == "date":
             g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
         if arche_prop_domain == "string":
@@ -411,7 +408,7 @@ def as_arche_graph(res):
         )
     )
     for const in ARCHE_CONST_MAPPINGS_SIMPLE:
-        arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], "No Match")
+        arche_prop_domain = get_prop_types().get(const[0], "No Match")
         if arche_prop_domain == "date":
             col.add()
             g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
@@ -453,7 +450,7 @@ def title_img():
     )
     g.add((sub, acdh_ns.isTitleImageOf, URIRef(f"{ARCHE_BASE_URL}")))
     for const in ARCHE_CONST_MAPPINGS_SIMPLE:
-        arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], "No Match")
+        arche_prop_domain = get_prop_types().get(const[0], "No Match")
         if arche_prop_domain == "date":
             g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
         if arche_prop_domain == "string":
