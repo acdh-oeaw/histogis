@@ -98,3 +98,14 @@ class ArchivTestCase(TestCase):
         params = {"lat": "48.36", "lng": "14.3", "when": "187110-01-01"}
         r = client.get(url, params)
         self.assertTrue(r.json()["features"])
+
+    def test_008_shps_api_filters(self):
+        url = "/api/tempspatial/"
+        params = {
+            "name": "Linz",
+        }
+        r = client.get(url)
+        all_shapes = r.json()["count"]
+        r = client.get(url, params)
+        some_shapes = r.json()["count"]
+        self.assertTrue(all_shapes > some_shapes)
