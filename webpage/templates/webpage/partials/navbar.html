@@ -20,9 +20,13 @@
                             Info
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">About </a></li>
-                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='team' %}">Team </a></li>
-                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='shp-samples' %}">Shape File Samples </a></li>
+                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">About
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='team' %}">Team </a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'webpage:staticpage' template='shp-samples' %}">Shape File Samples </a>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -40,6 +44,16 @@
                             {% for x in links %}
                             <li><a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a></li>
                             {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Data
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/api-docs/">API-Docs</a></li>
+                            <li><a class="dropdown-item" href="/api/">API</a></li>
                         </ul>
                     </li>
                 </ul>

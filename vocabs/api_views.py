@@ -42,7 +42,7 @@ class SkosConceptViewSet(viewsets.ModelViewSet):
     queryset = SkosConcept.objects.all()
     serializer_class = SkosConceptSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_class = SkosConceptFilter
+    filterset_class = SkosConceptFilter
     pagination_class = LargeResultsSetPagination
 
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (RDFRenderer,)

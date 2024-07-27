@@ -1,6 +1,5 @@
 import django_filters
 from django.db.models import Q
-from rest_framework_gis.filterset import GeoFilterSet
 from rest_framework_gis.filters import GeometryFilter
 
 from vocabs.models import SkosConcept
@@ -21,7 +20,7 @@ class SourceListFilter(django_filters.FilterSet):
         ]
 
 
-class TempSpatialListFilter(GeoFilterSet):
+class TempSpatialListFilter(django_filters.FilterSet):
     all_name = django_filters.CharFilter(
         method="all_name_filter",
         label="Name",
