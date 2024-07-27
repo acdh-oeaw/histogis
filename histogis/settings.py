@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "news",
     "analyze",
     "archeutils",
+    "django_extensions",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
