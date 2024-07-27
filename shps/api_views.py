@@ -1,17 +1,18 @@
 import coreapi
 import coreschema
 from dateutil.parser import parse
-import rest_framework
 from django.contrib.gis.geos import Point
+from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework.schemas import AutoSchema
 from rest_framework import generics
 from rest_framework import viewsets
+from rest_framework.filters import OrderingFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_gis.pagination import GeoJsonPagination
-from django_filters import rest_framework as df_rest_framework
 
 from .models import TempSpatial, Source
-from .filters import TempSpatialListFilter
+from .filters import TempSpatialListFilter, SourceListFilter
 from .api_serializers import TempSpatialSerializer, SourceSerializer, SimpleSerializer
 
 
@@ -34,12 +35,8 @@ class TempSpatialViewSet(viewsets.ModelViewSet):
     queryset = TempSpatial.objects.all()
     serializer_class = TempSpatialSerializer
     pagination_class = StandardResultsSetPagination
-    filter_backends = (df_rest_framework.DjangoFilterBackend,)
-    filter_class = TempSpatialListFilter
-    renderer_classes = (
-        rest_framework.renderers.BrowsableAPIRenderer,
-        rest_framework.renderers.JSONRenderer,
-    )
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = TempSpatialListFilter
 
 
 class SimpleViewSet(viewsets.ModelViewSet):
@@ -50,12 +47,8 @@ class SimpleViewSet(viewsets.ModelViewSet):
     queryset = TempSpatial.objects.all()
     serializer_class = SimpleSerializer
     pagination_class = SimpledResultsSetPagination
-    filter_backends = (df_rest_framework.DjangoFilterBackend,)
-    filter_class = TempSpatialListFilter
-    renderer_classes = (
-        rest_framework.renderers.BrowsableAPIRenderer,
-        rest_framework.renderers.JSONRenderer,
-    )
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = TempSpatialListFilter
 
 
 class SourceViewSet(viewsets.ModelViewSet):
@@ -65,6 +58,8 @@ class SourceViewSet(viewsets.ModelViewSet):
 
     queryset = Source.objects.all()
     serializer_class = SourceSerializer
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = SourceListFilter
 
 
 class TemporalizedSpatialQuery(generics.ListAPIView):
