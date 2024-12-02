@@ -1,7 +1,6 @@
 from django.urls import path, include
 from django.contrib import admin
 from rest_framework import routers
-from rest_framework.documentation import include_docs_urls
 from vocabs import api_views
 from shps import api_views as shps_api_views
 
@@ -24,7 +23,6 @@ urlpatterns = [
         shps_api_views.TemporalizedSpatialQuery.as_view(),
         name="where_was_api",
     ),
-    path("api-docs/", include_docs_urls(title="HistoGIS-API")),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("admin/", admin.site.urls),
     path("vocabs/", include("vocabs.urls", namespace="vocabs")),

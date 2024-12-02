@@ -1,10 +1,7 @@
-import coreapi
-import coreschema
 from dateutil.parser import parse
 from django.contrib.gis.geos import Point
 from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework.schemas import AutoSchema
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter
@@ -69,42 +66,6 @@ class TemporalizedSpatialQuery(generics.ListAPIView):
 
     serializer_class = TempSpatialSerializer
     pagination_class = StandardResultsSetPagination
-    schema = AutoSchema(
-        manual_fields=[
-            coreapi.Field(
-                "page_size",
-                required=False,
-                location="query",
-                schema=coreschema.String(
-                    description="Defaults to 1 due to performance reasons."
-                ),
-            ),
-            coreapi.Field(
-                "lat",
-                required=True,
-                location="query",
-                schema=coreschema.String(
-                    description="Latitude of the place to query for."
-                ),
-            ),
-            coreapi.Field(
-                name="lng",
-                required=True,
-                location="query",
-                schema=coreschema.String(
-                    description="Longitude of the place to query for."
-                ),
-            ),
-            coreapi.Field(
-                "when",
-                required=False,
-                location="query",
-                schema=coreschema.String(
-                    description="Date the TempSpatial temporal extent has to contain."
-                ),
-            ),
-        ]
-    )
 
     def get_queryset(self):
         lat = self.request.query_params.get("lat", None)
