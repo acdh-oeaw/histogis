@@ -6,7 +6,6 @@ Django>=5.0.6,<6
 djangorestframework-gis
 geopandas
 psycopg2-binary
-coreapi
 lxml
 rdflib
 requests
