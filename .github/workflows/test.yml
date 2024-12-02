@@ -1,31 +1,15 @@
 name: Test
 on: 
   push:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-    group: "pages"
-    cancel-in-progress: false
 jobs:
   test:
     name: Test Application
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     env:
       POSTGRES_DB: github_actions
-      DB_NAME: github_actions
     services:
       postgres:
-        image: postgis/postgis:12-master
+        image: postgis/postgis:16-3.5
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -36,31 +20,24 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.11
+    - name: Set up Python 3.12
       uses: actions/setup-python@v5
       with:
-        python-version: "3.11"
-    - uses: actions/cache@v4
-      with:
-        path: ${{ env.pythonLocation }}
-        key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+        python-version: "3.12"
     - name: GDAL
-      run: |
-        sudo apt-get update
-        sudo apt-get install postgresql-common libpq-dev python3-gdal
+      run: sudo apt-get install postgresql-common libpq-dev python3-gdal
     - name: Install dependencies
       run: |
-        pip install --upgrade --upgrade-strategy eager -r requirements.txt
+        pip install --upgrade --upgrade-strategy eager -r requirements_dev.txt
+    - name: Run migrations
+      run: python manage.py migrate
     - name: Run tests
-      run: coverage run manage.py test -v 2
-    - name: create report
-      run: coverage html
-    - name: Setup Pages
-      uses: actions/configure-pages@v5
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
+      run: coverage run manage.py test
+    - name: Create Coverage Report
+      run: coverage xml
+    - name: "Upload coverage to Codecov"
+      uses: codecov/codecov-action@v4
       with:
-        path: './htmlcov'
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./coverage.xml
+        fail_ci_if_error: false
