@@ -1,0 +1,13 @@
+acdh-django-browsing>=2.0,<3
+django-autocomplete-light
+django-leaflet
+django-next-prev
+Django>=5.0.6,<6
+djangorestframework-gis
+geopandas
+psycopg2-binary
+lxml
+rdflib
+requests
+coverage
+flake8

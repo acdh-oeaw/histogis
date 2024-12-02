@@ -28,7 +28,7 @@ jobs:
       run: sudo apt-get install postgresql-common libpq-dev python3-gdal
     - name: Install dependencies
       run: |
-        pip install --upgrade --upgrade-strategy eager -r requirements_dev.txt
+        pip install --upgrade --upgrade-strategy eager -r requirements.txt
     - name: Run migrations
       run: python manage.py migrate
     - name: Run tests
