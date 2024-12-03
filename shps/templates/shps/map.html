@@ -1,0 +1,75 @@
+{% extends "webpage/base.html" %}
+{% load static %}
+{% load leaflet_tags %}
+{% load webpage_extras %}
+{% block title %}Map{% endblock %}
+{% block scriptHeader %}
+{% leaflet_js %}
+{% leaflet_css %}
+{% endblock %}
+{% block content %}
+<style>
+    .leaflet-container {
+        /* all maps */
+        width: 100%;
+        height: 700px;
+    }
+</style>
+
+<div class="container-fluid">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb pt-2">
+            <li class="breadcrumb-item"><a href="{% url 'webpage:start' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'shapes:browse_shapes' %}">All Shapes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Map</li>
+        </ol>
+    </nav>
+
+</div>
+<div class="container-fluid">
+    <div id="spinner" class="d-flex justify-content-center align-items-center" style="height: 100vh; display: none;"></div>
+    <div id="mapContainer">
+        {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+    </div>
+    
+</div>
+
+<script type="text/javascript">
+
+function map_init_basic(map, options) {
+    const url = "{% url 'shapes:shapes_geojson' %}{% querystring %}";
+    const mapContainer = document.getElementById("mapContainer");
+    const spinner = document.getElementById("spinner");
+
+    mapContainer.style.display = "none";
+    spinner.style.display = "flex";
+    spinner.innerHTML = `
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    `;
+    mapContainer.style.display = "none";
+    console.log("fetching data")
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            const geojsonFeature = data;
+            const geojsonLayer = L.geoJson(geojsonFeature, {}).addTo(map);
+            map.fitBounds(geojsonLayer.getBounds());
+        })
+        .then(() => {
+            spinner.innerHTML = ""
+            spinner.classList.add("visually-hidden");
+            mapContainer.style.display = "block";
+        })
+        .catch(error => {
+            console.error("Something went wrong:", error);
+        });
+}
+</script>
+{% endblock %}

@@ -8,6 +8,7 @@ app_name = "shps"
 
 urlpatterns = [
     path("geojson", shapes_geojson, name="shapes_geojson"),
+    path("map", views.PlotToMapView.as_view(), name="map"),
     path("ids", arche_views.get_ids, name="get_ids"),
     path("arche", arche_views.project_as_arche_graph, name="project_as_arche"),
     path("arche-title-img", arche_views.get_title_img, name="arche_title_img"),

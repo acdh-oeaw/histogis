@@ -1,11 +1,9 @@
 import json
-import geopandas as gp
-import pandas as pd
-from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView
+from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib.gis.geos import Point
@@ -13,7 +11,6 @@ from django.utils.decorators import method_decorator
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView
 
-from shapely import wkt
 from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateView
 
 from .models import TempSpatial, Source
@@ -26,6 +23,10 @@ from .forms import (
     SourceFilterFormHelper,
     SourceForm,
 )
+
+
+class PlotToMapView(TemplateView):
+    template_name = "shps/map.html"
 
 
 class PermaLinkView(RedirectView):
@@ -78,26 +79,12 @@ class TempSpatialListView(GenericListView):
         "geom",
     ]
 
-    template_name = "shps/generic_list.html"
+    template_name = "shps/shapes_list.html"
 
     def get_context_data(self, **kwargs):
         context = super(TempSpatialListView, self).get_context_data()
         context["shapes"] = True
         return context
-
-    def render_to_response(self, context, **kwargs):
-        if self.request.GET.get("dl-geojson", None):
-            df = pd.DataFrame(list(self.get_queryset().values()))
-            df["geometry"] = df.apply(lambda row: wkt.loads(row["geom"].wkt), axis=1)
-            str_df = df.astype("str").drop(["geom"], axis=1)
-            gdf = gp.GeoDataFrame(str_df)
-            gdf["geometry"] = gdf.apply(lambda row: wkt.loads(row["geometry"]), axis=1)
-            response = HttpResponse(gdf.to_json(), content_type="application/json")
-            response["Content-Disposition"] = 'attachment; filename="out.geojson"'
-            return response
-        else:
-            response = super(TempSpatialListView, self).render_to_response(context)
-            return response
 
 
 class TempSpatialDetailView(DetailView):

@@ -20,6 +20,14 @@
         <a class="btn btn-primary float-center ms-5 me-5" href="{{ create_view_link }}">Create new {{ class_name }}</a>
     </div>
     {% endif %}
+    <div class="row  pb-4 pt-2">
+        <div class="btn-group" role="group">
+            <a type="button" class="btn btn-outline-secondary" href="{% querystring %}&_export=csv">CSV</a>
+            <a type="button" class="btn btn-outline-secondary" href="{% querystring %}&_export=json">JSON</a>
+            <a type="button" class="btn btn-outline-secondary" href="{% url 'shapes:shapes_geojson' %}{% querystring %}">GeoJson</a>
+            <a type="button" class="btn btn-outline-secondary" href="{% url 'shapes:map' %}{% querystring %}">Plot to map</a>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-4">
@@ -47,9 +55,6 @@
             {% block pagination.allpages %}
             {% include 'browsing/partials/pagination.html' %}
             {% endblock pagination.allpages %}
-            <div class="float-end">
-                {% include "browsing/partials/download_menu.html" %}
-            </div>
         </div>
     </div>
 </div>
