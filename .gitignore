@@ -39,3 +39,7 @@ venv
 *.secret
 staticfiles/
 histogis_dump.sql
+hansi.csv
+hansi.json
+1824-12-05.json
+1914-12-05.json

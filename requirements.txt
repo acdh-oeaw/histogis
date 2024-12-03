@@ -1,5 +1,6 @@
 acdh-django-browsing>=2.0,<3
 django-autocomplete-light
+django_extensions
 django-leaflet
 django-next-prev
 Django>=5.0.6,<6
