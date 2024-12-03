@@ -12,7 +12,7 @@
 
 <div class="container">
 
-    <h1 class="display-5 text-center p-4">
+    <h1 class="display-5 text-center pt-3">
         Browse {% class_definition %} {% block list_title %} {% endblock %}
     </h1>
     {% if user.is_authenticated %}
@@ -20,6 +20,13 @@
         <a class="btn btn-primary float-center ms-5 me-5" href="{{ create_view_link }}">Create new {{ class_name }}</a>
     </div>
     {% endif %}
+    <div class="row  pb-4 pt-2">
+        <div class="btn-group" role="group">
+            <a type="button" class="btn btn-outline-primary" href="{% querystring %}&_export=csv">CSV</a>
+            <a type="button" class="btn btn-outline-primary" href="{% querystring %}&_export=json">JSON</a>
+            <a type="button" class="btn btn-outline-primary" href="{% url 'shapes:shapes_geojson' %}{% querystring %}">GeoJson</a>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-4">

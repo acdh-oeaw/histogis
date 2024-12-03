@@ -133,6 +133,7 @@ class TempSpatialFilterFormHelper(FormHelper):
                     "all_name",
                     "name",
                     "alt_name",
+                    "in_between",
                     css_id="basic_search_fields",
                 ),
                 AccordionGroup(
