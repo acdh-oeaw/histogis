@@ -10,7 +10,7 @@
       <p class="lead mb-4">{% projects_metadata 'subtitle' %}</p>
       <div class="d-grid gap-2 d-md-flex justify-content-md-center">
         <a href="{% url 'shapes:browse_shapes' %}" type="button" class="btn btn-primary btn-lg px-4 me-md-2">Explore it</a>
-        <a href="api-docs/" type="button" class="btn btn-outline-secondary btn-lg px-4">Use it (API)</a>
+        <a href="api-docs/" role="button" class="btn btn-outline-secondary disabled btn-lg px-4" tabindex="-1" aria-disabled="true">Use it (API)</a>
       </div>
     </div>
   </div>
