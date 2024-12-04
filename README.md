@@ -12,6 +12,23 @@ HistoGIS is based upon django, geodjango and [djangobaseproject](https://github.
 2. Adapt the information in `webpage/metadata.py` according to your needs.
 3. Create and activate a virtual environment and run `pip install -r requirements.txt`.
 
+
+## useful commands
+
+### cleanup
+removes not used vocabs and sources without shapes
+```bash
+python manage.py cleanup
+```
+
+### update administrative divisions
+updates administrative_division fields according to [this google spreadsheet](https://docs.google.com/spreadsheets/d/14WNuiB7KnnezWndKJslw-j-EdHRF04CH2M1HqVSmPGg)
+
+```bash
+python manage.py update_amd
+```
+
+
 ### building the image
 
 `docker build -t histogis:latest .`
