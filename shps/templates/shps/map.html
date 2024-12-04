@@ -32,11 +32,12 @@
     </div>
     
 </div>
+<span id="url" class="visually-hidden" aria-hidden="true">{% url 'shapes:shapes_geojson' %}{% querystring %}</span>
 
 <script type="text/javascript">
 
 function map_init_basic(map, options) {
-    const url = "{% url 'shapes:shapes_geojson' %}{% querystring %}";
+    const url = document.getElementById("url").textContent;
     const mapContainer = document.getElementById("mapContainer");
     const spinner = document.getElementById("spinner");
 
