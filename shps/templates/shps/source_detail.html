@@ -18,13 +18,12 @@
         </ol>
     </nav>
     <div class="row p-4">
-        <div class="col-md-2">
+        <div class="col-md-2 fs-2 text-start">
             {% if object.get_prev %}
-            <h2 class="text-start">
                 <a href="{% url 'shapes:source_detail' pk=object.get_prev %}">
                     <i class="bi bi-chevron-left" title="previous"></i>
+                    <span class="visually-hidden">previous entry</span>
                 </a>
-            </h2>
             {% endif %}
         </div>
         <div class="col-md-8 ">
@@ -40,59 +39,108 @@
             </h1>
 
         </div>
-        <div class="col-md-2 text-end">
-            <h2>
-                {% if object.get_next %}
+        <div class="col-md-2 text-end fs-2">
+            {% if object.get_next %}
                 <a href="{% url 'shapes:source_detail' pk=object.get_next %}" style="float:right">
                     <i class="bi bi-chevron-right" title="next"></i>
+                    <span class="visually-hidden">enxt entry</span>
                 </a>
-            </h2>
             {% endif %}
         </div>
     </div>
 </div>
-<div class="container">
-    <dl>
-        <dt>
-            {% get_verbose_name source "name" %}
-        </dt>
-        <dd>
-            {{ object.name }}
-        </dd>
+<div class="container pt-2">
+    {% if object.source_of.all %}
+    <h2 class="text-center pb-2">Map</h2>
+    <div class="container-fluid">
+        <div id="spinner" class="d-flex justify-content-center align-items-center"
+            style="height: 400px; display: none;"></div>
+        <div id="mapContainer" style="height: 400px;">
+            {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="p-2">
+        <h2>About the Source</h2>
+        <dl>
+            <dt>
+                {% get_verbose_name source "name" %}
+            </dt>
+            <dd>
+                {{ object.name }}
+            </dd>
+            <dt>
+                {% get_verbose_name source "description" %}
+            </dt>
+            <dd>
+                {{ object.description }}
+            </dd>
+            <dt>
+                {% get_verbose_name source "quote" %}
+            </dt>
+            <dd>
+                {{ object.quote }}
+            </dd>
+            <dt>
+                {% get_verbose_name source "original_url" %}
+            </dt>
+            <dd>
+                {{ object.original_url }}
+            </dd>
+        </dl>
+        <h2 class="p-2">Related Objects</h2>
+        <ul>
+            {% for x in object.source_of.all %}
+            
+            <li>
+                <a href="{{ x.get_absolute_url }}">
+                    {{ x }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
 
-        <dt>
-            {% get_verbose_name source "description" %}
-        </dt>
-        <dd>
-            {{ object.description }}
-        </dd>
+    </div>
 
-        <dt>
-            {% get_verbose_name source "quote" %}
-        </dt>
-        <dd>
-            {{ object.quote }}
-        </dd>
-
-        <dt>
-            {% get_verbose_name source "original_url" %}
-        </dt>
-        <dd>
-            {{ object.original_url }}
-        </dd>
-    </dl>
-    <h2>Related Objects</h2>
-    <dl>
-        {% for x in object.source_of.all %}
-        <dt>
-            Name
-        </dt>
-        <dd>
-            <a href="{{ x.get_absolute_url }}">
-                {{ x }}
-            </a>
-        </dd>
-        {% endfor %}
-    </dl>
 </div>
+{% if object.source_of.all %}
+<script type="text/javascript">
+
+    function map_init_basic(map, options) {
+        const url = "{% url 'shapes:shapes_geojson' %}?source={{ object.id }}";
+        const mapContainer = document.getElementById("mapContainer");
+        const spinner = document.getElementById("spinner");
+
+        mapContainer.style.display = "none";
+        spinner.style.display = "flex";
+        spinner.innerHTML = `
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        `;
+        mapContainer.style.display = "none";
+        console.log("fetching data")
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                const geojsonFeature = data;
+                const geojsonLayer = L.geoJson(geojsonFeature, {}).addTo(map);
+                map.fitBounds(geojsonLayer.getBounds());
+            })
+            .then(() => {
+                spinner.innerHTML = ""
+                spinner.classList.add("visually-hidden");
+                mapContainer.style.display = "block";
+            })
+            .catch(error => {
+                console.error("Something went wrong:", error);
+            });
+    }
+</script>
+{% endif %}
 {% endblock %}
