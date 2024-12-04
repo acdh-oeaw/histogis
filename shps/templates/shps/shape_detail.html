@@ -41,13 +41,11 @@
                 <br />
 
                 <a href="{% url 'tempspatial-detail' pk=object.id %}?format=json" title="Download as GeoJSON"
-                    class="text-decoration-none">
-                    <i class="bi bi-download"></i>
+                class="btn btn-outline-secondary">
+                    Download as GeoJSON
                 </a>
-                <button class="btn">
-                    <i class="bi bi-chat-left-quote modalpointer fs-1" title="How to quote this page"
-                            data-bs-toggle="modal" data-bs-target="#howToQuoteModal">
-                    </i>
+                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#howToQuoteModal">
+                    How To Quote
                 </button>
                 {% if user.is_authenticated %}
                 <small>
