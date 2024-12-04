@@ -38,8 +38,9 @@ python manage.py update_amd
 
 To run the image you should provide an `docker.env` file to pass in needed environment variables; see example `docker.env` in this repo:
 
-
-`docker run -it -p 8020:8020 --rm --env-file docker.env --name histogis histogis:latest`
+```bash
+docker run -it --network="host" --rm --env-file .env histogis:latest
+```
 
 ### or use published image:
 
