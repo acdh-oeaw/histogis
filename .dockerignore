@@ -6,3 +6,6 @@ db.sqlite3
 env.*
 secret.*
 histogis_dump.sql
+.github/
+.ipynb_checkpoints
+*.secret
