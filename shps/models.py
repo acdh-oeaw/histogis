@@ -18,6 +18,16 @@ from vocabs.models import SkosConcept
 
 ARCHE = Namespace("https://vocabs.acdh.oeaw.ac.at/schema#")
 ACDH = Namespace("https://id.acdh.oeaw.ac.at/")
+ADM_CHOICES = (
+    (
+        "adm1",
+        "ADM 1: a primary administrative division of a country, such as a state in the United States",
+    ),
+    ("adm2", "ADM 2: a subdivision of a first-order administrative division"),
+    ("adm3", "ADM 3: a subdivision of a second-order administrative division"),
+    ("adm4", "ADM 4: a subdivision of a third-order administrative division"),
+    ("adm5", "ADM 5: a subdivision of a fourth-order administrative division"),
+)
 
 curent_date = datetime.now().strftime("%Y-%m-%d")
 
@@ -68,6 +78,14 @@ class Source(models.Model):
     )
     quote = models.TextField(
         blank=True, null=True, verbose_name="Quote", help_text="How to quote."
+    )
+    administrative_division = models.CharField(
+        blank=True,
+        null=True,
+        choices=ADM_CHOICES,
+        max_length=5,
+        verbose_name="administrative division",
+        help_text="Mainly used to group objects by similar hierarchy level; (http://www.geonames.org/export/codes.html)",
     )
     original_url = models.TextField(
         blank=True,
@@ -159,6 +177,14 @@ class TempSpatial(IdProvider):
         blank=True,
         verbose_name="Alternative Names",
         help_text="Alternative Names, use '; ' as separator in case of more names",
+    )
+    administrative_division = models.CharField(
+        blank=True,
+        null=True,
+        choices=ADM_CHOICES,
+        max_length=5,
+        verbose_name="administrative division",
+        help_text="Mainly used to group objects by similar hierarchy level; (http://www.geonames.org/export/codes.html)",
     )
     wikidata_id = models.CharField(
         max_length=500,
