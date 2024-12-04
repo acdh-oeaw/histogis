@@ -56,10 +56,19 @@ class TempSpatialListFilter(django_filters.FilterSet):
         field_name="geom",
         lookup_expr="contains",
     )
+    in_between = django_filters.DateFilter(
+        method="in_between_filter",
+        label="Date",
+        help_text="All TempSpatial objects with 'start date' before\
+            and end 'date after' the given date",
+    )
 
     class Meta:
         model = TempSpatial
         exclude = ["additional_data", "centroid", "temp_extent"]
+
+    def in_between_filter(self, queryset, name, value):
+        return queryset.filter(start_date__lte=value).filter(end_date__gte=value)
 
     def all_name_filter(self, queryset, name, value):
         return queryset.filter(Q(name__icontains=value) | Q(alt_name__icontains=value))
