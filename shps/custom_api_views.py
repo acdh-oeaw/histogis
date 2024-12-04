@@ -24,7 +24,5 @@ def shapes_geojson(request):
         lambda geom: round_coords(geom, precision=2)
     )
     data = json.loads(gdf.to_json())
-    data["metadata"] = {
-        "number of objects": len(gdf)
-    }
+    data["metadata"] = {"number of objects": len(gdf)}
     return JsonResponse(data)

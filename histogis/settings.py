@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     "news",
     "analyze",
     "archeutils",
-
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

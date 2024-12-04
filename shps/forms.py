@@ -88,7 +88,12 @@ class SourceFilterFormHelper(FormHelper):
         self.form_tag = False
         self.layout = Layout(
             BS5Accordion(
-                AccordionGroup("Basic Search", "name", css_id="basic_search_fields"),
+                AccordionGroup(
+                    "Basic Search",
+                    "name",
+                    "administrative_division",
+                    css_id="basic_search_fields",
+                ),
                 AccordionGroup(
                     "Advanced search",
                     "description",
@@ -133,6 +138,7 @@ class TempSpatialFilterFormHelper(FormHelper):
                     "all_name",
                     "name",
                     "alt_name",
+                    "administrative_division",
                     "in_between",
                     css_id="basic_search_fields",
                 ),
