@@ -13,6 +13,7 @@
 <body class="d-flex flex-column h-100">
     {% include "webpage/partials/navbar.html" %}
     <main class="flex-shrink-0">
+        <meta name="referrer" content="strict-origin-when-cross-origin">
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>
