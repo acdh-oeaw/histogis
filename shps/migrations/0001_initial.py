@@ -3,8 +3,9 @@
 import django.contrib.gis.db.models.fields
 import django.contrib.postgres.fields.ranges
 import django.db.models.deletion
-import shps.models
 from django.db import migrations, models
+
+import shps.models
 
 
 class Migration(migrations.Migration):

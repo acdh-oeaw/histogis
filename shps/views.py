@@ -1,28 +1,27 @@
 import json
-from django.urls import reverse_lazy
-from django.shortcuts import render, get_object_or_404
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import DeleteView
-from django.views.generic import TemplateView
-from django.contrib.auth.decorators import login_required
+
+from browsing.utils import BaseCreateView, BaseUpdateView, GenericListView
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import Point
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import FormView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import DeleteView, FormView
 
-from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateView
-
-from .models import TempSpatial, Source
-from .tables import TempSpatialTable, SourceTable
-from .filters import TempSpatialListFilter, SourceListFilter
+from .filters import SourceListFilter, TempSpatialListFilter
 from .forms import (
-    WhereWasForm,
-    TempSpatialFilterFormHelper,
-    TempSpatialForm,
     SourceFilterFormHelper,
     SourceForm,
+    TempSpatialFilterFormHelper,
+    TempSpatialForm,
+    WhereWasForm,
 )
+from .models import Source, TempSpatial
+from .tables import SourceTable, TempSpatialTable
 
 
 class PlotToMapView(TemplateView):
@@ -45,15 +44,13 @@ class WhereWas(FormView):
     success_url = "."
 
     def form_valid(self, form, **kwargs):
-        context = super(WhereWas, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         cd = form.cleaned_data
         pnt = Point(cd["lng"], cd["lat"])
         qs = TempSpatial.objects.filter(geom__contains=pnt)
         when = cd["when"]
         if when is not None:
             qs = qs.filter(temp_extent__contains=when)
-        else:
-            qs = qs
         if qs:
             context["answer"] = qs.order_by("spatial_extent")
         else:
@@ -82,7 +79,7 @@ class TempSpatialListView(GenericListView):
     template_name = "shps/shapes_list.html"
 
     def get_context_data(self, **kwargs):
-        context = super(TempSpatialListView, self).get_context_data()
+        context = super().get_context_data()
         context["shapes"] = True
         return context
 
@@ -92,7 +89,7 @@ class TempSpatialDetailView(DetailView):
     template_name = "shps/shape_detail.html"
 
     def get_context_data(self, **kwargs):
-        context = super(TempSpatialDetailView, self).get_context_data()
+        context = super().get_context_data()
         context["more"] = json.loads(self.object.additional_data)
         try:
             project_url = settings.BASE_URL
@@ -109,7 +106,7 @@ class TempSpatialCreate(BaseCreateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(TempSpatialCreate, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class TempSpatialUpdate(BaseUpdateView):
@@ -119,7 +116,7 @@ class TempSpatialUpdate(BaseUpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(TempSpatialUpdate, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class TempSpatialDelete(DeleteView):
@@ -129,7 +126,7 @@ class TempSpatialDelete(DeleteView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(TempSpatialDelete, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class SourceListView(GenericListView):
@@ -157,7 +154,7 @@ class SourceCreate(BaseCreateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(SourceCreate, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class SourceUpdate(BaseUpdateView):
@@ -167,7 +164,7 @@ class SourceUpdate(BaseUpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(SourceUpdate, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class SourceDelete(DeleteView):
@@ -177,4 +174,4 @@ class SourceDelete(DeleteView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(SourceDelete, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)

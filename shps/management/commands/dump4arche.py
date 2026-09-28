@@ -1,6 +1,6 @@
-from shps.to_arche import project_to_arche
-
 from django.core.management.base import BaseCommand
+
+from shps.to_arche import project_to_arche
 
 
 class Command(BaseCommand):

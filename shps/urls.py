@@ -1,8 +1,9 @@
 from django.urls import path
-from . import views
-from shps.custom_api_views import shapes_geojson
 
 from archeutils import views as arche_views
+from shps.custom_api_views import shapes_geojson
+
+from . import views
 
 app_name = "shps"
 

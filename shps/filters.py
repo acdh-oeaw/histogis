@@ -3,7 +3,8 @@ from django.db.models import Q
 from rest_framework_gis.filters import GeometryFilter
 
 from vocabs.models import SkosConcept
-from .models import TempSpatial, Source
+
+from .models import Source, TempSpatial
 
 
 class SourceListFilter(django_filters.FilterSet):

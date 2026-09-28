@@ -1,4 +1,5 @@
 from django import template
+
 from news.models import NewsFeed
 
 register = template.Library()

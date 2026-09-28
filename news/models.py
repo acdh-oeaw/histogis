@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 class NewsFeed(models.Model):
@@ -20,4 +20,4 @@ class NewsFeed(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
-        return "{}".format(self.title)
+        return f"{self.title}"

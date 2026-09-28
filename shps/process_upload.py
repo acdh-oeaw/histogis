@@ -1,14 +1,15 @@
+import glob
 import json
 import os
-import glob
 import zipfile
-import geopandas as gp
 
+import geopandas as gp
 from django.contrib.gis import geos
 from django.contrib.gis.geos import fromstr
 from django.db import IntegrityError
 
 from vocabs.models import SkosConcept, SkosConceptScheme
+
 from .models import TempSpatial
 
 mandatory_keys = [

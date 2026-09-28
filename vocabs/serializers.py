@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import SkosConcept, SkosConceptScheme, SkosLabel, SkosNamespace
 
 

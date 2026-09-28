@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
-from . import import_views
+
+from . import import_views, views
 
 app_name = "vocabs"
 

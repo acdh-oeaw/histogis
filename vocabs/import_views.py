@@ -1,8 +1,10 @@
 from io import TextIOWrapper
-from django.shortcuts import render
+
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
 from .forms import UploadFileForm
-from .skos import SkosImporter, Csv2SkosImporter
+from .skos import Csv2SkosImporter, SkosImporter
 
 
 @login_required

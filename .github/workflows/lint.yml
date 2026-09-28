@@ -1,6 +1,6 @@
-name: flake8 Lint
+name: Linting
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   flake8-lint:
@@ -8,10 +8,8 @@ jobs:
     name: Lint
     steps:
       - name: Check out source repository
-        uses: actions/checkout@v4
-      - name: Set up Python environment
-        uses: actions/setup-python@v5
+        uses: actions/checkout@v7
+      - name: Ruff lint
+        uses: astral-sh/ruff-action@v4.1.0
         with:
-          python-version: "3.11"
-      - name: flake8 Lint
-        uses: py-actions/flake8@v2
+          src: "."

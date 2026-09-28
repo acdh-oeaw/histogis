@@ -1,17 +1,17 @@
-from django.http import HttpResponse, JsonResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404, HttpResponse, JsonResponse
 from django.urls import reverse
 
+from shps.models import TempSpatial
+
 from .utils import (
-    as_arche_graph,
-    serialize_project,
     ARCHE_BASE_URL,
-    title_img,
     ARCHE_DEFAULT_EXTENSION,
     ARCHE_PAYLOAD_MIMETYPE,
+    as_arche_graph,
+    serialize_project,
+    title_img,
 )
-
-from shps.models import TempSpatial
 
 
 def res_as_arche_graph(request, pk):

@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 
-
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
@@ -11,28 +10,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 REDMINE_ID = 11176
 ACDH_IMPRINT_URL = "https://imprint.acdh.oeaw.ac.at/"
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "TZRHHwasdfsadfdsafkljlxö7639827249324GV")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
-DEBUG = os.environ.get("DEBUG", False)
-
-if DEBUG:
-    CACHE_TIMEOUT = 0
+if os.environ.get("DEBUG"):
+    DEBUG = True
 else:
-    CACHE_TIMEOUT = None
+    DEBUG = False
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-#         "LOCATION": "my_cache_table",
-#         "TIMEOUT": CACHE_TIMEOUT,
-#     }
-# }
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
-    }
-}
 
 ADD_ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
 
@@ -54,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "django.contrib.postgres",
     "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -67,7 +52,6 @@ INSTALLED_APPS = [
     "vocabs",
     "stats",
     "shps",
-    "charts",
     "browsing",
     "news",
     "analyze",
@@ -84,7 +68,6 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 25,
-    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
 MIDDLEWARE = [
@@ -104,7 +87,7 @@ ROOT_URLCONF = "histogis.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -112,8 +95,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "webpage.webpage_content_processors.installed_apps",
-                "webpage.webpage_content_processors.is_dev_version",
             ],
         },
     },
@@ -124,11 +105,13 @@ WSGI_APPLICATION = "histogis.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "OPTIONS": {"options": "-c search_path=public,histogis"},
         "NAME": os.environ.get("POSTGRES_DB", "histogis"),
         "USER": os.environ.get("POSTGRES_USER", "postgres"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "postgres"),
         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
         "PORT": os.environ.get("POSTEGRES_PORT", "5432"),
+        "DISABLE_SERVER_SIDE_CURSORS": True,
     }
 }
 
@@ -184,7 +167,7 @@ VOCABS_DEFAULT_PEFIX = os.path.basename(BASE_DIR)
 
 VOCABS_SETTINGS = {
     "default_prefix": VOCABS_DEFAULT_PEFIX,
-    "default_ns": "http://www.vocabs/{}/".format(VOCABS_DEFAULT_PEFIX),
+    "default_ns": f"http://www.vocabs/{VOCABS_DEFAULT_PEFIX}/",
     "default_lang": "eng",
 }
 

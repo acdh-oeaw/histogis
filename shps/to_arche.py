@@ -1,15 +1,16 @@
-import rdflib
-from datetime import datetime
-from rdflib import Literal, Namespace, RDF, URIRef
-from rdflib.namespace import XSD
+from datetime import UTC, datetime
 
-from .models import TempSpatial
+import rdflib
+from rdflib import RDF, Literal, Namespace, URIRef
+from rdflib.namespace import XSD
 
 from webpage.metadata import PROJECT_METADATA
 
+from .models import TempSpatial
+
 ARCHE = Namespace("https://vocabs.acdh.oeaw.ac.at/schema#")
 ACDH = Namespace("https://id.acdh.oeaw.ac.at/")
-curent_date = datetime.now().strftime("%Y-%m-%d")
+curent_date = datetime.now(tz=UTC).strftime("%Y-%m-%d")
 
 
 def serialize_project():

@@ -1,13 +1,10 @@
-{% extends "webpage/base.html" %}
+{% extends "base.html" %}
 {% load static %}
-{% load stats_extras %}
-{% load webpage_extras %}
-{% load news_extras %}
 {% block content %}
 <div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-2">{% projects_metadata 'title' %}</h1>
+    <h1 class="display-2">Histogis</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">{% projects_metadata 'subtitle' %}</p>
+      <p class="lead mb-4">A platform to collect, create, curate and share temporalized shapefiles</p>
       <div class="d-grid gap-2 d-md-flex justify-content-md-center">
         <a href="{% url 'shapes:browse_shapes' %}" type="button" class="btn btn-primary btn-lg px-4 me-md-2">Explore it</a>
         <a href="api-docs/" role="button" class="btn btn-outline-secondary disabled btn-lg px-4" tabindex="-1" aria-disabled="true">Use it (API)</a>

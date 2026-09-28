@@ -1,6 +1,7 @@
 from django.urls import path
+
 from . import dal_views
-from .models import SkosLabel, SkosConcept, SkosConceptScheme
+from .models import SkosConcept, SkosConceptScheme, SkosLabel
 
 app_name = "vocabs"
 

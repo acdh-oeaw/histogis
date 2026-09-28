@@ -1,8 +1,9 @@
-from django.urls import path, include
 from django.contrib import admin
+from django.urls import include, path
 from rest_framework import routers
-from vocabs import api_views
+
 from shps import api_views as shps_api_views
+from vocabs import api_views
 
 router = routers.DefaultRouter()
 router.register(r"skoslabels", api_views.SkosLabelViewSet)

@@ -1,5 +1,5 @@
 from django.conf import settings
-from rdflib import Graph, Namespace, URIRef, Literal, XSD
+from rdflib import XSD, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF
 
 from webpage.metadata import PROJECT_METADATA

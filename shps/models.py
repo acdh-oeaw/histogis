@@ -1,8 +1,7 @@
-import os
 import hashlib
-from datetime import datetime
+import os
+from datetime import UTC, datetime
 
-from rdflib import Namespace
 from django.conf import settings
 from django.contrib.gis.db import models
 from django.contrib.postgres.fields import DateRangeField
@@ -11,10 +10,10 @@ from django.core.serializers import serialize
 from django.urls import reverse
 from django.utils.text import slugify
 from next_prev import next_in_order, prev_in_order
+from rdflib import Namespace
 
 from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
-
 
 ARCHE = Namespace("https://vocabs.acdh.oeaw.ac.at/schema#")
 ACDH = Namespace("https://id.acdh.oeaw.ac.at/")
@@ -29,7 +28,7 @@ ADM_CHOICES = (
     ("adm5", "ADM 5: a subdivision of a fourth-order administrative division"),
 )
 
-curent_date = datetime.now().strftime("%Y-%m-%d")
+curent_date = datetime.now(UTC).strftime("%Y-%m-%d")
 
 
 class OverwriteStorage(FileSystemStorage):
@@ -111,13 +110,13 @@ class Source(models.Model):
     def delete(self, using=None, keep_parents=False):
         """Delete the file from disk because Django doesn't do it. Kudos to AlexanderWatzinger"""
         self.upload.delete()
-        super(Source, self).delete(using, keep_parents)
+        super().delete(using, keep_parents)
 
     def __str__(self):
         if self.name:
-            return "{}".format(self.name)
+            return f"{self.name}"
         else:
-            return "Source ID: {}".format(self.name)
+            return f"Source ID: {self.name}"
 
     @classmethod
     def get_listview_url(self):
@@ -141,7 +140,7 @@ class Source(models.Model):
 
     def get_file_size(self):
         try:
-            return "{}".format(self.upload.size)
+            return f"{self.upload.size}"
         except:  # noqa: E722
             return None
 
@@ -160,7 +159,7 @@ class Source(models.Model):
             return None
 
     def slug_name(self):
-        return "{}__{}_{}".format(slugify(self.name), self.start_date, self.end_date)
+        return f"{slugify(self.name)}__{self.start_date}_{self.end_date}"
 
 
 class TempSpatial(IdProvider):
@@ -400,8 +399,6 @@ class TempStatialRel(IdProvider):
 
     def __str__(self):
         if self.instance_a and self.instance_b and self.relation_type:
-            return "{} {} {}".format(
-                self.instance_a, self.relation_type, self.instance_b
-            )
+            return f"{self.instance_a} {self.relation_type} {self.instance_b}"
         else:
-            return "TempStatialRel ID: {}".format(self.id)
+            return f"TempStatialRel ID: {self.id}"
