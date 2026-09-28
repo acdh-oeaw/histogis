@@ -1,16 +1,16 @@
-from rest_framework import viewsets
-from rest_framework import pagination
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import pagination, viewsets
+from rest_framework.settings import api_settings
+
+from .api_renderers import RDFRenderer
+from .filters import SkosConceptFilter
 from .models import SkosConcept, SkosConceptScheme, SkosLabel, SkosNamespace
 from .serializers import (
-    SkosLabelSerializer,
-    SkosNamespaceSerializer,
     SkosConceptSchemeSerializer,
     SkosConceptSerializer,
+    SkosLabelSerializer,
+    SkosNamespaceSerializer,
 )
-from .filters import SkosConceptFilter
-from .api_renderers import RDFRenderer
-from rest_framework.settings import api_settings
 
 
 class LargeResultsSetPagination(pagination.PageNumberPagination):

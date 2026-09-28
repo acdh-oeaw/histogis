@@ -17,3 +17,13 @@ dependencies = [
     "rdflib>=7.6.0",
     "requests>=2.34.2",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.9",
+]
+
+[tool.ruff]
+
+[tool.ruff.lint]
+ignore = ["RUF012", "BLE001", "TRY002", "EXE001", "SIM102"]

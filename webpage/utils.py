@@ -1,8 +1,8 @@
 import django_filters
-from django.views.generic.edit import CreateView, UpdateView
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
-from django_tables2 import SingleTableView, RequestConfig
+from crispy_forms.layout import Submit
+from django.views.generic.edit import CreateView, UpdateView
+from django_tables2 import RequestConfig, SingleTableView
 
 
 def serialize(modelclass):
@@ -22,7 +22,7 @@ def serialize(modelclass):
 
 class GenericFilterFormHelper(FormHelper):
     def __init__(self, *args, **kwargs):
-        super(GenericFilterFormHelper, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
@@ -55,26 +55,26 @@ class GenericListView(SingleTableView):
     template_name = "browsing/generic_list.html"
 
     def get_queryset(self, **kwargs):
-        qs = super(GenericListView, self).get_queryset()
+        qs = super().get_queryset()
         self.filter = self.filter_class(self.request.GET, queryset=qs)
         self.filter.form.helper = self.formhelper_class()
         return self.filter.qs
 
     def get_table(self, **kwargs):
-        table = super(GenericListView, self).get_table()
+        table = super().get_table()
         RequestConfig(
             self.request, paginate={"page": 1, "per_page": self.paginate_by}
         ).configure(table)
         return table
 
     def get_context_data(self, **kwargs):
-        context = super(GenericListView, self).get_context_data()
+        context = super().get_context_data()
         context[self.context_filter_name] = self.filter
-        context["docstring"] = "{}".format(self.model.__doc__)
+        context["docstring"] = f"{self.model.__doc__}"
         if self.model.__name__.endswith("s"):
-            context["class_name"] = "{}".format(self.model.__name__)
+            context["class_name"] = f"{self.model.__name__}"
         else:
-            context["class_name"] = "{}s".format(self.model.__name__)
+            context["class_name"] = f"{self.model.__name__}s"
         try:
             context["get_arche_dump"] = self.model.get_arche_dump()
         except AttributeError:
@@ -96,12 +96,12 @@ class BaseCreateView(CreateView):
     template_name = "browsing/generic_create.html"
 
     def get_context_data(self, **kwargs):
-        context = super(BaseCreateView, self).get_context_data()
-        context["docstring"] = "{}".format(self.model.__doc__)
+        context = super().get_context_data()
+        context["docstring"] = f"{self.model.__doc__}"
         if self.model.__name__.endswith("s"):
-            context["class_name"] = "{}".format(self.model.__name__)
+            context["class_name"] = f"{self.model.__name__}"
         else:
-            context["class_name"] = "{}s".format(self.model.__name__)
+            context["class_name"] = f"{self.model.__name__}s"
         return context
 
 
@@ -111,10 +111,10 @@ class BaseUpdateView(UpdateView):
     template_name = "browsing/generic_create.html"
 
     def get_context_data(self, **kwargs):
-        context = super(BaseUpdateView, self).get_context_data()
-        context["docstring"] = "{}".format(self.model.__doc__)
+        context = super().get_context_data()
+        context["docstring"] = f"{self.model.__doc__}"
         if self.model.__name__.endswith("s"):
-            context["class_name"] = "{}".format(self.model.__name__)
+            context["class_name"] = f"{self.model.__name__}"
         else:
-            context["class_name"] = "{}s".format(self.model.__name__)
+            context["class_name"] = f"{self.model.__name__}s"
         return context

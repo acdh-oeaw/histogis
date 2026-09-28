@@ -1,10 +1,8 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.urls import reverse
-
-from django.utils.text import slugify
 from django.utils.functional import cached_property
-
+from django.utils.text import slugify
 
 try:
     DEFAULT_NAMESPACE = settings.VOCABS_SETTINGS["default_nsgg"]
@@ -34,7 +32,7 @@ class SkosNamespace(models.Model):
     prefix = models.CharField(max_length=50, blank=True, default=DEFAULT_PREFIX)
 
     def __str__(self):
-        return "{}".format(self.prefix)
+        return f"{self.prefix}"
 
     class Meta:
         ordering = ["id"]
@@ -57,7 +55,7 @@ class SkosConceptScheme(models.Model):
             self.namespace = temp_namespace
         else:
             pass
-        super(SkosConceptScheme, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @classmethod
     def get_listview_url(self):
@@ -83,7 +81,7 @@ class SkosConceptScheme(models.Model):
         return False
 
     def __str__(self):
-        return "{}:{}".format(self.namespace, self.dc_title)
+        return f"{self.namespace}:{self.dc_title}"
 
     class Meta:
         ordering = ["id"]
@@ -130,9 +128,9 @@ class SkosLabel(models.Model):
 
     def __str__(self):
         if self.label_type != "":
-            return "{} @{} ({})".format(self.label, self.isoCode, self.label_type)
+            return f"{self.label} @{self.isoCode} ({self.label_type})"
         else:
-            return "{} @{}".format(self.label, self.isoCode)
+            return f"{self.label} @{self.isoCode}"
 
     class Meta:
         ordering = ["id"]
@@ -209,7 +207,7 @@ class SkosConcept(models.Model):
             if concepts < 1:
                 self.notation = temp_notation
             else:
-                self.notation = "{}-{}".format(temp_notation, concepts)
+                self.notation = f"{temp_notation}-{concepts}"
         else:
             pass
 
@@ -221,7 +219,7 @@ class SkosConcept(models.Model):
             self.namespace = temp_namespace
         else:
             pass
-        super(SkosConcept, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @cached_property
     def label(self):

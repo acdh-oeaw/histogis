@@ -1,7 +1,7 @@
 import django_filters
 from dal import autocomplete
-from .models import SkosConcept, SkosConceptScheme, get_all_children, SkosLabel
 
+from .models import SkosConcept, SkosConceptScheme, SkosLabel, get_all_children
 
 django_filters.filters.LOOKUP_TYPES = [
     ("", "---------"),
@@ -23,7 +23,7 @@ django_filters.filters.LOOKUP_TYPES = [
 def generous_concept_filter(queryset, name, value):
     """call this function through "method=generous_concept_filter" """
     if value:
-        lookup = "__".join([name, "in"])
+        lookup = f"{name}__in"
         starter = value[0]
         all = get_all_children(starter, include_self=True)
         qs = queryset.filter(**{lookup: all})
@@ -32,7 +32,6 @@ def generous_concept_filter(queryset, name, value):
 
 
 class SkosConceptListFilter(django_filters.FilterSet):
-
     pref_label = django_filters.ModelMultipleChoiceFilter(
         widget=autocomplete.Select2Multiple(url="vocabs-ac:skosconcept-autocomplete"),
         queryset=SkosConcept.objects.all(),
@@ -54,7 +53,6 @@ class SkosConceptListFilter(django_filters.FilterSet):
 
 
 class SkosConceptFilter(django_filters.FilterSet):
-
     pref_label = django_filters.ModelMultipleChoiceFilter(
         widget=autocomplete.Select2Multiple(url="vocabs-ac:skosconcept-autocomplete"),
         queryset=SkosConcept.objects.all(),
@@ -76,7 +74,6 @@ class SkosConceptFilter(django_filters.FilterSet):
 
 
 class SkosConceptSchemeListFilter(django_filters.FilterSet):
-
     dc_title = django_filters.CharFilter(
         lookup_expr="icontains",
         help_text=SkosConceptScheme._meta.get_field("dc_title").help_text,
@@ -94,7 +91,6 @@ class SkosConceptSchemeListFilter(django_filters.FilterSet):
 
 
 class SkosLabelListFilter(django_filters.FilterSet):
-
     label = django_filters.CharFilter(
         lookup_expr="icontains",
         help_text=SkosLabel._meta.get_field("label").help_text,

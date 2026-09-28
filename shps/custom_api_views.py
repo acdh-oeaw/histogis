@@ -1,4 +1,5 @@
 import json
+
 import geopandas as gpd
 from django.http import JsonResponse
 from shapely.wkt import loads

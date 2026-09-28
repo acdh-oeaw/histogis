@@ -1,9 +1,11 @@
-import lxml.etree as ET
 import csv
+
+import lxml.etree as ET
+
 from .models import SkosConcept, SkosConceptScheme, SkosLabel
 
 
-class Csv2SkosReader(object):
+class Csv2SkosReader:
     """
     extract SKOS-like objects from special structured CSV sheets
     and returns a list of dictionaries containing data needed to
@@ -15,12 +17,10 @@ class Csv2SkosReader(object):
         self.data = [x for x in csv.reader(self.csv_file)]
         self.headers = self.data[0]
         try:
-            self.alt_lang = (self.headers[1])[
-                (self.headers[1]).index("@") + 1 :  # noqa: E203
-            ]  # noqa: E203
+            self.alt_lang = (self.headers[1])[(self.headers[1]).index("@") + 1 :]
         except:  # noqa: E722
             self.alt_lang = None
-        self.schemes = set([x[0] for x in self.data[1:]])
+        self.schemes = {[x[0] for x in self.data[1:]]}
         self.number_of_schemes = len(self.schemes)
 
     def get_concepts(self):
@@ -134,9 +134,9 @@ class Csv2SkosImporter(Csv2SkosReader):
                     temp_second.scheme = [temp_scheme]
                     temp_first.skos_narrower = [temp_second]
                     success.append(second["pref_label"])
-                except:  # noqa: E722
+                except:  # noqa
                     failed.append(second["pref_label"])
-            except:  # noqa: E722
+            except:  # noqa
                 pass
         report["failed"] = failed
         report["success"] = success
@@ -152,7 +152,7 @@ class Csv2SkosImporter(Csv2SkosReader):
         return report
 
 
-class SkosReader(object):
+class SkosReader:
     """
     reads a skos file (RDF/XML) and returns a list of dictionaries
     containing rdf:Description properties
@@ -294,12 +294,12 @@ class SkosImporter(SkosReader):
                 try:
                     temp_concept.pref_label = x["pref_labels"][0]["text"]
                     temp_concept.pref_label_lang = x["pref_labels"]["lang"]
-                except:  # noqa: E722
+                except:  # noqa
                     pass
                 try:
                     temp_concept.definition = x["definitions"][0]
                     temp_concept.definition_lang = "eng"
-                except:  # noqa: E722
+                except:  # noqa
                     pass
                 temp_concept.save()
 
@@ -353,11 +353,7 @@ class SkosImporter(SkosReader):
 
                 num_description_type_concept += 1
         concepts_after = len(SkosConcept.objects.all())
-        summary = (
-            "#descr. type 'concept': {} |  #descr. type 'conceptSchemes': {}".format(
-                num_description_type_concept, num_description_type_concept_scheme
-            )
-        )
+        summary = f"#descr. type 'concept': {num_description_type_concept} |  #descr. type 'conceptSchemes': {num_description_type_concept_scheme}"
 
         report = {
             "summary": summary,

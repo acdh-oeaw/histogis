@@ -1,9 +1,9 @@
-from django.http import JsonResponse
-import pandas as pd
 from datetime import timedelta
 
-from django.urls import reverse
+import pandas as pd
 from django.db.models.functions import TruncYear
+from django.http import JsonResponse
+from django.urls import reverse
 from django.views.generic import TemplateView
 
 from shps.models import TempSpatial
@@ -12,7 +12,7 @@ from shps.models import TempSpatial
 def make_href(row, entity="work", id="id", label=None):
     url = reverse("shapes:shape_detail", kwargs={"pk": row[id]})
     if label:
-        element = """<a href="{}" target='_blank'>{}</a>""".format(url, row[label])
+        element = f"""<a href="{url}" target='_blank'>{row[label]}</a>"""
     else:
         element = """<a href="{}" target='_blank'>{}</a>""".format(url, "link2object")
     return element

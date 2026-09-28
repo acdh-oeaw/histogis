@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 
-
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
@@ -13,7 +12,10 @@ ACDH_IMPRINT_URL = "https://imprint.acdh.oeaw.ac.at/"
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = os.environ.get("DEBUG", False)
+if os.environ.get("DEBUG"):
+    DEBUG = True
+else:
+    DEBUG = False
 
 
 ADD_ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
@@ -167,7 +169,7 @@ VOCABS_DEFAULT_PEFIX = os.path.basename(BASE_DIR)
 
 VOCABS_SETTINGS = {
     "default_prefix": VOCABS_DEFAULT_PEFIX,
-    "default_ns": "http://www.vocabs/{}/".format(VOCABS_DEFAULT_PEFIX),
+    "default_ns": f"http://www.vocabs/{VOCABS_DEFAULT_PEFIX}/",
     "default_lang": "eng",
 }
 

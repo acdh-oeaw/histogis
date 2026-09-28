@@ -1,5 +1,5 @@
-from rest_framework import renderers
 from django.template.loader import render_to_string
+from rest_framework import renderers
 
 
 class RDFRenderer(renderers.BaseRenderer):

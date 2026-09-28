@@ -1,6 +1,7 @@
 from rest_framework import serializers
+
+from .models import Source, TempSpatial
 from .serializer_base import LinkedPastsSerializer
-from .models import TempSpatial, Source
 
 
 class SimpleSerializer(serializers.HyperlinkedModelSerializer):

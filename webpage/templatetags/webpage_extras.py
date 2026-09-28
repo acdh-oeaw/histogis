@@ -1,4 +1,5 @@
 from django import template
+
 from webpage.metadata import PROJECT_METADATA as PM
 
 register = template.Library()
@@ -18,12 +19,12 @@ def get_verbose_name(instance, field_name):
     """
     try:
         label = instance._meta.get_field(field_name).verbose_name
-    except:
+    except:  ## noqa
         label = None
     if label:
-        return "{}".format(label)
+        return f"{label}"
     else:
-        return "No verbose name for '{}' provided".format(field_name)
+        return f"No verbose name for '{field_name}' provided"
 
 
 @register.simple_tag
@@ -35,9 +36,9 @@ def get_help_text(instance, field_name):
     """
     try:
         label = instance._meta.get_field(field_name).help_text
-    except:
+    except:  ## noqa
         label = None
     if label:
-        return "{}".format(label)
+        return f"{label}"
     else:
-        return "No helptext for '{}' provided".format(field_name)
+        return f"No helptext for '{field_name}' provided"

@@ -2,12 +2,8 @@ from copy import deepcopy
 
 import requests
 from django.conf import settings
-from django.contrib.auth import authenticate
-from django.contrib.auth import login
-from django.contrib.auth import logout
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-from django.http import JsonResponse
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.template import loader
 from django.template.exceptions import TemplateDoesNotExist
@@ -46,7 +42,7 @@ class GenericWebpageView(TemplateView):
     template_name = "webpage/index.html"
 
     def get_context_data(self, **kwargs):
-        context = super(GenericWebpageView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["apps"] = settings.INSTALLED_APPS
         return context
 

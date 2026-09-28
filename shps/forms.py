@@ -1,18 +1,16 @@
 import glob
 import os
 
+from crispy_bootstrap5.bootstrap5 import BS5Accordion
+from crispy_forms.bootstrap import AccordionGroup
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
-
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout
-from crispy_bootstrap5.bootstrap5 import BS5Accordion
-from crispy_forms.bootstrap import AccordionGroup
-
 from leaflet.forms.widgets import LeafletWidget
 
-from .models import TempSpatial, Source
+from .models import Source, TempSpatial
 from .process_upload import import_shapes, unzip_shapes
 
 
@@ -22,7 +20,7 @@ class WhereWasForm(forms.Form):
     when = forms.DateField(required=False)
 
     def __init__(self, *args, **kwargs):
-        super(WhereWasForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = "form-horizontal"
@@ -46,7 +44,7 @@ class SourceForm(forms.ModelForm):
         fields = "__all__"
 
     def __init__(self, *args, **kwargs):
-        super(SourceForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = "form-horizontal"
@@ -59,7 +57,7 @@ class SourceForm(forms.ModelForm):
     def save(self, commit=True):
         # make sure the temp folder is clean
         [os.remove(f) for f in glob.glob(os.path.join(settings.TEMP_DIR, "*.*"))]
-        instance = super(SourceForm, self).save(commit=True)
+        instance = super().save(commit=True)
         if self.cleaned_data["import_shapes"]:
             uploaded_file = instance.upload
             temp_dir = settings.TEMP_DIR
@@ -81,7 +79,7 @@ class SourceForm(forms.ModelForm):
 
 class SourceFilterFormHelper(FormHelper):
     def __init__(self, *args, **kwargs):
-        super(SourceFilterFormHelper, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
@@ -113,7 +111,7 @@ class TempSpatialForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        super(TempSpatialForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = "form-horizontal"
@@ -126,7 +124,7 @@ class TempSpatialForm(forms.ModelForm):
 
 class TempSpatialFilterFormHelper(FormHelper):
     def __init__(self, *args, **kwargs):
-        super(TempSpatialFilterFormHelper, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"

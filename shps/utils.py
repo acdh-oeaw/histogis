@@ -1,7 +1,8 @@
-import requests
-import pandas as pd
-from shapely.geometry import mapping, shape
 from io import BytesIO
+
+import pandas as pd
+import requests
+from shapely.geometry import mapping, shape
 
 
 def round_coords(geometry, precision=2):

@@ -1,5 +1,5 @@
-from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from django.conf import settings
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 try:
     if settings.BASE_URL.endswith("/"):
@@ -12,7 +12,7 @@ except AttributeError:
 
 class LinkedPastsSerializer(GeoFeatureModelSerializer):
     def to_representation(self, instance):
-        feature = super(LinkedPastsSerializer, self).to_representation(instance)
+        feature = super().to_representation(instance)
         when = {
             "timespans": [
                 {"start": {"in": instance.start_date}, "end": {"in": instance.end_date}}
@@ -26,15 +26,13 @@ class LinkedPastsSerializer(GeoFeatureModelSerializer):
             all_names = names
         types = [
             {
-                "identifier": "{}{}".format(
-                    base_url, instance.administrative_unit.get_absolute_url()
-                ),
+                "identifier": f"{base_url}{instance.administrative_unit.get_absolute_url()}",
                 "label": instance.administrative_unit.pref_label,
             }
         ]
         descriptions = [
             {
-                "value": "{}".format(instance.source.description),
+                "value": f"{instance.source.description}",
                 "lang": "en",
             }
         ]
@@ -52,5 +50,5 @@ class LinkedPastsSerializer(GeoFeatureModelSerializer):
                 }
             ]
             feature["links"] = links
-        feature["@id"] = "{}{}".format(base_url, instance.get_permalink_url())
+        feature["@id"] = f"{base_url}{instance.get_permalink_url()}"
         return feature
