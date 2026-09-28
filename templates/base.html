@@ -5,6 +5,7 @@
 
 <head>
     <title>{% block title %} {% projects_metadata 'title' %}{% endblock %}</title>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
 {% include "partials/head.html" %}
 {% block scriptHeader %}
 {% endblock scriptHeader %}
@@ -13,7 +14,7 @@
 <body class="d-flex flex-column h-100">
     {% include "partials/navbar.html" %}
     <main class="flex-shrink-0">
-        <meta name="referrer" content="strict-origin-when-cross-origin">
+        
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>
