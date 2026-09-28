@@ -1,7 +1,6 @@
 {% extends "webpage/base.html" %}
 {% load static %}
 {% load django_tables2 %}
-{% load browsing_extras %}
 {% load crispy_forms_field %}
 {% load crispy_forms_tags %}
 {% block title %} Browse {{ class_name }} {% endblock %}
@@ -13,11 +12,11 @@
 <div class="container">
 
     <h1 class="display-5 text-center pt-3">
-        Browse {% class_definition %} {% block list_title %} {% endblock %}
+        Browse  {% block list_title %} {% endblock %}
     </h1>
     {% if user.is_authenticated %}
     <div class="d-grid gap-2">
-        <a class="btn btn-primary float-center ms-5 me-5" href="{{ create_view_link }}">Create new {{ class_name }}</a>
+        <a class="btn btn-primary float-center ms-5 me-5" href="{{ create_view_link }}">Create new Shape</a>
     </div>
     {% endif %}
     <div class="row  pb-4 pt-2">
@@ -43,7 +42,6 @@
                     <a class="btn btn-primary" href=".">Reset</a>
                 </div>
             </form>
-            {% include 'browsing/partials/chart_form.html' %}
         </div>
         <div class="col-md-8" id="results">
             {% with table.paginator.count as total %}
