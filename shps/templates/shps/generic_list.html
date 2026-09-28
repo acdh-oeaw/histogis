@@ -1,4 +1,4 @@
-{% extends "webpage/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load django_tables2 %}
 {% load crispy_forms_field %}
@@ -34,7 +34,7 @@
                     <a class="btn btn-primary" href=".">Reset</a>
                 </div>
             </form>
-            {% include 'browsing/partials/chart_form.html' %}
+            
         </div>
         <div class="col-md-8" id="results">
             {% with table.paginator.count as total %}

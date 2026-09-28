@@ -85,6 +85,8 @@ class SkosConceptScheme(models.Model):
 
     class Meta:
         ordering = ["id"]
+        verbose_name = "SkosConceptSchema"
+        verbose_name_plural = "SkosConceptSchemas"
 
 
 class SkosLabel(models.Model):

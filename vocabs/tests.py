@@ -11,7 +11,7 @@ class VocabsTest(TestCase):
 
     def test_vocabs(self):
         rv = self.client.get("/vocabs/scheme/")
-        self.assertContains(rv, "Browse SkosConceptSchemes")
+        self.assertContains(rv, "Browse SkosConceptSchemas")
         rv = self.client.get("/vocabs/scheme/create/", follow=True)
         self.assertContains(rv, "Namespace")
 
