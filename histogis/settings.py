@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 REDMINE_ID = 11176
 ACDH_IMPRINT_URL = "https://imprint.acdh.oeaw.ac.at/"
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 if os.environ.get("DEBUG"):
     DEBUG = True

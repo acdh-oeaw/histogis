@@ -1,6 +1,6 @@
 import hashlib
 import os
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from django.conf import settings
 from django.contrib.gis.db import models
@@ -28,7 +28,7 @@ ADM_CHOICES = (
     ("adm5", "ADM 5: a subdivision of a fourth-order administrative division"),
 )
 
-curent_date = datetime.now(timezone.UTC).strftime("%Y-%m-%d")
+curent_date = datetime.now(UTC).strftime("%Y-%m-%d")
 
 
 class OverwriteStorage(FileSystemStorage):
