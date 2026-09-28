@@ -40,7 +40,8 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                            
-                            <li><a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'shapes:browse_shapes' %}">Shapes</a></li>
+                            <li><a class="dropdown-item" href="{% url 'shapes:browse_sources' %}">Sources</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
