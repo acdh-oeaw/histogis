@@ -11,28 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 REDMINE_ID = 11176
 ACDH_IMPRINT_URL = "https://imprint.acdh.oeaw.ac.at/"
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "TZRHHwasdfsadfdsafkljlxö7639827249324GV")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", False)
 
-if DEBUG:
-    CACHE_TIMEOUT = 0
-else:
-    CACHE_TIMEOUT = None
-
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-#         "LOCATION": "my_cache_table",
-#         "TIMEOUT": CACHE_TIMEOUT,
-#     }
-# }
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
-    }
-}
 
 ADD_ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
 
@@ -54,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "django.contrib.postgres",
     "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -67,7 +50,6 @@ INSTALLED_APPS = [
     "vocabs",
     "stats",
     "shps",
-    "charts",
     "browsing",
     "news",
     "analyze",
@@ -84,7 +66,6 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 25,
-    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
 MIDDLEWARE = [
@@ -124,11 +105,13 @@ WSGI_APPLICATION = "histogis.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "OPTIONS": {"options": "-c search_path=public,histogis"},
         "NAME": os.environ.get("POSTGRES_DB", "histogis"),
         "USER": os.environ.get("POSTGRES_USER", "postgres"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "postgres"),
         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
         "PORT": os.environ.get("POSTEGRES_PORT", "5432"),
+        "DISABLE_SERVER_SIDE_CURSORS": True,
     }
 }
 

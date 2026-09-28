@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView
 
-from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateView
+from browsing.utils import GenericListView, BaseCreateView, BaseUpdateView
 
 from .models import TempSpatial, Source
 from .tables import TempSpatialTable, SourceTable
