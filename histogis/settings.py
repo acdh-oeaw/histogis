@@ -175,6 +175,44 @@ LEAFLET_CONFIG = {
     "DEFAULT_CENTER": (47, 16),
     "DEFAULT_ZOOM": 6,
     "MIN_ZOOM": 3,
+    "TILES": [
+        (
+            "CARTO Positron (no labels)",
+            "https://basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png?key=cb1_5eau_1_4764382fe31e5a5beebc9e46",
+            {
+                "attribution": (
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">'
+                    "OpenStreetMap</a> contributors, "
+                    '&copy; <a href="https://carto.com/attribution/">CARTO</a>'
+                ),
+                "maxZoom": 20,
+            },
+        ),
+        (
+            "CARTO Positron (with labels)",
+            "https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png?key=cb1_5eau_1_4764382fe31e5a5beebc9e46",
+            {
+                "attribution": (
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">'
+                    "OpenStreetMap</a> contributors, "
+                    '&copy; <a href="https://carto.com/attribution/">CARTO</a>'
+                ),
+                "maxZoom": 20,
+            },
+        ),
+        (
+            "OpenTopoMap",
+            "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+            {
+                "attribution": (
+                    "Map data: &copy; "
+                    '<a href="https://www.openstreetmap.org/copyright">'
+                    "OpenStreetMap contributors</a> | "
+                    '<a href="https://opentopomap.org">OpenTopoMap</a>'
+                )
+            },
+        ),
+    ],
     "OVERLAYS": [
         (
             "dinamlex",
