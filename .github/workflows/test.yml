@@ -23,7 +23,7 @@ jobs:
     - name: checkout the repo  
       uses: actions/checkout@v7
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.2.0
+      uses: astral-sh/setup-uv@v10.4.0
     - name: Update apt package index
       run: sudo apt-get update
     - name: GDAL
@@ -39,7 +39,7 @@ jobs:
     - name: Create Coverage Report
       run: uv run coverage xml
     - name: "Upload coverage to Codecov"
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v7
       with:
         token: ${{secrets.CODECOV_TOKEN}}
         files: ./coverage.xml
